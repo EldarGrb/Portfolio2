@@ -259,6 +259,10 @@ body {
   color: #eefcb3;
   opacity: 0.7;
 }
+.service-header-icon svg {
+  width: 100%;
+  height: 100%;
+}
 .service-header h3 {
   font-size: 1rem;
   font-weight: 500;
@@ -445,6 +449,10 @@ body {
   display: flex; align-items: center; justify-content: center;
   color: #eefcb3;
   flex-shrink: 0;
+}
+.step-card-icon svg {
+  width: 24px;
+  height: 24px;
 }
 .step-card h4 {
   font-size: 0.95rem;
