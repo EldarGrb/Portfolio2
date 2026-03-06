@@ -845,11 +845,22 @@ body {
 /* ===== RESPONSIVE ===== */
 @media (max-width: 900px) {
   .hero-wrapper { padding: 8px; }
-  .hero-card { min-height: calc(100vh - 16px); }
+  .hero-card { min-height: calc(100vh - 16px); min-height: calc(100svh - 16px); }
   .navbar { padding: 16px 20px; }
   .navbar.scrolled { left: 8px; right: 8px; }
   .nav-links { display: none; }
-  .hero-content { padding: 0 20px 32px; flex-direction: column; align-items: flex-start; gap: 24px; }
+  .hero-content {
+    padding: 0 20px 32px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 24px;
+  }
+  .hero-card h1 { font-size: clamp(2.4rem, 9vw, 3.2rem); }
+  .hero-cta-btn { align-self: center; }
+  .service-accordion { height: auto; }
+  .service-image-wrapper { aspect-ratio: 4 / 3; }
   .section { padding: 60px 24px; }
   .services-header { flex-direction: column; gap: 20px; }
   .services-content { grid-template-columns: 1fr; }
