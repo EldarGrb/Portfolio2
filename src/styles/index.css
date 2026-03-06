@@ -866,6 +866,8 @@ body {
   .services-content { grid-template-columns: 1fr; }
   .stats-content { grid-template-columns: 1fr; }
   .process-layout { grid-template-columns: 1fr; }
+  .step-tabs { flex-wrap: wrap; }
+  .step-tab { padding: 8px 20px; font-size: 0.85rem; }
   .cta-cards { grid-template-columns: 1fr; }
   .footer-top { grid-template-columns: 1fr; }
   .cta-section { padding: 60px 24px; }
