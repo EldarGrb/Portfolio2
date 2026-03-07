@@ -670,6 +670,18 @@ body {
   border-radius: 16px;
   padding: 32px;
 }
+.footer-contact-link {
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.55);
+  font-size: 0.9rem;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.3s;
+  text-align: left;
+}
+.footer-contact-link:hover { color: #eefcb3; }
 .footer-contact-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;

@@ -17,7 +17,7 @@ function Services({ onContact }) {
           {services.map((s, i) => {
             const Icon = Icons[s.icon];
             return (
-              <div className={`service-item ${i === active ? 'active' : ''}`} key={i} onClick={() => setActive(i)}>
+              <div className={`service-item ${i === active ? 'active' : ''}`} key={i} onClick={() => setActive(i)} role="button" tabIndex={0} aria-expanded={i === active}>
                 <div className="service-header">
                   <span className="service-header-icon"><Icon /></span>
                   <h3>{s.title}</h3>

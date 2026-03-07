@@ -16,9 +16,9 @@ function Hero({ onContact }) {
       <section className="hero-card">
         <TripBackground />
         <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
-          <a href="#" className="nav-logo"><Icons.Logo /> Uroboros Systems</a>
+          <a href="/" className="nav-logo"><Icons.Logo /> Uroboros Systems</a>
           <ul className="nav-links">
-            <li><a href="#" className="active">Home</a></li>
+            <li><a href="/" className="active">Home</a></li>
             <li><a href="#services">Services</a></li>
             <li><a href="#process">Process</a></li>
             <li><a href="#contact">Contact</a></li>

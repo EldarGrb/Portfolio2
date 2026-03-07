@@ -7,13 +7,13 @@ function Footer({ onContact }) {
         <div className="footer-subscribe">
           <h3>Stay updated</h3>
           <div className="subscribe-form">
-            <input className="subscribe-input" type="email" placeholder="Enter your email" />
+            <input className="subscribe-input" type="email" name="email" placeholder="Enter your email" aria-label="Email address" />
             <button className="subscribe-btn">Subscribe</button>
           </div>
           <div className="footer-links-grid" style={{ marginTop: 24 }}>
             <div>
               <h4>Pages</h4>
-              <a href="#">Home</a>
+              <a href="/">Home</a>
               <a href="#services">Services</a>
               <a href="#process">Process</a>
               <a href="#contact">Contact</a>
@@ -24,7 +24,7 @@ function Footer({ onContact }) {
           <div className="footer-contact-grid">
             <div>
               <h4>Contact</h4>
-              <a href="#" onClick={(e) => { e.preventDefault(); onContact(); }}>Send us a message</a>
+              <button className="footer-contact-link" onClick={onContact}>Send us a message</button>
             </div>
             <div>
               <h4>Location</h4>
