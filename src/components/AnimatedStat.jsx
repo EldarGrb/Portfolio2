@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
 
-function AnimatedStat({ number, label }) {
+function AnimatedStat({ number, label, detail, isActive, onActivate }) {
   const ref = useRef(null);
   const [display, setDisplay] = useState(number);
+
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
@@ -26,12 +27,22 @@ function AnimatedStat({ number, label }) {
     }, { threshold: 0.3 });
     obs.observe(el);
     return () => obs.disconnect();
-  }, []);
+  }, [number]);
+
   return (
-    <div className="stat-card" ref={ref}>
+    <button
+      type="button"
+      className={`stat-card ${isActive ? 'active' : ''}`}
+      ref={ref}
+      onMouseEnter={onActivate}
+      onFocus={onActivate}
+      onClick={onActivate}
+      aria-pressed={isActive}
+      aria-label={`${label}. ${detail}`}
+    >
       <div className="stat-number">{display}</div>
       <div className="stat-label">{label}</div>
-    </div>
+    </button>
   );
 }
 

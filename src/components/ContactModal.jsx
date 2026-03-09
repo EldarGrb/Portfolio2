@@ -104,12 +104,12 @@ function ContactModal({ open, onClose }) {
         ref={modalRef}
       >
         <button className="modal-close" onClick={handleClose} ref={closeButtonRef} aria-label="Close contact form">&times;</button>
-        <h2 className="modal-title" id={titleId}>Get in touch</h2>
-        <p className="modal-subtitle" id={subtitleId}>Tell us about your project and we'll get back to you shortly.</p>
+        <h2 className="modal-title" id={titleId}>Start your project</h2>
+        <p className="modal-subtitle" id={subtitleId}>Share your goals, timeline, and scope. We reply within 24 hours.</p>
 
         {status === 'success' ? (
           <div className="modal-success">
-            <p>Message sent successfully. We'll be in touch soon.</p>
+            <p>Your message has been received. We&apos;ll get back to you within 24 hours.</p>
             <button className="btn-primary" onClick={handleClose}>Close</button>
           </div>
         ) : (
@@ -144,14 +144,14 @@ function ContactModal({ open, onClose }) {
                 id="contact-message"
                 name="message"
                 required
-                placeholder="Tell us about your project..."
+                placeholder="Project goals, timeline, and what success looks like..."
                 rows="4"
                 value={form.message}
                 onChange={handleChange}
               />
             </div>
             {status === 'error' && (
-              <p className="modal-error" role="alert">Something went wrong. Please try again.</p>
+              <p className="modal-error" role="alert">We couldn&apos;t send your message right now. Please try again.</p>
             )}
             <button className="btn-primary modal-submit" type="submit" disabled={status === 'sending'} aria-busy={status === 'sending'}>
               {status === 'sending' ? 'Sending...' : 'Send message'}

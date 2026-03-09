@@ -23,11 +23,11 @@ function Hero({ onContact }) {
             <li><a href="#process">Process</a></li>
             <li><a href="#contact">Contact</a></li>
           </ul>
-          <button className="nav-cta" onClick={onContact}>Get in touch</button>
+          <button className="nav-cta" onClick={onContact}>Start a project</button>
         </nav>
         <div className="hero-content">
           <h1>Built for your vision, focused on results.</h1>
-          <a href="#services" className="btn-primary hero-cta-btn">Explore our services</a>
+          <a href="#services" className="btn-primary hero-cta-btn">View our capabilities</a>
         </div>
       </section>
       <div className="marquee-wrapper">

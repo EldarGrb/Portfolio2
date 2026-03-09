@@ -9,8 +9,11 @@ function Services({ onContact }) {
   return (
     <section className="section services" id="services" ref={ref} style={{ opacity: 0, transform: 'translateY(30px)', transition: 'opacity 0.8s, transform 0.8s' }}>
       <div className="services-header">
-        <h2 className="section-title">Expert services that move your project forward</h2>
-        <button className="btn-secondary" onClick={onContact}>Get started</button>
+        <div className="services-header-copy">
+          <span className="section-signature" aria-hidden="true"><Icons.Logo /></span>
+          <h2 className="section-title">Expert services that move your project forward</h2>
+        </div>
+        <button className="btn-secondary" onClick={onContact}>Request proposal</button>
       </div>
       <div className="services-content">
         <div className="service-accordion">

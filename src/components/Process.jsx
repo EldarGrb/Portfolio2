@@ -11,6 +11,7 @@ function Process() {
     <section className="section process" id="process" ref={ref} style={{ opacity: 0, transform: 'translateY(30px)', transition: 'opacity 0.8s, transform 0.8s' }}>
       <div className="process-layout">
         <div className="process-left">
+          <span className="section-signature" aria-hidden="true"><Icons.Logo /></span>
           <h2 className="section-title">Our method for delivering exceptional results</h2>
           <p>
             A streamlined 3-phase approach ensures your project gets
@@ -54,13 +55,16 @@ function Process() {
             {processSteps[step].map((s, i) => {
               const Icon = Icons[s.icon];
               return (
-                <div className="step-card" key={i}>
-                  <span className="step-card-icon"><Icon /></span>
-                  <div>
+                <article className="step-row" key={i}>
+                  <div className="step-row-meta" aria-hidden="true">
+                    <span className="step-row-index">{String(i + 1).padStart(2, '0')}</span>
+                    <span className="step-row-icon"><Icon /></span>
+                  </div>
+                  <div className="step-row-body">
                     <h4>{s.title}</h4>
                     <p>{s.desc}</p>
                   </div>
-                </div>
+                </article>
               );
             })}
           </div>

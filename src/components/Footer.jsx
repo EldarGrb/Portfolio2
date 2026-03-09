@@ -128,7 +128,7 @@ function Footer({ onContact }) {
             <div className="footer-contact-grid">
               <div>
                 <h4>Contact</h4>
-                <button className="footer-contact-link" onClick={onContact}>Send us a message</button>
+                <button className="footer-contact-link" onClick={onContact}>Start a conversation</button>
               </div>
               <div>
                 <h4>Location</h4>
@@ -157,7 +157,7 @@ function Footer({ onContact }) {
           >
             <button className="modal-close" onClick={closeModal} ref={closeButtonRef} aria-label="Close subscription message">&times;</button>
             <h2 className="modal-title" id={titleId}>You&apos;re subscribed</h2>
-            <p className="modal-subtitle" id={bodyId}>Thanks for subscribing to our newsletter. We&apos;ll send occasional updates.</p>
+            <p className="modal-subtitle" id={bodyId}>Thanks for joining our newsletter. Your first update will arrive soon.</p>
             <button className="btn-primary modal-submit" type="button" onClick={closeModal}>Close</button>
           </div>
         </div>
