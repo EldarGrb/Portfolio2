@@ -46,12 +46,15 @@ function Services({ onContact }) {
           })}
         </div>
         <div className="service-image-wrapper">
-          <img
-            className="service-image"
-            src={`/images/img${active + 1}.webp`}
-            alt={services[active].title}
-            key={active}
-          />
+          <picture key={active}>
+            <source srcSet={`/images/img${active + 1}.webp`} type="image/webp" />
+            <img
+              className="service-image"
+              src={`/images/img${active + 1}.jpg`}
+              alt={services[active].title}
+              loading="lazy"
+            />
+          </picture>
         </div>
       </div>
     </section>
