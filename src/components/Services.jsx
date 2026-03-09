@@ -41,6 +41,19 @@ function Services({ onContact }) {
                     </div>
                   </div>
                 </div>
+                {i === active && (
+                  <div className="service-inline-media">
+                    <picture>
+                      <source srcSet={`/images/img${i + 1}.webp`} type="image/webp" />
+                      <img
+                        className="service-inline-image"
+                        src={`/images/img${i + 1}.jpg`}
+                        alt={s.title}
+                        loading="lazy"
+                      />
+                    </picture>
+                  </div>
+                )}
               </div>
             );
           })}

@@ -429,6 +429,17 @@ textarea:focus-visible {
   border-radius: 16px;
   animation: serviceFadeIn 0.4s ease;
 }
+.service-inline-media {
+  display: none;
+}
+.service-inline-image {
+  width: 100%;
+  display: block;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 12px;
+  animation: serviceFadeIn 0.4s ease;
+}
 @keyframes serviceFadeIn {
   from { opacity: 0; transform: scale(1.02); }
   to { opacity: 1; transform: scale(1); }
@@ -1071,7 +1082,14 @@ textarea:focus-visible {
   .hero-card h1 { font-size: clamp(2.4rem, 9vw, 3.2rem); }
   .hero-cta-btn { align-self: center; }
   .service-accordion { height: auto; }
-  .service-image-wrapper { aspect-ratio: 4 / 3; }
+  .service-image-wrapper { display: none; }
+  .service-inline-media {
+    display: block;
+    margin: 0 16px 16px;
+  }
+  .service-item.active .service-body-inner {
+    padding: 0 24px 16px;
+  }
   .section { padding: 60px 24px; }
   .services-header { flex-direction: column; gap: 20px; }
   .services-header-copy { max-width: 100%; }
