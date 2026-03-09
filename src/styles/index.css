@@ -1094,19 +1094,75 @@ textarea:focus-visible {
   .step-row-meta { width: 60px; }
   .step-tabs { flex-wrap: wrap; }
   .step-tab { padding: 8px 20px; font-size: 0.85rem; }
-  .cta-conversation { padding: 18px; }
+  .cta-section { padding: 48px 16px; }
+  .cta-main {
+    padding: 32px 16px;
+    border-radius: 14px;
+  }
+  .cta-content {
+    max-width: none;
+    width: 100%;
+  }
+  .cta-main h2 {
+    font-size: clamp(1.5rem, 8vw, 2rem);
+    line-height: 1.24;
+    margin-bottom: 10px;
+  }
+  .cta-note {
+    font-size: 0.92rem;
+    line-height: 1.55;
+  }
+  .cta-conversation { padding: 16px; }
   .cta-selectors { gap: 8px; }
   .cta-selector {
-    flex: 1 1 calc(50% - 8px);
+    flex: 1 1 100%;
+    min-height: 44px;
     text-align: center;
   }
-  .footer-top { grid-template-columns: 1fr; }
+  .footer { padding: 32px 16px 18px; }
+  .footer-top {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  .footer-contact { order: 1; }
+  .footer-subscribe {
+    order: 2;
+    padding: 20px;
+    border-radius: 12px;
+  }
+  .footer-contact {
+    padding: 20px;
+    border-radius: 12px;
+  }
+  .footer-subscribe h3 {
+    color: rgba(255,255,255,0.72);
+    margin-bottom: 14px;
+  }
+  .subscribe-input {
+    min-height: 48px;
+    font-size: 1rem;
+  }
   .subscribe-form { flex-direction: column; }
-  .subscribe-btn { width: 100%; }
+  .subscribe-btn {
+    width: 100%;
+    min-height: 48px;
+    font-size: 1rem;
+    font-weight: 600;
+  }
   .footer-links-grid { grid-template-columns: 1fr; }
+  .footer-link-optional { display: none; }
+  .footer-links-grid h4,
+  .footer-contact h4 {
+    color: rgba(255,255,255,0.68);
+  }
+  .footer-links-grid a,
+  .footer-contact p,
+  .footer-contact a,
+  .footer-contact-link {
+    color: rgba(255,255,255,0.78);
+  }
   .footer-contact-grid { grid-template-columns: 1fr; gap: 20px; }
-  .cta-section { padding: 60px 24px; }
-  .footer { padding: 40px 24px 20px; }
   .footer-bottom { flex-direction: column; gap: 16px; }
   .footer-logo {
     font-size: 1.25rem;

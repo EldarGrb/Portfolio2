@@ -117,9 +117,9 @@ function Footer({ onContact }) {
             <div className="footer-links-grid" style={{ marginTop: 24 }}>
               <div>
                 <h4>Pages</h4>
-                <a href="/">Home</a>
+                <a href="/" className="footer-link-optional">Home</a>
                 <a href="#services">Services</a>
-                <a href="#process">Process</a>
+                <a href="#process" className="footer-link-optional">Process</a>
                 <a href="#contact">Contact</a>
               </div>
             </div>
