@@ -24,12 +24,12 @@ function CTA({ onContact }) {
           </div>
           <span className="cta-card-arrow">&rsaquo;</span>
         </button>
-        <a className="cta-card cta-card-secondary" href="#services">
+        <a className="cta-card cta-card-secondary" href="#process">
           <div className="cta-card-left">
             <span className="cta-card-icon"><Icons.Rocket /></span>
             <div>
-              <h3>See relevant work</h3>
-              <p>Review our capabilities and delivery approach</p>
+              <h3>See our process</h3>
+              <p>Understand how we plan, build, and launch</p>
             </div>
           </div>
           <span className="cta-card-arrow">&rsaquo;</span>
