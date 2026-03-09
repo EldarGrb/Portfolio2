@@ -19,9 +19,9 @@ export const services = [
   },
   {
     icon: 'Zap',
-    title: 'AI integrations & workflow automation',
-    description: 'Implement practical AI systems into daily operations, including AI voice receptionists, AI customer support assistants, and n8n-powered workflow automation.',
-    tags: ['AI integrations', 'n8n', 'Voice AI', 'Customer Support AI'],
+    title: 'AI operations & automation systems',
+    description: 'Deploy production-ready AI systems that automate workflows, handle first-line customer conversations, and route work across your stack with reliable n8n orchestration.',
+    tags: ['AI Ops', 'n8n Orchestration', 'Voice Reception', 'Support Automation'],
   },
   {
     icon: 'BarChart',
