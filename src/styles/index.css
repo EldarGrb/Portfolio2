@@ -207,14 +207,16 @@ textarea:focus-visible {
   z-index: 2;
   display: flex;
   align-items: center;
+  min-height: 64px;
   background: #161a18;
-  padding: 21px 0;
+  padding: 0;
   overflow: hidden;
   border-radius: 0 0 20px 20px;
 }
 .marquee-track {
   display: flex;
   align-items: center;
+  min-height: 64px;
   gap: 48px;
   animation: marqueeScroll 30s linear infinite;
   width: max-content;
@@ -231,6 +233,11 @@ textarea:focus-visible {
   color: rgba(255,255,255,0.55);
   font-size: 0.9rem;
   line-height: 1;
+}
+.marquee-item span {
+  display: flex;
+  align-items: center;
+  transform: translateY(1px);
 }
 .marquee-item svg {
   width: 20px;
