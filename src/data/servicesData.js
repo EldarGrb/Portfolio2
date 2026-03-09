@@ -19,6 +19,7 @@ export const services = [
   },
   {
     icon: 'Zap',
+    featured: true,
     title: 'AI operations & automation systems',
     description: 'Deploy production-ready AI systems that automate workflows, handle first-line customer conversations, and route work across your stack with reliable n8n orchestration.',
     tags: ['AI Ops', 'n8n Orchestration', 'Voice Reception', 'Support Automation'],

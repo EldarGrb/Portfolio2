@@ -21,7 +21,7 @@ function Services({ onContact }) {
             const Icon = Icons[s.icon];
             const panelId = `service-panel-${i}`;
             return (
-              <div className={`service-item ${i === active ? 'active' : ''}`} key={i}>
+              <div className={`service-item ${s.featured ? 'featured' : ''} ${i === active ? 'active' : ''}`} key={i}>
                 <button
                   className="service-header"
                   type="button"
@@ -31,6 +31,7 @@ function Services({ onContact }) {
                 >
                   <span className="service-header-icon"><Icon /></span>
                   <h3>{s.title}</h3>
+                  {s.featured && <span className="service-featured-badge">Featured</span>}
                 </button>
                 <div className="service-body" id={panelId}>
                   <div className="service-body-inner">

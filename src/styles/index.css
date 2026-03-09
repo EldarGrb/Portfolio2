@@ -292,6 +292,26 @@ textarea:focus-visible {
   background: #161a18;
   border-color: rgba(230,240,163,0.15);
 }
+.service-item.featured {
+  position: relative;
+  border-color: rgba(238,252,179,0.24);
+  background:
+    linear-gradient(180deg, rgba(238,252,179,0.05) 0%, rgba(22,26,24,0.96) 46%),
+    #161a18;
+}
+.service-item.featured::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 14px;
+  right: 14px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(238,252,179,0.6), transparent);
+}
+.service-item.featured.active {
+  border-color: rgba(238,252,179,0.45);
+  box-shadow: 0 0 0 1px rgba(238,252,179,0.08), 0 10px 24px rgba(0,0,0,0.24);
+}
 .service-header {
   display: flex;
   align-items: center;
@@ -318,6 +338,21 @@ textarea:focus-visible {
   font-size: 1rem;
   font-weight: 500;
   color: #eefcb3;
+}
+.service-featured-badge {
+  margin-left: auto;
+  padding: 4px 10px;
+  border: 1px solid rgba(238,252,179,0.38);
+  background: rgba(238,252,179,0.1);
+  border-radius: 999px;
+  color: rgba(238,252,179,0.92);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.service-item.featured .service-header-icon {
+  opacity: 1;
 }
 .service-body {
   display: grid;
@@ -356,6 +391,11 @@ textarea:focus-visible {
   border-radius: 20px;
   font-size: 0.8rem;
   color: rgba(255,255,255,0.6);
+}
+.service-item.featured .service-tag {
+  border-color: rgba(238,252,179,0.2);
+  color: rgba(238,252,179,0.84);
+  background: rgba(238,252,179,0.08);
 }
 
 /* Service image */
