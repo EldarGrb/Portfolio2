@@ -40,14 +40,23 @@ textarea:focus-visible {
   top: 0; left: 0; right: 0; bottom: 0;
   z-index: 0;
 }
+.hero-bg-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: saturate(0.75) brightness(0.55) contrast(1.08);
+}
 .hero-bg-gradient {
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
   background:
-    radial-gradient(ellipse at 50% 50%, rgba(238,252,179,0.16) 0%, transparent 52%),
-    radial-gradient(ellipse at 24% 32%, rgba(70,95,78,0.32) 0%, transparent 58%),
-    radial-gradient(ellipse at 78% 64%, rgba(54,74,63,0.28) 0%, transparent 55%),
-    linear-gradient(180deg, rgba(5,8,7,0.9) 0%, rgba(8,10,9,0.88) 100%);
+    radial-gradient(ellipse at 50% 50%, rgba(238,252,179,0.11) 0%, transparent 55%),
+    radial-gradient(ellipse at 22% 35%, rgba(54,74,63,0.24) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 66%, rgba(42,58,50,0.22) 0%, transparent 58%),
+    linear-gradient(180deg, rgba(3,5,5,0.9) 0%, rgba(8,10,9,0.9) 100%);
 }
 
 /* ===== NAVBAR (inside hero card) ===== */
