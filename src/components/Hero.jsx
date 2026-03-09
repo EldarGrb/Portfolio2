@@ -1,21 +1,13 @@
-import { useState, useEffect } from 'react';
 import Icons from './Icons';
 import { marqueeItems } from '../data/marqueeData';
 import TripBackground from './TripBackground';
 
 function Hero({ onContact }) {
-  const [scrolled, setScrolled] = useState(false);
-  useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 60);
-    window.addEventListener('scroll', handler);
-    return () => window.removeEventListener('scroll', handler);
-  }, []);
-
   return (
     <div className="hero-wrapper">
       <section className="hero-card">
         <TripBackground />
-        <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
+        <nav className="navbar">
           <a href="/" className="nav-logo"><Icons.Logo /> Uroboros Systems</a>
           <ul className="nav-links">
             <li><a href="/" className="active">Home</a></li>
