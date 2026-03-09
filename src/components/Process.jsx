@@ -47,7 +47,7 @@ function Process() {
           <div className="step-tabs">
             {stepLabels.map((label, i) => (
               <button className={`step-tab ${i === step ? 'active' : ''}`} key={i} onClick={() => setStep(i)}>
-                {label}
+                <span>{label}</span>
               </button>
             ))}
           </div>

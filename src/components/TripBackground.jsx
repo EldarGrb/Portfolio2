@@ -15,72 +15,53 @@ const fragmentShader = `
   uniform vec2 uMouse;
   varying vec2 vUv;
 
-  vec2 hash(vec2 p) {
-    p = vec2(dot(p, vec2(127.1, 311.7)), dot(p, vec2(269.5, 183.3)));
-    return fract(sin(p) * 43758.5453123);
+  float ring(vec2 uv, vec2 center, vec2 radius, float thickness) {
+    vec2 p = (uv - center) / radius;
+    float d = abs(length(p) - 1.0);
+    return 1.0 - smoothstep(thickness, thickness + 0.015, d);
   }
 
-  vec3 voronoi(vec2 x, float time) {
-    vec2 n = floor(x);
-    vec2 f = fract(x);
-    float md = 8.0;
-    float md2 = 8.0;
-    vec2 mr;
-    for (int j = -1; j <= 1; j++) {
-      for (int i = -1; i <= 1; i++) {
-        vec2 g = vec2(float(i), float(j));
-        vec2 o = hash(n + g);
-        o = 0.5 + 0.5 * sin(time * 0.4 + 6.2831 * o);
-        vec2 r = g + o - f;
-        float d = dot(r, r);
-        if (d < md) {
-          md2 = md;
-          md = d;
-          mr = r;
-        } else if (d < md2) {
-          md2 = d;
-        }
-      }
-    }
-    return vec3(md, md2, md2 - md);
+  float softGlow(vec2 uv, vec2 center, vec2 radius) {
+    vec2 p = (uv - center) / radius;
+    float d = abs(length(p) - 1.0);
+    return exp(-22.0 * d);
   }
 
   void main() {
     vec2 uv = vUv;
     vec2 mouse = uMouse * 0.5 + 0.5;
-    float mouseD = smoothstep(0.5, 0.0, distance(uv, mouse));
-    vec2 p = uv * 5.0;
-    p += vec2(uTime * 0.05, uTime * 0.03);
-    p += (mouse - 0.5) * mouseD * 0.8;
-    vec3 v1 = voronoi(p, uTime);
-    vec3 v2 = voronoi(p * 2.2 + 10.0, uTime * 0.7);
-    vec3 v3 = voronoi(p * 4.5 + 20.0, uTime * 1.2);
-    float edge1 = 1.0 - smoothstep(0.0, 0.08, v1.z);
-    float edge2 = 1.0 - smoothstep(0.0, 0.05, v2.z);
-    float edge3 = 1.0 - smoothstep(0.0, 0.03, v3.z);
-    float cell1 = sqrt(v1.x);
-    float cell2 = sqrt(v2.x);
-    vec3 black    = vec3(0.01, 0.01, 0.01);
-    vec3 darkGreen = vec3(0.04, 0.07, 0.03);
-    vec3 olive    = vec3(0.10, 0.14, 0.06);
-    vec3 warm     = vec3(0.16, 0.10, 0.06);
-    vec3 accent   = vec3(0.93, 0.99, 0.70);
-    vec3 cellColor = mix(black, darkGreen, cell1 * 0.8);
-    cellColor = mix(cellColor, olive, cell2 * 0.3);
-    float warmMask = smoothstep(0.3, 0.7, cell1) * smoothstep(0.4, 0.8, sin(uTime * 0.2 + cell1 * 6.0) * 0.5 + 0.5);
-    cellColor = mix(cellColor, warm, warmMask * 0.5);
-    vec3 edgeColor = mix(olive, accent, 0.4);
-    cellColor = mix(cellColor, edgeColor * 0.5, edge1 * 0.6);
-    cellColor = mix(cellColor, olive * 0.8, edge2 * 0.3);
-    cellColor = mix(cellColor, accent * 0.15, edge3 * 0.2);
-    float intersect = edge1 * edge2;
-    cellColor += accent * intersect * 0.3;
-    cellColor += accent * mouseD * 0.08;
-    float pulse = sin(uTime * 0.8 + v1.x * 10.0) * 0.5 + 0.5;
-    cellColor += edgeColor * edge1 * pulse * 0.15;
-    float vig = 1.0 - smoothstep(0.2, 1.2, distance(uv, vec2(0.5)));
-    cellColor *= 0.65 + vig * 0.35;
-    gl_FragColor = vec4(cellColor, 1.0);
+    vec2 drift = vec2(
+      sin(uTime * 0.18 + uv.y * 4.0) * 0.006,
+      cos(uTime * 0.15 + uv.x * 3.2) * 0.006
+    );
+    vec2 warped = uv + drift + (mouse - 0.5) * 0.025;
+
+    vec2 c1 = vec2(0.43 + sin(uTime * 0.10) * 0.008, 0.50 + cos(uTime * 0.13) * 0.006);
+    vec2 c2 = vec2(0.57 + cos(uTime * 0.11) * 0.008, 0.50 + sin(uTime * 0.09) * 0.006);
+
+    float loopA = ring(warped, c1, vec2(0.24, 0.17), 0.035);
+    float loopB = ring(warped, c2, vec2(0.24, 0.17), 0.035);
+    float loops = clamp(loopA + loopB, 0.0, 1.0);
+
+    float glowA = softGlow(warped, c1, vec2(0.24, 0.17));
+    float glowB = softGlow(warped, c2, vec2(0.24, 0.17));
+    float overlap = smoothstep(0.48, 0.02, distance(warped, vec2(0.5, 0.5)));
+
+    vec3 bg = vec3(0.015, 0.018, 0.017);
+    bg += vec3(0.020, 0.033, 0.024) * smoothstep(1.0, 0.2, distance(uv, vec2(0.5, 0.5)));
+
+    vec3 primary = vec3(0.93, 0.99, 0.70);
+    vec3 secondary = vec3(0.56, 0.72, 1.00);
+
+    vec3 color = bg;
+    color += primary * loops * 0.22;
+    color += secondary * max(glowA, glowB) * 0.035;
+    color += mix(primary, secondary, 0.45) * overlap * 0.05 * (0.6 + 0.4 * sin(uTime * 0.7));
+
+    float vignette = smoothstep(1.25, 0.1, distance(uv, vec2(0.5)));
+    color *= 0.78 + vignette * 0.22;
+
+    gl_FragColor = vec4(color, 1.0);
   }
 `;
 
@@ -100,7 +81,7 @@ class WebGLErrorBoundary extends Component {
 }
 
 function ShaderPlane() {
-  const meshRef = useRef();
+  const materialRef = useRef(null);
   const mouseRef = useRef(new THREE.Vector2(0, 0));
   const targetMouseRef = useRef(new THREE.Vector2(0, 0));
   const { viewport } = useThree();
@@ -122,15 +103,18 @@ function ShaderPlane() {
   }, []);
 
   useFrame((state) => {
-    uniforms.uTime.value = state.clock.elapsedTime;
+    const material = materialRef.current;
+    if (!material) return;
     mouseRef.current.lerp(targetMouseRef.current, 0.05);
-    uniforms.uMouse.value.copy(mouseRef.current);
+    material.uniforms.uTime.value = state.clock.elapsedTime;
+    material.uniforms.uMouse.value.copy(mouseRef.current);
   });
 
   return (
-    <mesh ref={meshRef} scale={[viewport.width, viewport.height, 1]}>
+    <mesh scale={[viewport.width, viewport.height, 1]}>
       <planeGeometry args={[1, 1, 1, 1]} />
       <shaderMaterial
+        ref={materialRef}
         vertexShader={vertexShader}
         fragmentShader={fragmentShader}
         uniforms={uniforms}

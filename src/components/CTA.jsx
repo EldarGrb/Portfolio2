@@ -24,7 +24,7 @@ function CTA({ onContact }) {
           </div>
           <span className="cta-card-arrow">&rsaquo;</span>
         </button>
-        <a className="cta-card" href="#services">
+        <a className="cta-card cta-card-secondary" href="#services">
           <div className="cta-card-left">
             <span className="cta-card-icon"><Icons.Rocket /></span>
             <div>
