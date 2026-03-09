@@ -6,7 +6,7 @@ function CTA({ onContact }) {
   const options = [
     {
       id: 'website',
-      label: 'New website',
+      label: 'New website/app',
       summary: 'Build or redesign a site that converts and performs.',
       cta: 'Discuss your website project',
     },
