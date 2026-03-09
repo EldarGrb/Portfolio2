@@ -16,13 +16,20 @@ function Services({ onContact }) {
         <div className="service-accordion">
           {services.map((s, i) => {
             const Icon = Icons[s.icon];
+            const panelId = `service-panel-${i}`;
             return (
-              <div className={`service-item ${i === active ? 'active' : ''}`} key={i} onClick={() => setActive(i)} role="button" tabIndex={0} aria-expanded={i === active}>
-                <div className="service-header">
+              <div className={`service-item ${i === active ? 'active' : ''}`} key={i}>
+                <button
+                  className="service-header"
+                  type="button"
+                  onClick={() => setActive(i)}
+                  aria-expanded={i === active}
+                  aria-controls={panelId}
+                >
                   <span className="service-header-icon"><Icon /></span>
                   <h3>{s.title}</h3>
-                </div>
-                <div className="service-body">
+                </button>
+                <div className="service-body" id={panelId}>
                   <div className="service-body-inner">
                     <p>{s.description}</p>
                     <div className="service-tags">

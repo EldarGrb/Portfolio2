@@ -1,10 +1,18 @@
-import { useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 
 function ContactModal({ open, onClose }) {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
   const [status, setStatus] = useState('idle'); // idle | sending | success | error
+  const modalRef = useRef(null);
+  const closeButtonRef = useRef(null);
+  const previousFocusedElementRef = useRef(null);
+  const titleId = useId();
+  const subtitleId = useId();
 
-  if (!open) return null;
+  const handleClose = () => {
+    onClose();
+    setStatus('idle');
+  };
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -32,22 +40,77 @@ function ContactModal({ open, onClose }) {
 
   const handleBackdropClick = (e) => {
     if (e.target === e.currentTarget) {
-      onClose();
-      setStatus('idle');
+      handleClose();
     }
   };
 
+  useEffect(() => {
+    if (!open) return undefined;
+
+    previousFocusedElementRef.current = document.activeElement;
+    const { style } = document.body;
+    const previousOverflow = style.overflow;
+    style.overflow = 'hidden';
+    closeButtonRef.current?.focus();
+
+    const onKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        onClose();
+        setStatus('idle');
+        return;
+      }
+
+      if (event.key !== 'Tab') return;
+      const dialog = modalRef.current;
+      if (!dialog) return;
+      const focusable = dialog.querySelectorAll(
+        'button, [href], input, textarea, select, [tabindex]:not([tabindex="-1"])'
+      );
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      const isShift = event.shiftKey;
+
+      if (!isShift && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      } else if (isShift && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      }
+    };
+
+    document.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+      style.overflow = previousOverflow;
+      if (previousFocusedElementRef.current instanceof HTMLElement) {
+        previousFocusedElementRef.current.focus();
+      }
+    };
+  }, [open, onClose]);
+
+  if (!open) return null;
+
   return (
     <div className="modal-backdrop" onClick={handleBackdropClick}>
-      <div className="modal-content">
-        <button className="modal-close" onClick={() => { onClose(); setStatus('idle'); }}>&times;</button>
-        <h2 className="modal-title">Get in touch</h2>
-        <p className="modal-subtitle">Tell us about your project and we'll get back to you shortly.</p>
+      <div
+        className="modal-content"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={titleId}
+        aria-describedby={subtitleId}
+        ref={modalRef}
+      >
+        <button className="modal-close" onClick={handleClose} ref={closeButtonRef} aria-label="Close contact form">&times;</button>
+        <h2 className="modal-title" id={titleId}>Get in touch</h2>
+        <p className="modal-subtitle" id={subtitleId}>Tell us about your project and we'll get back to you shortly.</p>
 
         {status === 'success' ? (
           <div className="modal-success">
             <p>Message sent successfully. We'll be in touch soon.</p>
-            <button className="btn-primary" onClick={() => { onClose(); setStatus('idle'); }}>Close</button>
+            <button className="btn-primary" onClick={handleClose}>Close</button>
           </div>
         ) : (
           <form className="modal-form" onSubmit={handleSubmit}>
@@ -88,9 +151,9 @@ function ContactModal({ open, onClose }) {
               />
             </div>
             {status === 'error' && (
-              <p className="modal-error">Something went wrong. Please try again.</p>
+              <p className="modal-error" role="alert">Something went wrong. Please try again.</p>
             )}
-            <button className="btn-primary modal-submit" type="submit" disabled={status === 'sending'}>
+            <button className="btn-primary modal-submit" type="submit" disabled={status === 'sending'} aria-busy={status === 'sending'}>
               {status === 'sending' ? 'Sending...' : 'Send message'}
             </button>
           </form>

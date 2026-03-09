@@ -11,7 +11,7 @@ function Process() {
     <section className="section process" id="process" ref={ref} style={{ opacity: 0, transform: 'translateY(30px)', transition: 'opacity 0.8s, transform 0.8s' }}>
       <div className="process-layout">
         <div className="process-left">
-          <h2 className="section-title">My method for delivering exceptional results</h2>
+          <h2 className="section-title">Our method for delivering exceptional results</h2>
           <p>
             A streamlined 3-phase approach ensures your project gets
             a focused strategy, practical solutions, and measurable outcomes.

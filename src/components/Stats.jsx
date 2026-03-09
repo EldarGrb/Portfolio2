@@ -14,7 +14,7 @@ function Stats() {
           <h2 className="section-title">Proven performance, measurable results</h2>
           <p>
             Every project is backed by measurable outcomes. These numbers reflect
-            the quality, reliability, and impact I bring to every engagement.
+            the quality, reliability, and impact we bring to every engagement.
           </p>
           <div className="stats-grid">
             {stats.map((s, i) => <AnimatedStat key={i} number={s.number} label={s.label} />)}
