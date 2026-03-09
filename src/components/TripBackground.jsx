@@ -1,5 +1,5 @@
 import { useRef, useMemo, useEffect, useState, Component } from 'react';
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import { Canvas, useFrame, useThree, useLoader } from '@react-three/fiber';
 import * as THREE from 'three';
 
 const vertexShader = `
@@ -13,53 +13,55 @@ const vertexShader = `
 const fragmentShader = `
   uniform float uTime;
   uniform vec2 uMouse;
+  uniform sampler2D uLogoTexture;
   varying vec2 vUv;
 
-  float ring(vec2 uv, vec2 center, vec2 radius, float thickness) {
-    vec2 p = (uv - center) / radius;
-    float d = abs(length(p) - 1.0);
-    return 1.0 - smoothstep(thickness, thickness + 0.015, d);
+  float sampleLogo(vec2 uv) {
+    vec2 logoUv = (uv - vec2(0.5)) * vec2(1.35, 1.35) + vec2(0.5);
+    vec4 tex = texture2D(uLogoTexture, logoUv);
+    float lum = dot(tex.rgb, vec3(0.299, 0.587, 0.114));
+    return max(tex.a, lum);
   }
 
-  float softGlow(vec2 uv, vec2 center, vec2 radius) {
-    vec2 p = (uv - center) / radius;
-    float d = abs(length(p) - 1.0);
-    return exp(-22.0 * d);
+  float sampleGlow(vec2 uv) {
+    float g = 0.0;
+    g += sampleLogo(uv + vec2(0.0032, 0.0000));
+    g += sampleLogo(uv + vec2(-0.0032, 0.0000));
+    g += sampleLogo(uv + vec2(0.0000, 0.0032));
+    g += sampleLogo(uv + vec2(0.0000, -0.0032));
+    g += sampleLogo(uv + vec2(0.0024, 0.0024));
+    g += sampleLogo(uv + vec2(-0.0024, 0.0024));
+    g += sampleLogo(uv + vec2(0.0024, -0.0024));
+    g += sampleLogo(uv + vec2(-0.0024, -0.0024));
+    return g / 8.0;
   }
 
   void main() {
     vec2 uv = vUv;
     vec2 mouse = uMouse * 0.5 + 0.5;
-    vec2 drift = vec2(
-      sin(uTime * 0.18 + uv.y * 4.0) * 0.006,
-      cos(uTime * 0.15 + uv.x * 3.2) * 0.006
+    vec2 center = uv - vec2(0.5);
+    vec2 flow = vec2(
+      sin((uv.y + uTime * 0.03) * 12.0) * 0.0018,
+      cos((uv.x - uTime * 0.025) * 10.0) * 0.0016
     );
-    vec2 warped = uv + drift + (mouse - 0.5) * 0.025;
+    vec2 warped = uv + flow + (mouse - vec2(0.5)) * 0.012;
 
-    vec2 c1 = vec2(0.43 + sin(uTime * 0.10) * 0.008, 0.50 + cos(uTime * 0.13) * 0.006);
-    vec2 c2 = vec2(0.57 + cos(uTime * 0.11) * 0.008, 0.50 + sin(uTime * 0.09) * 0.006);
+    float mask = sampleLogo(warped);
+    float halo = sampleGlow(warped);
+    float edge = clamp(halo - mask, 0.0, 1.0);
+    float pulse = 0.6 + 0.4 * sin(uTime * 0.65);
 
-    float loopA = ring(warped, c1, vec2(0.24, 0.17), 0.035);
-    float loopB = ring(warped, c2, vec2(0.24, 0.17), 0.035);
-    float loops = clamp(loopA + loopB, 0.0, 1.0);
+    vec3 bg = vec3(0.014, 0.018, 0.016);
+    bg += vec3(0.016, 0.028, 0.022) * smoothstep(0.9, 0.08, length(center));
 
-    float glowA = softGlow(warped, c1, vec2(0.24, 0.17));
-    float glowB = softGlow(warped, c2, vec2(0.24, 0.17));
-    float overlap = smoothstep(0.48, 0.02, distance(warped, vec2(0.5, 0.5)));
-
-    vec3 bg = vec3(0.015, 0.018, 0.017);
-    bg += vec3(0.020, 0.033, 0.024) * smoothstep(1.0, 0.2, distance(uv, vec2(0.5, 0.5)));
-
-    vec3 primary = vec3(0.93, 0.99, 0.70);
-    vec3 secondary = vec3(0.56, 0.72, 1.00);
-
+    vec3 accent = vec3(0.93, 0.99, 0.70);
     vec3 color = bg;
-    color += primary * loops * 0.22;
-    color += secondary * max(glowA, glowB) * 0.035;
-    color += mix(primary, secondary, 0.45) * overlap * 0.05 * (0.6 + 0.4 * sin(uTime * 0.7));
+    color += accent * mask * (0.20 + 0.07 * pulse);
+    color += accent * edge * (0.09 + 0.05 * pulse);
+    color += accent * smoothstep(0.0, 1.0, halo) * 0.02;
 
-    float vignette = smoothstep(1.25, 0.1, distance(uv, vec2(0.5)));
-    color *= 0.78 + vignette * 0.22;
+    float vignette = smoothstep(1.3, 0.12, length(center));
+    color *= 0.80 + vignette * 0.20;
 
     gl_FragColor = vec4(color, 1.0);
   }
@@ -85,11 +87,26 @@ function ShaderPlane() {
   const mouseRef = useRef(new THREE.Vector2(0, 0));
   const targetMouseRef = useRef(new THREE.Vector2(0, 0));
   const { viewport } = useThree();
+  const rawLogoTexture = useLoader(THREE.TextureLoader, '/images/logo-mask.svg');
+  const logoTexture = useMemo(() => {
+    const texture = rawLogoTexture.clone();
+    texture.colorSpace = THREE.SRGBColorSpace;
+    texture.minFilter = THREE.LinearFilter;
+    texture.magFilter = THREE.LinearFilter;
+    texture.generateMipmaps = false;
+    texture.wrapS = THREE.ClampToEdgeWrapping;
+    texture.wrapT = THREE.ClampToEdgeWrapping;
+    texture.needsUpdate = true;
+    return texture;
+  }, [rawLogoTexture]);
+
+  useEffect(() => () => logoTexture.dispose(), [logoTexture]);
 
   const uniforms = useMemo(() => ({
     uTime: { value: 0 },
     uMouse: { value: new THREE.Vector2(0, 0) },
-  }), []);
+    uLogoTexture: { value: logoTexture },
+  }), [logoTexture]);
 
   useEffect(() => {
     const handler = (e) => {
