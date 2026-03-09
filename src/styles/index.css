@@ -39,15 +39,25 @@ textarea:focus-visible {
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
   z-index: 0;
+  --hero-pan-x: 0px;
+  --hero-pan-y: 0px;
+}
+.hero-bg-motion {
+  position: absolute;
+  inset: -9%;
+  transform: translate3d(var(--hero-pan-x), var(--hero-pan-y), 0);
+  transition: transform 180ms linear;
+  will-change: transform;
 }
 .hero-bg-image {
-  position: absolute;
-  inset: 0;
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
-  filter: saturate(0.75) brightness(0.55) contrast(1.08);
+  filter: saturate(0.78) brightness(0.54) contrast(1.1);
+  animation: heroImageDrift 16s ease-in-out infinite alternate;
+  transform: scale(1.1);
 }
 .hero-bg-gradient {
   position: absolute;
@@ -57,6 +67,17 @@ textarea:focus-visible {
     radial-gradient(ellipse at 22% 35%, rgba(54,74,63,0.24) 0%, transparent 60%),
     radial-gradient(ellipse at 80% 66%, rgba(42,58,50,0.22) 0%, transparent 58%),
     linear-gradient(180deg, rgba(3,5,5,0.9) 0%, rgba(8,10,9,0.9) 100%);
+}
+@keyframes heroImageDrift {
+  0% {
+    transform: scale(1.09) translate3d(-1.8%, -1.4%, 0);
+  }
+  50% {
+    transform: scale(1.14) translate3d(2.2%, 1.4%, 0);
+  }
+  100% {
+    transform: scale(1.11) translate3d(-0.8%, 2.1%, 0);
+  }
 }
 
 /* ===== NAVBAR (inside hero card) ===== */
@@ -1058,4 +1079,15 @@ textarea:focus-visible {
   .cta-section { padding: 60px 24px; }
   .footer { padding: 40px 24px 20px; }
   .footer-bottom { flex-direction: column; gap: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-bg-motion {
+    inset: -2%;
+    transform: none;
+    transition: none;
+  }
+  .hero-bg-image {
+    animation: none;
+    transform: scale(1.04);
+  }
 }
