@@ -18,10 +18,10 @@ export const services = [
     tags: ['Shopify', 'Stripe', 'WordPress', 'Subscriptions'],
   },
   {
-    icon: 'Database',
-    title: 'API development & integrations',
-    description: 'Custom API design, third-party integrations, and microservice architecture for seamless data flow.',
-    tags: ['REST', 'GraphQL', 'Webhooks', 'Microservices'],
+    icon: 'Zap',
+    title: 'AI integrations & workflow automation',
+    description: 'Implement practical AI systems into daily operations, including AI voice receptionists, AI customer support assistants, and n8n-powered workflow automation.',
+    tags: ['AI integrations', 'n8n', 'Voice AI', 'Customer Support AI'],
   },
   {
     icon: 'BarChart',
