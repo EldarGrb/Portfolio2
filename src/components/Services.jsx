@@ -1,11 +1,28 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Icons from './Icons';
 import { services } from '../data/servicesData';
 import { useFadeIn } from '../hooks/useFadeIn';
 
 function Services({ onContact }) {
   const [active, setActive] = useState(0);
+  const [isMobile, setIsMobile] = useState(() => (
+    typeof window !== 'undefined' ? window.matchMedia('(max-width: 900px)').matches : false
+  ));
   const ref = useFadeIn();
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(max-width: 900px)');
+    const onChange = (event) => setIsMobile(event.matches);
+
+    if (mediaQuery.addEventListener) {
+      mediaQuery.addEventListener('change', onChange);
+      return () => mediaQuery.removeEventListener('change', onChange);
+    }
+
+    mediaQuery.addListener(onChange);
+    return () => mediaQuery.removeListener(onChange);
+  }, []);
+
   return (
     <section className="section services" id="services" ref={ref} style={{ opacity: 0, transform: 'translateY(30px)', transition: 'opacity 0.8s, transform 0.8s' }}>
       <div className="services-header">
@@ -41,34 +58,23 @@ function Services({ onContact }) {
                     </div>
                   </div>
                 </div>
-                {i === active && (
-                  <div className="service-inline-media">
-                    <picture>
-                      <source srcSet={`/images/img${i + 1}.webp`} type="image/webp" />
-                      <img
-                        className="service-inline-image"
-                        src={`/images/img${i + 1}.jpg`}
-                        alt={s.title}
-                        loading="lazy"
-                      />
-                    </picture>
-                  </div>
-                )}
               </div>
             );
           })}
         </div>
-        <div className="service-image-wrapper">
-          <picture key={active}>
-            <source srcSet={`/images/img${active + 1}.webp`} type="image/webp" />
-            <img
-              className="service-image"
-              src={`/images/img${active + 1}.jpg`}
-              alt={services[active].title}
-              loading="lazy"
-            />
-          </picture>
-        </div>
+        {!isMobile && (
+          <div className="service-image-wrapper">
+            <picture key={active}>
+              <source srcSet={`/images/img${active + 1}.webp`} type="image/webp" />
+              <img
+                className="service-image"
+                src={`/images/img${active + 1}.jpg`}
+                alt={services[active].title}
+                loading="lazy"
+              />
+            </picture>
+          </div>
+        )}
       </div>
     </section>
   );
