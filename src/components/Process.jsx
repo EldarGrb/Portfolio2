@@ -1,12 +1,89 @@
-import { useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import Icons from './Icons';
 import { processSteps } from '../data/processData';
 import { useFadeIn } from '../hooks/useFadeIn';
 
+const CHART_LINE_PATH = 'M0 140 Q100 120 150 100 Q250 60 300 50 Q400 30 500 20 Q550 15 600 10';
+const CHART_AREA_PATH = `${CHART_LINE_PATH} L600 160 L0 160 Z`;
+const STEP_PROGRESS = [0.18, 0.52, 0.86];
+const DOT_ANIMATION_DURATION = 420;
+
+const easeOutCubic = (t) => 1 - ((1 - t) ** 3);
+
 function Process() {
   const [step, setStep] = useState(0);
+  const [dotPoint, setDotPoint] = useState({ x: 0, y: 0 });
+  const linePathRef = useRef(null);
+  const dotPointRef = useRef({ x: 0, y: 0 });
+  const isDotInitializedRef = useRef(false);
+  const animationFrameRef = useRef(null);
   const ref = useFadeIn();
   const stepLabels = ['Discover', 'Build', 'Launch'];
+
+  const getPointForStep = useCallback((stepIndex) => {
+    const linePath = linePathRef.current;
+    if (!linePath) return null;
+
+    const totalLength = linePath.getTotalLength();
+    const progress = STEP_PROGRESS[stepIndex] ?? STEP_PROGRESS[0];
+    const point = linePath.getPointAtLength(totalLength * progress);
+    return { x: point.x, y: point.y };
+  }, []);
+
+  useEffect(() => {
+    const targetPoint = getPointForStep(step);
+    if (!targetPoint) return;
+
+    if (!isDotInitializedRef.current) {
+      dotPointRef.current = targetPoint;
+      isDotInitializedRef.current = true;
+      animationFrameRef.current = requestAnimationFrame(() => {
+        setDotPoint(targetPoint);
+        animationFrameRef.current = null;
+      });
+      return;
+    }
+
+    const startPoint = dotPointRef.current;
+    const targetDistance = Math.hypot(targetPoint.x - startPoint.x, targetPoint.y - startPoint.y);
+    if (targetDistance < 0.4) return;
+
+    if (animationFrameRef.current) {
+      cancelAnimationFrame(animationFrameRef.current);
+    }
+
+    const startTime = performance.now();
+
+    const animate = (timestamp) => {
+      const elapsed = timestamp - startTime;
+      const progress = Math.min(elapsed / DOT_ANIMATION_DURATION, 1);
+      const eased = easeOutCubic(progress);
+      const nextPoint = {
+        x: startPoint.x + ((targetPoint.x - startPoint.x) * eased),
+        y: startPoint.y + ((targetPoint.y - startPoint.y) * eased),
+      };
+
+      setDotPoint(nextPoint);
+      dotPointRef.current = nextPoint;
+
+      if (progress < 1) {
+        animationFrameRef.current = requestAnimationFrame(animate);
+      } else {
+        animationFrameRef.current = null;
+      }
+    };
+
+    animationFrameRef.current = requestAnimationFrame(animate);
+  }, [getPointForStep, step]);
+
+  useEffect(() => (
+    () => {
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+    }
+  ), []);
+
   return (
     <section className="section process" id="process" ref={ref} style={{ opacity: 0, transform: 'translateY(30px)', transition: 'opacity 0.8s, transform 0.8s' }}>
       <div className="process-layout">
@@ -18,28 +95,35 @@ function Process() {
             a focused strategy, practical solutions, and measurable outcomes.
           </p>
           <div className="process-chart">
-            <svg width="100%" height="100%" viewBox="0 0 600 160" preserveAspectRatio="none">
+            <svg className="process-chart-svg" viewBox="0 0 600 220" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Process growth chart">
               <defs>
                 <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="0%" stopColor="#eefcb3" stopOpacity="0.3" />
                   <stop offset="100%" stopColor="#eefcb3" stopOpacity="0" />
                 </linearGradient>
               </defs>
-              {/* Grid lines */}
-              <g stroke="rgba(255,255,255,0.05)" strokeWidth="1">
-                <line x1="0" y1="40" x2="600" y2="40" />
-                <line x1="0" y1="80" x2="600" y2="80" />
-                <line x1="0" y1="120" x2="600" y2="120" />
-                <line x1="150" y1="0" x2="150" y2="160" strokeDasharray="4,4" />
-                <line x1="300" y1="0" x2="300" y2="160" strokeDasharray="4,4" />
-                <line x1="450" y1="0" x2="450" y2="160" strokeDasharray="4,4" />
+              <g transform="translate(0 30)">
+                {/* Grid lines */}
+                <g stroke="rgba(255,255,255,0.05)" strokeWidth="1">
+                  <line x1="0" y1="40" x2="600" y2="40" />
+                  <line x1="0" y1="80" x2="600" y2="80" />
+                  <line x1="0" y1="120" x2="600" y2="120" />
+                  <line x1="150" y1="0" x2="150" y2="160" strokeDasharray="4,4" />
+                  <line x1="300" y1="0" x2="300" y2="160" strokeDasharray="4,4" />
+                  <line x1="450" y1="0" x2="450" y2="160" strokeDasharray="4,4" />
+                </g>
+                {/* Area fill */}
+                <path d={CHART_AREA_PATH} fill="url(#chartGrad)" />
+                {/* Line */}
+                <path ref={linePathRef} className="chart-line-main" d={CHART_LINE_PATH} stroke="#eefcb3" strokeWidth="2" fill="none" />
+                {/* Pulse glow overlay */}
+                <path key={step} className="chart-line-glow" d={CHART_LINE_PATH} />
+                {/* Data point */}
+                <g className="chart-dot" transform={`translate(${dotPoint.x} ${dotPoint.y})`}>
+                  <circle className="chart-dot-halo" r="8" />
+                  <circle className="chart-dot-core" r="4" />
+                </g>
               </g>
-              {/* Area fill */}
-              <path d="M0 140 Q100 120 150 100 Q250 60 300 50 Q400 30 500 20 Q550 15 600 10 L600 160 L0 160 Z" fill="url(#chartGrad)" />
-              {/* Line */}
-              <path d="M0 140 Q100 120 150 100 Q250 60 300 50 Q400 30 500 20 Q550 15 600 10" stroke="#eefcb3" strokeWidth="2" fill="none" />
-              {/* Data point */}
-              <circle cx="300" cy="50" r="4" fill="#eefcb3" />
             </svg>
           </div>
         </div>

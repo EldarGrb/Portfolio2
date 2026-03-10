@@ -659,19 +659,45 @@ textarea:focus-visible {
 .process-chart {
   margin-top: 40px;
   position: relative;
-  height: 200px;
+  height: 236px;
   background: rgba(5,7,6,0.82);
   border-radius: 12px;
   border: 1px solid rgba(238,252,179,0.18);
   overflow: hidden;
   padding: 20px;
 }
-.chart-line {
-  position: absolute;
-  bottom: 20px;
-  left: 20px;
-  right: 20px;
-  height: 70%;
+.process-chart-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.chart-line-main {
+  stroke: #eefcb3;
+  stroke-width: 2;
+  fill: none;
+}
+.chart-line-glow {
+  stroke: #eefcb3;
+  stroke-width: 2;
+  fill: none;
+  opacity: 0;
+  filter: drop-shadow(0 0 5px rgba(238,252,179,0.35));
+  animation: chartLineGlowPulse 0.58s ease;
+  pointer-events: none;
+}
+.chart-dot {
+  pointer-events: none;
+}
+.chart-dot-halo {
+  fill: rgba(238,252,179,0.2);
+}
+.chart-dot-core {
+  fill: #eefcb3;
+}
+@keyframes chartLineGlowPulse {
+  0% { opacity: 0; }
+  38% { opacity: 0.52; }
+  100% { opacity: 0; }
 }
 
 /* ===== CTA ===== */
@@ -1089,6 +1115,11 @@ textarea:focus-visible {
   .process-steps {
     padding: 20px 18px;
     border-radius: 14px;
+  }
+  .process-chart {
+    margin-top: 30px;
+    height: 212px;
+    padding: 16px;
   }
   .step-content::before { left: 30px; }
   .step-row-meta { width: 60px; }
