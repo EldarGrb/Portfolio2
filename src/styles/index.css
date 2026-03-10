@@ -677,27 +677,68 @@ textarea:focus-visible {
   fill: none;
 }
 .chart-line-glow {
-  stroke: #eefcb3;
-  stroke-width: 2;
+  stroke: rgba(230,244,184,0.94);
+  stroke-width: 3;
   fill: none;
   opacity: 0;
-  filter: drop-shadow(0 0 5px rgba(238,252,179,0.35));
-  animation: chartLineGlowPulse 0.58s ease;
+  filter: drop-shadow(0 0 10px rgba(238,252,179,0.56));
+  animation: chartLineGlowPulse 0.78s ease;
+  pointer-events: none;
+}
+.chart-line-trail {
+  fill: none;
+  stroke: url(#chartTrailGrad);
+  stroke-width: 3.1;
+  stroke-linecap: round;
+  opacity: 0;
+  filter: drop-shadow(0 0 8px rgba(111,168,255,0.58));
+  stroke-dasharray: var(--trail-segment) 1;
+  stroke-dashoffset: calc(-1 * var(--trail-start));
+  animation: chartTrailMove 0.58s cubic-bezier(0.35, 0, 0.2, 1) forwards;
   pointer-events: none;
 }
 .chart-dot {
   pointer-events: none;
 }
 .chart-dot-halo {
-  fill: rgba(238,252,179,0.2);
+  fill: rgba(111,168,255,0.26);
+}
+.chart-dot-ring {
+  fill: none;
+  stroke: rgba(111,168,255,0.74);
+  stroke-width: 1.8;
+  transform-origin: center;
+  animation: chartDotRingPulse 0.55s ease-out forwards;
 }
 .chart-dot-core {
-  fill: #eefcb3;
+  fill: #6FA8FF;
 }
 @keyframes chartLineGlowPulse {
   0% { opacity: 0; }
-  38% { opacity: 0.52; }
+  42% { opacity: 0.82; }
   100% { opacity: 0; }
+}
+@keyframes chartTrailMove {
+  0% {
+    opacity: 0;
+    stroke-dashoffset: calc(-1 * var(--trail-start));
+  }
+  18% { opacity: 0.95; }
+  72% { opacity: 0.82; }
+  100% {
+    opacity: 0;
+    stroke-dashoffset: calc(-1 * var(--trail-end));
+  }
+}
+@keyframes chartDotRingPulse {
+  0% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(2.8);
+  }
 }
 
 /* ===== CTA ===== */

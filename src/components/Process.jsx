@@ -7,18 +7,37 @@ const CHART_LINE_PATH = 'M0 140 Q100 120 150 100 Q250 60 300 50 Q400 30 500 20 Q
 const CHART_AREA_PATH = `${CHART_LINE_PATH} L600 160 L0 160 Z`;
 const STEP_PROGRESS = [0.18, 0.52, 0.86];
 const DOT_ANIMATION_DURATION = 420;
+const TRAIL_SEGMENT = 0.14;
 
 const easeOutCubic = (t) => 1 - ((1 - t) ** 3);
 
 function Process() {
   const [step, setStep] = useState(0);
   const [dotPoint, setDotPoint] = useState({ x: 0, y: 0 });
+  const [motionKey, setMotionKey] = useState(0);
+  const [trailMotion, setTrailMotion] = useState({ start: 0, end: 0, active: false });
   const linePathRef = useRef(null);
   const dotPointRef = useRef({ x: 0, y: 0 });
   const isDotInitializedRef = useRef(false);
   const animationFrameRef = useRef(null);
   const ref = useFadeIn();
   const stepLabels = ['Discover', 'Build', 'Launch'];
+
+  const getTrailOffsetForStep = useCallback((stepIndex) => {
+    const progress = STEP_PROGRESS[stepIndex] ?? STEP_PROGRESS[0];
+    const centered = progress - (TRAIL_SEGMENT / 2);
+    return Math.min(1 - TRAIL_SEGMENT, Math.max(0, centered));
+  }, []);
+
+  const handleStepChange = useCallback((nextStep) => {
+    if (nextStep === step) return;
+
+    const start = getTrailOffsetForStep(step);
+    const end = getTrailOffsetForStep(nextStep);
+    setTrailMotion({ start, end, active: true });
+    setMotionKey((prev) => prev + 1);
+    setStep(nextStep);
+  }, [getTrailOffsetForStep, step]);
 
   const getPointForStep = useCallback((stepIndex) => {
     const linePath = linePathRef.current;
@@ -101,6 +120,11 @@ function Process() {
                   <stop offset="0%" stopColor="#eefcb3" stopOpacity="0.3" />
                   <stop offset="100%" stopColor="#eefcb3" stopOpacity="0" />
                 </linearGradient>
+                <linearGradient id="chartTrailGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="#6FA8FF" stopOpacity="0.12" />
+                  <stop offset="45%" stopColor="#dce9ff" stopOpacity="0.95" />
+                  <stop offset="100%" stopColor="#6FA8FF" stopOpacity="0.16" />
+                </linearGradient>
               </defs>
               <g transform="translate(0 30)">
                 {/* Grid lines */}
@@ -117,11 +141,26 @@ function Process() {
                 {/* Line */}
                 <path ref={linePathRef} className="chart-line-main" d={CHART_LINE_PATH} stroke="#eefcb3" strokeWidth="2" fill="none" />
                 {/* Pulse glow overlay */}
-                <path key={step} className="chart-line-glow" d={CHART_LINE_PATH} />
+                <path key={`glow-${motionKey}`} className="chart-line-glow" d={CHART_LINE_PATH} />
+                {/* Traveling highlight overlay */}
+                {trailMotion.active && (
+                  <path
+                    key={`trail-${motionKey}`}
+                    className="chart-line-trail"
+                    d={CHART_LINE_PATH}
+                    pathLength="1"
+                    style={{
+                      '--trail-segment': `${TRAIL_SEGMENT}`,
+                      '--trail-start': `${trailMotion.start}`,
+                      '--trail-end': `${trailMotion.end}`,
+                    }}
+                  />
+                )}
                 {/* Data point */}
                 <g className="chart-dot" transform={`translate(${dotPoint.x} ${dotPoint.y})`}>
-                  <circle className="chart-dot-halo" r="8" />
-                  <circle className="chart-dot-core" r="4" />
+                  <circle className="chart-dot-halo" r="12" />
+                  {trailMotion.active && <circle key={`ring-${motionKey}`} className="chart-dot-ring" r="5.5" />}
+                  <circle className="chart-dot-core" r="5.5" />
                 </g>
               </g>
             </svg>
@@ -130,7 +169,7 @@ function Process() {
         <div className="process-steps">
           <div className="step-tabs">
             {stepLabels.map((label, i) => (
-              <button className={`step-tab ${i === step ? 'active' : ''}`} key={i} onClick={() => setStep(i)}>
+              <button className={`step-tab ${i === step ? 'active' : ''}`} key={i} onClick={() => handleStepChange(i)}>
                 <span>{label}</span>
               </button>
             ))}
