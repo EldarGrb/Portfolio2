@@ -707,8 +707,7 @@ textarea:focus-visible {
   fill: none;
   stroke: rgba(111,168,255,0.74);
   stroke-width: 1.8;
-  transform-origin: center;
-  animation: chartDotRingPulse 0.55s ease-out forwards;
+  opacity: 0;
 }
 .chart-dot-core {
   fill: #6FA8FF;
@@ -728,16 +727,6 @@ textarea:focus-visible {
   100% {
     opacity: 0;
     stroke-dashoffset: calc(-1 * var(--trail-end));
-  }
-}
-@keyframes chartDotRingPulse {
-  0% {
-    opacity: 0.7;
-    transform: scale(1);
-  }
-  100% {
-    opacity: 0;
-    transform: scale(2.8);
   }
 }
 

@@ -159,7 +159,12 @@ function Process() {
                 {/* Data point */}
                 <g className="chart-dot" transform={`translate(${dotPoint.x} ${dotPoint.y})`}>
                   <circle className="chart-dot-halo" r="12" />
-                  {trailMotion.active && <circle key={`ring-${motionKey}`} className="chart-dot-ring" r="5.5" />}
+                  {trailMotion.active && (
+                    <circle key={`ring-${motionKey}`} className="chart-dot-ring" r="5.5">
+                      <animate attributeName="r" from="5.5" to="15.5" dur="0.55s" fill="freeze" />
+                      <animate attributeName="opacity" from="0.72" to="0" dur="0.55s" fill="freeze" />
+                    </circle>
+                  )}
                   <circle className="chart-dot-core" r="5.5" />
                 </g>
               </g>
