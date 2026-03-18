@@ -2,10 +2,7 @@
 html { scroll-behavior: smooth; }
 :root {
   --accent-primary: #eefcb3;
-  --ai-emphasis-color: #f4eee2;
-  --ai-emphasis-fill: linear-gradient(135deg, #fbf7f0 0%, #ecdcc2 22%, #d7b183 48%, #f4e8d6 72%, #c99f74 100%);
-  --ai-emphasis-wash: linear-gradient(135deg, rgba(242, 230, 211, 0.18) 0%, rgba(205, 164, 117, 0.22) 100%);
-  --ai-emphasis-text-fill: transparent;
+  --ai-emphasis-color: #b8743c;
   --text-main: #e8e8e8;
   --wide-content-max: 1540px;
   --ultra-content-max: 1760px;
@@ -2645,10 +2642,7 @@ textarea:focus-visible {
   --line-strong: rgba(235, 232, 224, 0.2);
   --accent-primary: #ddd3c0;
   --accent-secondary: #b6ab9a;
-  --ai-emphasis-color: #f4eee2;
-  --ai-emphasis-fill: linear-gradient(135deg, #fbf7f0 0%, #ecdcc2 22%, #d7b183 48%, #f4e8d6 72%, #c99f74 100%);
-  --ai-emphasis-wash: linear-gradient(135deg, rgba(242, 230, 211, 0.18) 0%, rgba(205, 164, 117, 0.22) 100%);
-  --ai-emphasis-text-fill: transparent;
+  --ai-emphasis-color: #b8743c;
   --text-main: #f1eee7;
   --text-muted: rgba(241, 238, 231, 0.72);
   --text-soft: rgba(241, 238, 231, 0.54);
@@ -2702,74 +2696,17 @@ body {
 }
 
 .ai-emphasis {
-  position: relative;
-  display: inline-block;
-  padding-inline: 0.04em;
   color: var(--ai-emphasis-color);
-  background-image: var(--ai-emphasis-fill);
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-box-decoration-break: clone;
-  box-decoration-break: clone;
-  -webkit-text-fill-color: var(--ai-emphasis-text-fill);
-  text-shadow: 0 0 18px rgba(214, 176, 126, 0.12);
-}
-
-.ai-emphasis::after {
-  content: '';
-  position: absolute;
-  left: -0.02em;
-  right: -0.02em;
-  bottom: 0.08em;
-  height: 0.28em;
-  border-radius: 999px;
-  background: var(--ai-emphasis-wash);
-  opacity: 0.95;
-  z-index: -1;
-}
-
-.ai-emphasis--inline {
-  background-position: 0 52%;
-}
-
-.ai-emphasis--subtle {
-  background-image: none;
-  text-shadow: none;
-  -webkit-text-fill-color: currentColor;
-}
-
-.ai-emphasis--subtle::after {
-  display: none;
-}
-
-.service-header .ai-emphasis,
-.service-body .ai-emphasis {
-  --ai-emphasis-fill: linear-gradient(135deg, #f5f0e6 0%, #e5d3b8 26%, #cea274 58%, #efe2cf 100%);
-  --ai-emphasis-wash: linear-gradient(135deg, rgba(240, 229, 211, 0.16) 0%, rgba(201, 159, 116, 0.2) 100%);
-}
-
-.service-header .ai-emphasis::after {
-  bottom: 0.1em;
-  height: 0.3em;
+  font-weight: 600;
 }
 
 .hero-card .ai-emphasis {
-  text-shadow: 0 0 22px rgba(214, 176, 126, 0.16);
+  color: #c98347;
 }
 
 .hero-summary .ai-emphasis,
 .service-body .ai-emphasis {
-  text-shadow: 0 0 14px rgba(214, 176, 126, 0.1);
-}
-
-@supports not ((-webkit-background-clip: text) or (background-clip: text)) {
-  .ai-emphasis {
-    background-image: none;
-    -webkit-text-fill-color: currentColor;
-    color: var(--ai-emphasis-color);
-  }
+  color: #c07a43;
 }
 
 .navbar {
