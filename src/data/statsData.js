@@ -1,22 +1,22 @@
 export const stats = [
   {
-    number: '4+',
-    label: 'Projects delivered across industries',
-    detail: 'Delivered projects in fintech, e-commerce, SaaS, and internal ops tooling.',
+    number: '24h',
+    label: 'Response window during active engagements',
+    detail: 'Questions and blockers should not sit for days. Active projects need clear replies and quick decisions.',
   },
   {
-    number: '4X',
-    label: 'Average performance improvement',
-    detail: 'Optimization work commonly improves Lighthouse performance and interaction responsiveness.',
+    number: '1',
+    label: 'Lead partner from scope to delivery',
+    detail: 'Fewer handoffs means clearer ownership, tighter communication, and less project noise.',
   },
   {
-    number: '99%',
-    label: 'Client satisfaction rate',
-    detail: 'Long-term engagements are driven by transparent communication and predictable delivery.',
+    number: 'Weekly',
+    label: 'Decision checkpoints that keep work visible',
+    detail: 'Short review rhythms keep scope, timeline, and next actions visible before problems compound.',
   },
   {
     number: '3',
-    label: 'Countries served remotely',
-    detail: 'Remote-first collaboration with async updates and weekly milestone-based checkpoints.',
+    label: 'Core delivery lanes',
+    detail: 'Websites, web apps, and AI-enhanced workflows can be scoped as focused systems instead of disconnected one-off requests.',
   },
 ];

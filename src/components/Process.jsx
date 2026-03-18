@@ -21,7 +21,7 @@ function Process() {
   const isDotInitializedRef = useRef(false);
   const animationFrameRef = useRef(null);
   const ref = useFadeIn();
-  const stepLabels = ['Discover', 'Build', 'Launch'];
+  const stepLabels = ['Clarify', 'Build', 'Stabilize'];
 
   const getTrailOffsetForStep = useCallback((stepIndex) => {
     const progress = STEP_PROGRESS[stepIndex] ?? STEP_PROGRESS[0];
@@ -108,22 +108,22 @@ function Process() {
       <div className="process-layout">
         <div className="process-left">
           <span className="section-signature" aria-hidden="true"><Icons.Logo /></span>
-          <h2 className="section-title">Our method for delivering exceptional results</h2>
+          <h2 className="section-title">A delivery process built to reduce guesswork and keep momentum visible.</h2>
           <p>
-            A streamlined 3-phase approach ensures your project gets
-            a focused strategy, practical solutions, and measurable outcomes.
+            The work moves from clear scope to focused implementation to measured improvement,
+            so the system supports the business instead of becoming another source of friction.
           </p>
           <div className="process-chart">
             <svg className="process-chart-svg" viewBox="0 0 600 220" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Process growth chart">
               <defs>
                 <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#eefcb3" stopOpacity="0.3" />
-                  <stop offset="100%" stopColor="#eefcb3" stopOpacity="0" />
+                  <stop offset="0%" stopColor="#ddd3c0" stopOpacity="0.24" />
+                  <stop offset="100%" stopColor="#ddd3c0" stopOpacity="0" />
                 </linearGradient>
                 <linearGradient id="chartTrailGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="#6FA8FF" stopOpacity="0.12" />
-                  <stop offset="45%" stopColor="#dce9ff" stopOpacity="0.95" />
-                  <stop offset="100%" stopColor="#6FA8FF" stopOpacity="0.16" />
+                  <stop offset="0%" stopColor="#a7b08d" stopOpacity="0.08" />
+                  <stop offset="45%" stopColor="#ddd3c0" stopOpacity="0.92" />
+                  <stop offset="100%" stopColor="#a7b08d" stopOpacity="0.14" />
                 </linearGradient>
               </defs>
               <g transform="translate(0 30)">
@@ -174,7 +174,7 @@ function Process() {
         <div className="process-steps">
           <div className="step-tabs">
             {stepLabels.map((label, i) => (
-              <button className={`step-tab ${i === step ? 'active' : ''}`} key={i} onClick={() => handleStepChange(i)}>
+              <button type="button" className={`step-tab ${i === step ? 'active' : ''}`} key={i} onClick={() => handleStepChange(i)}>
                 <span>{label}</span>
               </button>
             ))}

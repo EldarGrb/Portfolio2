@@ -5,22 +5,22 @@ import { useFadeIn } from '../hooks/useFadeIn';
 function CTA({ onContact }) {
   const options = [
     {
-      id: 'website',
-      label: 'New website/app',
-      summary: 'Build or redesign a site that converts and performs.',
-      cta: 'Discuss your website project',
+      id: 'website-system',
+      label: 'Website or web app',
+      summary: 'Clarify the offer, strengthen the user journey, and build a system that supports sales or delivery.',
+      cta: 'Talk through the build',
     },
     {
-      id: 'automation',
-      label: 'Automation / AI',
-      summary: 'Automate workflows with practical AI and n8n orchestration.',
-      cta: 'Plan your AI automation setup',
+      id: 'workflow-automation',
+      label: 'Workflow automation',
+      summary: 'Reduce repetitive admin, tighten handoffs, and connect the tools your business already depends on.',
+      cta: 'Scope the workflow',
     },
     {
-      id: 'performance',
-      label: 'Performance upgrade',
-      summary: 'Improve speed, Core Web Vitals, and reliability for your current stack.',
-      cta: 'Request a performance audit',
+      id: 'assistant-layer',
+      label: 'Voice or chat assistant',
+      summary: 'Handle first-response questions, intake, and routing with AI that supports the real process behind it.',
+      cta: 'Plan the assistant',
     },
   ];
 
@@ -34,30 +34,29 @@ function CTA({ onContact }) {
         <div className="cta-bg" />
         <div className="cta-content">
           <span className="section-signature cta-signature" aria-hidden="true"><Icons.Logo /></span>
-          <h2>Ready to start your next project with confidence?</h2>
-          <p className="cta-note">Tell us what you need. We reply within 24 hours.</p>
+          <h2>Choose the system that would make the biggest difference right now.</h2>
+          <p className="cta-note">Start with the bottleneck that matters most. We can scope the right first build from there.</p>
 
           <div className="cta-conversation">
-            <p className="cta-question">What are you looking for right now?</p>
-            <div className="cta-selectors" role="tablist" aria-label="Project type">
+            <p className="cta-question">Where do you need the most help?</p>
+            <div className="cta-selectors" aria-label="Project type options">
               {options.map((option) => (
                 <button
                   key={option.id}
                   type="button"
                   className={`cta-selector ${selected === option.id ? 'active' : ''}`}
                   onClick={() => setSelected(option.id)}
-                  role="tab"
-                  aria-selected={selected === option.id}
+                  aria-pressed={selected === option.id}
                 >
                   {option.label}
                 </button>
               ))}
             </div>
 
-            <div className="cta-response">
+            <div className="cta-response" aria-live="polite">
               <h3>{activeOption.label}</h3>
               <p>{activeOption.summary}</p>
-              <button className="btn-primary cta-dynamic-btn" onClick={onContact}>
+              <button type="button" className="btn-primary cta-dynamic-btn" onClick={onContact}>
                 {activeOption.cta}
               </button>
             </div>

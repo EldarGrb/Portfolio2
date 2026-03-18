@@ -11,28 +11,30 @@ function Stats() {
     <section className="section stats" ref={ref} style={{ opacity: 0, transform: 'translateY(30px)', transition: 'opacity 0.8s, transform 0.8s' }}>
       <div className="stats-content">
         <div className="stats-visual">
-          <img src="/images/earth.jpg" alt="Global reach" className="stats-image" />
+          <img src="/images/earth.jpg" alt="Operational visibility visual" className="stats-image" />
         </div>
         <div className="stats-text">
           <span className="section-signature" aria-hidden="true"><Icons.Logo /></span>
-          <h2 className="section-title">Proven performance, measurable results</h2>
+          <h2 className="section-title">The engagement model is designed to stay clear and dependable.</h2>
           <p>
-            Every project is backed by measurable outcomes. These numbers reflect
-            the quality, reliability, and impact we bring to every engagement.
+            Strong delivery is not just about code quality. It is about ownership,
+            communication rhythm, and choosing the right system for the business problem.
           </p>
-          <div className="stats-grid">
-            {stats.map((s, i) => (
-              <AnimatedStat
-                key={i}
-                number={s.number}
-                label={s.label}
-                detail={s.detail}
-                isActive={i === activeStat}
-                onActivate={() => setActiveStat(i)}
-              />
-            ))}
+          <div className="stats-evidence">
+            <div className="stats-grid">
+              {stats.map((s, i) => (
+                <AnimatedStat
+                  key={i}
+                  number={s.number}
+                  label={s.label}
+                  detail={s.detail}
+                  isActive={i === activeStat}
+                  onActivate={() => setActiveStat(i)}
+                />
+              ))}
+            </div>
+            <p className="stats-detail">{stats[activeStat].detail}</p>
           </div>
-          <p className="stats-detail">{stats[activeStat].detail}</p>
         </div>
       </div>
     </section>

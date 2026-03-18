@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/insights",
+      "destination": "/"
+    },
+    {
+      "source": "/insights/:path*",
+      "destination": "/"
+    }
+  ]
+}

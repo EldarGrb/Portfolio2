@@ -1,168 +1,134 @@
-import { useEffect, useId, useRef, useState } from 'react';
 import Icons from './Icons';
+import NewsletterSignup from './NewsletterSignup';
 
-const WORKER_ENDPOINT = 'https://worker-proud-breeze-0b51.eldar-jahic-gb.workers.dev/';
+function Footer({ onContact, currentPath = '/', variant = 'default' }) {
+  const isMinimal = variant === 'minimal';
+  const isEditorial = variant === 'editorial' || variant === 'minimal';
 
-function Footer({ onContact }) {
-  const [email, setEmail] = useState('');
-  const [status, setStatus] = useState('idle'); // idle | sending | success | error
-  const [modalOpen, setModalOpen] = useState(false);
-  const modalRef = useRef(null);
-  const closeButtonRef = useRef(null);
-  const previousFocusedElementRef = useRef(null);
-  const titleId = useId();
-  const bodyId = useId();
+  const inInsights = currentPath.startsWith('/insights');
+  const servicesHref = inInsights ? '/#services' : '#services';
+  const processHref = inInsights ? '/#process' : '#process';
+  const contactHref = inInsights ? '/#contact' : '#contact';
 
-  const closeModal = () => setModalOpen(false);
+  if (isMinimal) {
+    return (
+      <footer className={`footer footer--minimal ${isEditorial ? 'footer--editorial' : ''}`.trim()}>
+        <div className="footer-frame footer-frame--minimal">
+          <div className="footer-minimal-brand">
+            <p className="footer-minimal-kicker">Uroboros Systems Insights</p>
+            <div className="footer-logo">
+              <Icons.Logo />
+              Uroboros Systems
+            </div>
+            <p className="footer-minimal-copy">
+              Practical websites, apps, and AI workflows for teams that want clearer execution.
+            </p>
+          </div>
 
-  useEffect(() => {
-    if (!modalOpen) return;
-    previousFocusedElementRef.current = document.activeElement;
-    closeButtonRef.current?.focus();
+          <nav className="footer-minimal-nav" aria-label="Footer navigation">
+            <a href="/">Home</a>
+            <a href="/insights">Insights</a>
+            <a href={servicesHref}>Services</a>
+            <a href={processHref}>Process</a>
+            <a href={contactHref}>Contact</a>
+          </nav>
 
-    const onKeyDown = (event) => {
-      if (event.key === 'Escape') {
-        event.preventDefault();
-        setModalOpen(false);
-        return;
-      }
-      if (event.key !== 'Tab') return;
-      const dialog = modalRef.current;
-      if (!dialog) return;
-      const focusable = dialog.querySelectorAll(
-        'button, [href], input, textarea, select, [tabindex]:not([tabindex="-1"])'
-      );
-      if (!focusable.length) return;
-      const first = focusable[0];
-      const last = focusable[focusable.length - 1];
-      const isShift = event.shiftKey;
-      if (!isShift && document.activeElement === last) {
-        event.preventDefault();
-        first.focus();
-      } else if (isShift && document.activeElement === first) {
-        event.preventDefault();
-        last.focus();
-      }
-    };
-
-    document.addEventListener('keydown', onKeyDown);
-    return () => {
-      document.removeEventListener('keydown', onKeyDown);
-      if (previousFocusedElementRef.current instanceof HTMLElement) {
-        previousFocusedElementRef.current.focus();
-      }
-    };
-  }, [modalOpen]);
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    if (!email.trim()) return;
-
-    setStatus('sending');
-    try {
-      const response = await fetch(WORKER_ENDPOINT, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: 'Newsletter subscriber',
-          email: email.trim(),
-          message: 'Newsletter subscription request from portfolio footer.',
-          type: 'newsletter_subscribe',
-        }),
-      });
-
-      if (!response.ok) throw new Error('Subscription request failed');
-
-      setStatus('success');
-      setEmail('');
-      setModalOpen(true);
-    } catch {
-      setStatus('error');
-    }
-  };
-
-  const handleModalBackdropClick = (event) => {
-    if (event.target === event.currentTarget) {
-      closeModal();
-    }
-  };
+          <div className="footer-minimal-cta">
+            <p>Need help applying one of these ideas to your workflow?</p>
+            <button className="btn-primary" type="button" onClick={onContact}>
+              Start a project
+            </button>
+          </div>
+        </div>
+      </footer>
+    );
+  }
 
   return (
-    <>
-      <footer className="footer">
-        <div className="footer-top">
-          <div className="footer-subscribe">
-            <h3>Stay updated</h3>
-            <form className="subscribe-form" onSubmit={handleSubmit}>
-              <input
-                className="subscribe-input"
-                type="email"
-                name="email"
-                placeholder="Enter your email"
-                aria-label="Email address"
-                required
-                value={email}
-                onChange={(event) => {
-                  setEmail(event.target.value);
-                  if (status === 'error') setStatus('idle');
-                }}
-              />
-              <button className="subscribe-btn" type="submit" disabled={status === 'sending'} aria-busy={status === 'sending'}>
-                {status === 'sending' ? 'Subscribing...' : 'Subscribe'}
+    <footer className={`footer ${isEditorial ? 'footer--editorial' : ''}`.trim()}>
+      <div className="footer-frame">
+        <div className="footer-hero">
+          <div className="footer-lead">
+            <p className="footer-kicker section-label">Ready for a steadier build</p>
+            <h2>Build the next website, web app, or AI workflow with more clarity.</h2>
+            <p className="footer-summary">
+              Uroboros Systems helps small businesses and solo founders ship practical software
+              with stronger communication, calmer execution, and AI that supports the work
+              instead of distracting from it.
+            </p>
+            <div className="footer-actions">
+              <button className="btn-primary footer-primary-action" type="button" onClick={onContact}>
+                Start a project
               </button>
-            </form>
-            {status === 'error' && (
-              <p className="subscribe-error" role="alert">Could not subscribe right now. Please try again.</p>
-            )}
-            <div className="footer-links-grid" style={{ marginTop: 24 }}>
+              <a className="btn-secondary footer-secondary-action" href="/insights">
+                Read the notes
+              </a>
+            </div>
+          </div>
+
+          <aside className="footer-aside" aria-label="Who this is best for">
+            <p className="footer-panel-label">Best fit</p>
+            <ul className="footer-fit-list">
+              <li>Businesses that need a sharper website or client-facing web app.</li>
+              <li>Teams that want AI workflows or assistants tied to real operations.</li>
+              <li>Founders who want clearer delivery, practical next steps, and less guesswork.</li>
+            </ul>
+          </aside>
+        </div>
+
+        <div className="footer-support">
+          <NewsletterSignup
+            className="footer-subscribe"
+            eyebrow="Practical software notes"
+            title="Occasional notes on web systems, AI workflows, and clearer delivery."
+            description="Short, useful updates for teams planning a website, web app, or operational workflow."
+          />
+
+          <nav className="footer-links-panel" aria-label="Footer navigation">
+            <p className="footer-card-label">Explore</p>
+            <div className="footer-links-grid">
               <div>
                 <h4>Pages</h4>
                 <a href="/" className="footer-link-optional">Home</a>
-                <a href="#services">Services</a>
-                <a href="#process" className="footer-link-optional">Process</a>
-                <a href="#contact">Contact</a>
+                <a href="/insights">Insights</a>
+              </div>
+              <div>
+                <h4>Work</h4>
+                <a href={servicesHref}>Services</a>
+                <a href={processHref} className="footer-link-optional">Process</a>
+                <a href={contactHref}>Contact</a>
               </div>
             </div>
-          </div>
-          <div className="footer-contact">
+          </nav>
+
+          <div className="footer-details">
+            <p className="footer-card-label">Availability</p>
             <div className="footer-contact-grid">
               <div>
-                <h4>Contact</h4>
-                <button className="footer-contact-link" onClick={onContact}>Start a conversation</button>
+                <h4>Response</h4>
+                <p>Usually within 24 hours for new project inquiries.</p>
               </div>
               <div>
                 <h4>Location</h4>
                 <p>Available worldwide<br />Remote-first</p>
               </div>
             </div>
+            <button className="footer-contact-link" type="button" onClick={onContact}>
+              Tell me what you&apos;re building
+            </button>
           </div>
         </div>
+
         <div className="footer-bottom">
           <div className="footer-logo">
             <Icons.Logo />
             Uroboros Systems
           </div>
+          <p className="footer-closing">Calm software systems for growing businesses and solo founders.</p>
+          <p className="footer-status">Remote-first · Available worldwide</p>
         </div>
-      </footer>
-
-      {modalOpen && (
-        <div className="modal-backdrop" onClick={handleModalBackdropClick}>
-          <div
-            className="modal-content newsletter-modal"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby={titleId}
-            aria-describedby={bodyId}
-            ref={modalRef}
-          >
-            <button className="modal-close" onClick={closeModal} ref={closeButtonRef} aria-label="Close subscription message">&times;</button>
-            <h2 className="modal-title" id={titleId}>You&apos;re subscribed</h2>
-            <p className="modal-subtitle" id={bodyId}>Thanks for joining our newsletter. Your first update will arrive soon.</p>
-            <button className="btn-primary modal-submit" type="button" onClick={closeModal}>Close</button>
-          </div>
-        </div>
-      )}
-    </>
+      </div>
+    </footer>
   );
 }
 

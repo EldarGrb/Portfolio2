@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import Icons from './Icons';
+import ServiceVisual from './ServiceVisual';
 import { services } from '../data/servicesData';
 import { useFadeIn } from '../hooks/useFadeIn';
 
@@ -9,6 +10,7 @@ function Services({ onContact }) {
     typeof window !== 'undefined' ? window.matchMedia('(max-width: 900px)').matches : false
   ));
   const ref = useFadeIn();
+  const activeService = services[active];
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(max-width: 900px)');
@@ -28,7 +30,11 @@ function Services({ onContact }) {
       <div className="services-header">
         <div className="services-header-copy">
           <span className="section-signature" aria-hidden="true"><Icons.Logo /></span>
-          <h2 className="section-title">Expert services that move your project forward</h2>
+          <h2 className="section-title">Focused systems for the parts of the business that need to work better.</h2>
+          <p className="services-intro">
+            Each engagement is scoped around a real operational goal: better lead flow,
+            clearer delivery, smoother internal work, or less first-response admin.
+          </p>
         </div>
         <button className="btn-secondary" onClick={onContact}>Request proposal</button>
       </div>
@@ -36,10 +42,12 @@ function Services({ onContact }) {
         <div className="service-accordion">
           {services.map((s, i) => {
             const Icon = Icons[s.icon];
+            const headerId = `service-header-${i}`;
             const panelId = `service-panel-${i}`;
             return (
               <div className={`service-item ${s.featured ? 'featured' : ''} ${i === active ? 'active' : ''}`} key={i}>
                 <button
+                  id={headerId}
                   className="service-header"
                   type="button"
                   onClick={() => setActive(i)}
@@ -50,7 +58,13 @@ function Services({ onContact }) {
                   <h3>{s.title}</h3>
                   {s.featured && <span className="service-featured-badge">Featured</span>}
                 </button>
-                <div className="service-body" id={panelId}>
+                <div
+                  className="service-body"
+                  id={panelId}
+                  role="region"
+                  aria-labelledby={headerId}
+                  hidden={i !== active}
+                >
                   <div className="service-body-inner">
                     <p>{s.description}</p>
                     <div className="service-tags">
@@ -64,15 +78,11 @@ function Services({ onContact }) {
         </div>
         {!isMobile && (
           <div className="service-image-wrapper">
-            <picture key={active}>
-              <source srcSet={`/images/img${active + 1}.webp`} type="image/webp" />
-              <img
-                className="service-image"
-                src={`/images/img${active + 1}.jpg`}
-                alt={services[active].title}
-                loading="lazy"
-              />
-            </picture>
+            <ServiceVisual
+              key={activeService.visual}
+              visual={activeService.visual}
+              label={activeService.imageAlt}
+            />
           </div>
         )}
       </div>

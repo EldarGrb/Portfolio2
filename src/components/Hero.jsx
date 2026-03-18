@@ -1,40 +1,67 @@
 import Icons from './Icons';
-import { marqueeItems } from '../data/marqueeData';
 import TripBackground from './TripBackground';
+import SiteNav from './SiteNav';
 
-function Hero({ onContact }) {
+function Hero({ onContact, currentPath }) {
+  const proofItems = [
+    {
+      icon: 'Shield',
+      label: 'Reliability first',
+      title: 'Clear scope before build',
+      description: 'Projects are shaped around the operational problem that needs solving, not generic deliverables.',
+    },
+    {
+      icon: 'Layers',
+      label: 'Software + AI systems',
+      title: 'Web and workflow work in one plan',
+      description: 'Sites, apps, automations, and assistants are scoped together when they need to support the same business flow.',
+    },
+    {
+      icon: 'Monitor',
+      label: 'Low-drama delivery',
+      title: 'Visible progress and practical next steps',
+      description: 'You should always know what is being built, what decision is next, and what outcome the work supports.',
+    },
+  ];
+
   return (
     <div className="hero-wrapper">
       <section className="hero-card">
         <TripBackground />
-        <nav className="navbar">
-          <a href="/" className="nav-logo"><Icons.Logo /> Uroboros Systems</a>
-          <ul className="nav-links">
-            <li><a href="/" className="active">Home</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#process">Process</a></li>
-            <li><a href="#contact">Contact</a></li>
-          </ul>
-          <button className="nav-cta" onClick={onContact}>Start a project</button>
-        </nav>
+        <SiteNav onContact={onContact} currentPath={currentPath} />
         <div className="hero-content">
-          <h1>Built for your vision, focused on results.</h1>
-          <a href="#services" className="btn-primary hero-cta-btn">View our capabilities</a>
+          <div className="hero-copy">
+            <p className="hero-eyebrow">Software systems for businesses that need clearer operations</p>
+            <h1>Websites, web apps, and AI workflows that help your business run better.</h1>
+            <p className="hero-summary">
+              Uroboros Systems works with small businesses and solo founders who need
+              practical software, stronger digital presence, and AI-enhanced workflows
+              without the noise of a generic agency process.
+            </p>
+            <div className="hero-actions">
+              <button type="button" className="btn-primary hero-cta-btn" onClick={onContact}>Start a project</button>
+              <a href="#services" className="btn-secondary hero-secondary-btn">See services</a>
+            </div>
+          </div>
+
+          <div className="hero-proof-grid" aria-label="Engagement principles">
+            {proofItems.map((item) => {
+              const Icon = Icons[item.icon];
+
+              return (
+                <article className="hero-proof-card" key={item.title}>
+                  <div className="hero-proof-icon" aria-hidden="true">
+                    <Icon />
+                  </div>
+                  <p className="hero-proof-label">{item.label}</p>
+                  <h2>{item.title}</h2>
+                  <p>{item.description}</p>
+                </article>
+              );
+            })}
+          </div>
         </div>
       </section>
-      <div className="marquee-wrapper">
-        <div className="marquee-track">
-          {[...marqueeItems, ...marqueeItems].map((item, i) => {
-            const Icon = Icons[item.icon];
-            return (
-              <div className="marquee-item" key={i}>
-                <Icon />
-                <span>{item.text}</span>
-              </div>
-            );
-          })}
-        </div>
-      </div>
     </div>
   );
 }

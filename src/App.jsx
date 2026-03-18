@@ -1,40 +1,45 @@
-import { useEffect, useState, useCallback } from 'react';
-import Hero from './components/Hero';
-import Services from './components/Services';
-import Stats from './components/Stats';
-import Process from './components/Process';
-import CTA from './components/CTA';
-import Footer from './components/Footer';
-import ContactModal from './components/ContactModal';
+import { useState, useCallback } from 'react';
 import { SpeedInsights } from '@vercel/speed-insights/react';
+import ContactModal from './components/ContactModal';
+import HomePage from './pages/HomePage';
+import InsightsPage from './pages/InsightsPage';
+import InsightArticlePage from './pages/InsightArticlePage';
+import NotFoundPage from './pages/NotFoundPage';
+import { getArticleBySlug } from './data/insights/articles';
+
+function normalizePath(pathname) {
+  if (!pathname) return '/';
+  return pathname.length > 1 ? pathname.replace(/\/+$/, '') : pathname;
+}
 
 function App() {
   const [modalOpen, setModalOpen] = useState(false);
   const openModal = useCallback(() => setModalOpen(true), []);
   const closeModal = useCallback(() => setModalOpen(false), []);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.opacity = '1';
-          entry.target.style.transform = 'translateY(0)';
-        }
-      });
-    }, { threshold: 0.1 });
+  const currentPath = normalizePath(window.location.pathname);
 
-    document.querySelectorAll('.section, .cta-section').forEach(el => observer.observe(el));
-    return () => observer.disconnect();
-  }, []);
+  const insightPrefix = '/insights/';
+  const isInsightsHub = currentPath === '/insights';
+  const isInsightArticle = currentPath.startsWith(insightPrefix);
+  const articleSlug = isInsightArticle ? currentPath.slice(insightPrefix.length) : '';
+  const article = articleSlug ? getArticleBySlug(articleSlug) : null;
+
+  let page = null;
+
+  if (currentPath === '/') {
+    page = <HomePage onContact={openModal} />;
+  } else if (isInsightsHub) {
+    page = <InsightsPage currentPath={currentPath} onContact={openModal} />;
+  } else if (isInsightArticle && article) {
+    page = <InsightArticlePage article={article} currentPath={currentPath} onContact={openModal} />;
+  } else {
+    page = <NotFoundPage currentPath={currentPath} onContact={openModal} />;
+  }
 
   return (
     <>
-      <Hero onContact={openModal} />
-      <Services onContact={openModal} />
-      <Stats />
-      <Process />
-      <CTA onContact={openModal} />
-      <Footer onContact={openModal} />
+      {page}
       <ContactModal open={modalOpen} onClose={closeModal} />
       <SpeedInsights />
     </>
