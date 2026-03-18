@@ -19,6 +19,12 @@ function SiteNav({ currentPath, onContact, variant = 'default' }) {
     { href: processHref, label: 'Process', active: false },
     { href: contactHref, label: 'Contact', active: false },
   ];
+  const mobileMenuLinks = useInsightsNav
+    ? [
+        { href: '/', label: 'Go to main page', active: false },
+        ...navLinks.filter((item) => item.label !== 'Home'),
+      ]
+    : navLinks;
 
   useEffect(() => {
     if (!menuOpen) return undefined;
@@ -86,6 +92,16 @@ function SiteNav({ currentPath, onContact, variant = 'default' }) {
               <button type="button" className={`nav-cta ${isEditorial ? 'nav-cta--editorial' : ''}`.trim()} onClick={onContact}>
                 Start a project
               </button>
+              <button
+                type="button"
+                className={`nav-menu-toggle ${isEditorial ? 'nav-menu-toggle--editorial' : ''}`.trim()}
+                aria-expanded={menuOpen}
+                aria-label={menuOpen ? 'Close insights navigation' : 'Open insights navigation'}
+                onClick={() => setMenuOpen((open) => !open)}
+                ref={menuButtonRef}
+              >
+                {menuOpen ? <Icons.X /> : <Icons.Menu />}
+              </button>
             </div>
           ) : (
             <>
@@ -122,13 +138,13 @@ function SiteNav({ currentPath, onContact, variant = 'default' }) {
         </div>
       </nav>
 
-      {!useInsightsNav && menuOpen && (
+      {menuOpen && (
         <div className="nav-mobile-backdrop" onClick={handleMenuClose}>
           <div
             className={`nav-mobile-panel ${isEditorial ? 'nav-mobile-panel--editorial' : ''}`.trim()}
             role="dialog"
             aria-modal="true"
-            aria-label="Site navigation"
+            aria-label={useInsightsNav ? 'Insights navigation' : 'Site navigation'}
             onClick={(event) => event.stopPropagation()}
             ref={menuRef}
           >
@@ -145,7 +161,7 @@ function SiteNav({ currentPath, onContact, variant = 'default' }) {
               </button>
             </div>
             <div className="nav-mobile-links">
-              {navLinks.map((item) => (
+              {mobileMenuLinks.map((item) => (
                 <a
                   key={item.label}
                   href={item.href}
