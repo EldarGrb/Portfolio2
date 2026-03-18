@@ -273,6 +273,20 @@ export function renderMarkdownContent(markdown) {
   return markdownToHtml(markdown);
 }
 
+function splitArticleSource(raw, sourceLabel) {
+  const frontmatterMatch = raw.match(/^---\s*\n([\s\S]*?)\n---\s*\n?([\s\S]*)$/);
+  if (!frontmatterMatch) {
+    throw new Error(`Missing frontmatter block in ${sourceLabel}`);
+  }
+
+  const frontmatterText = frontmatterMatch[1];
+  const body = frontmatterMatch[2].trim();
+  const parsedMeta = parseFrontmatter(frontmatterText, sourceLabel);
+  const meta = assertArticleMeta(parsedMeta, sourceLabel);
+
+  return { meta, body };
+}
+
 function extractFaqItems(faqMarkdown) {
   const matches = [...faqMarkdown.matchAll(/^###\s+(.+)$/gm)];
   if (!matches.length) return [];
@@ -346,16 +360,7 @@ function extractSections(body, sourceLabel) {
  * @returns {Article}
  */
 export function parseArticleFile(raw, sourceLabel) {
-  const frontmatterMatch = raw.match(/^---\s*\n([\s\S]*?)\n---\s*\n?([\s\S]*)$/);
-  if (!frontmatterMatch) {
-    throw new Error(`Missing frontmatter block in ${sourceLabel}`);
-  }
-
-  const frontmatterText = frontmatterMatch[1];
-  const body = frontmatterMatch[2].trim();
-
-  const parsedMeta = parseFrontmatter(frontmatterText, sourceLabel);
-  const meta = assertArticleMeta(parsedMeta, sourceLabel);
+  const { meta, body } = splitArticleSource(raw, sourceLabel);
   const { sections, orderedSections } = extractSections(body, sourceLabel);
   const faqSection = sections.faqBlock ?? null;
   const faqItems = faqSection ? extractFaqItems(faqSection.markdown) : [];
@@ -367,6 +372,15 @@ export function parseArticleFile(raw, sourceLabel) {
     orderedSections,
     sections,
     faqItems,
+  };
+}
+
+export function parseArticleMeta(raw, sourceLabel) {
+  const { meta } = splitArticleSource(raw, sourceLabel);
+
+  return {
+    ...meta,
+    url: `/insights/${meta.slug}`,
   };
 }
 

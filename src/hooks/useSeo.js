@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 const DEFAULT_OG_IMAGE = 'https://uroboros-systems.com/images/og-image.webp';
 
@@ -52,6 +52,8 @@ export function useSeo({
   image = DEFAULT_OG_IMAGE,
   schemas = [],
 }) {
+  const previousSchemaSignatureRef = useRef('');
+
   useEffect(() => {
     if (title) {
       document.title = title;
@@ -70,11 +72,17 @@ export function useSeo({
 
     upsertCanonical(canonical);
 
-    clearSeoSchemas();
-    injectSchemas(schemas);
+    const schemaSignature = JSON.stringify(schemas);
+
+    if (schemaSignature !== previousSchemaSignatureRef.current) {
+      clearSeoSchemas();
+      injectSchemas(schemas);
+      previousSchemaSignatureRef.current = schemaSignature;
+    }
 
     return () => {
       clearSeoSchemas();
+      previousSchemaSignatureRef.current = '';
     };
   }, [title, description, canonical, url, type, image, schemas]);
 }

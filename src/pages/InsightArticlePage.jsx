@@ -1,6 +1,6 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import InsightsLayout from '../components/InsightsLayout';
-import { SITE_URL } from '../data/insights/articles';
+import { loadArticleBySlug, SITE_URL } from '../data/insights/articles';
 import { buildSidebarRelatedLinks } from '../data/insights/navigation';
 import { formatDateLabel, renderMarkdownContent } from '../data/insights/articleParser';
 import { useSeo } from '../hooks/useSeo';
@@ -150,20 +150,46 @@ function StructuredSectionContent({ section, article }) {
   );
 }
 
-function InsightArticlePage({ article, currentPath, onContact }) {
+function InsightArticlePage({ articleSlug, articleMeta, currentPath, onContact }) {
+  const [article, setArticle] = useState(null);
+  const [status, setStatus] = useState('loading');
+
+  useEffect(() => {
+    let ignore = false;
+
+    loadArticleBySlug(articleSlug)
+      .then((result) => {
+        if (ignore) return;
+
+        setArticle(result);
+        setStatus(result ? 'ready' : 'missing');
+      })
+      .catch(() => {
+        if (ignore) return;
+        setArticle(null);
+        setStatus('error');
+      });
+
+    return () => {
+      ignore = true;
+    };
+  }, [articleSlug]);
+
   const relatedLinks = useMemo(
-    () => buildSidebarRelatedLinks(article.slug, 3),
-    [article.slug],
+    () => buildSidebarRelatedLinks(articleMeta.slug, 3),
+    [articleMeta.slug],
   );
 
   const mainSections = useMemo(
-    () => article.orderedSections.filter((section) => section.key !== 'faqBlock'),
-    [article.orderedSections],
+    () => article?.orderedSections.filter((section) => section.key !== 'faqBlock') ?? [],
+    [article],
   );
 
-  const faqSection = article.sections.faqBlock ?? null;
+  const faqSection = article?.sections.faqBlock ?? null;
 
   const schemas = useMemo(() => {
+    if (!article) return [];
+
     const output = [
       {
         '@context': 'https://schema.org',
@@ -228,10 +254,10 @@ function InsightArticlePage({ article, currentPath, onContact }) {
   }, [article]);
 
   useSeo({
-    title: `${article.title} | Uroboros Systems Insights`,
-    description: article.excerpt,
-    canonical: article.canonical,
-    url: article.canonical,
+    title: `${articleMeta.title} | Uroboros Systems Insights`,
+    description: articleMeta.excerpt,
+    canonical: articleMeta.canonical,
+    url: articleMeta.canonical,
     type: 'article',
     schemas,
   });
@@ -248,65 +274,85 @@ function InsightArticlePage({ article, currentPath, onContact }) {
         <header className="insight-article-header">
           <p className="insights-masthead-label">Uroboros Systems Insights</p>
           <div className="insight-article-meta-row">
-            <span className="insights-card-category">{article.category}</span>
+            <span className="insights-card-category">{articleMeta.category}</span>
             <div className="insights-card-meta insight-article-meta-list">
-              <span>{formatDateLabel(article.publishedAt)}</span>
-              <span>Updated {formatDateLabel(article.updatedAt)}</span>
-              <span>{article.readTime} min read</span>
+              <span>{formatDateLabel(articleMeta.publishedAt)}</span>
+              <span>Updated {formatDateLabel(articleMeta.updatedAt)}</span>
+              <span>{articleMeta.readTime} min read</span>
             </div>
           </div>
-          <h1>{article.title}</h1>
-          <p className="insight-article-dek">{article.excerpt}</p>
+          <h1>{articleMeta.title}</h1>
+          <p className="insight-article-dek">{articleMeta.excerpt}</p>
         </header>
 
         <article className="insight-docs-article insight-docs-article--reading">
-          {mainSections.map((section) => (
-            <section key={section.id} id={section.id} className="insight-docs-section">
-              <h2>{section.title}</h2>
-              <StructuredSectionContent section={section} article={article} />
-            </section>
-          ))}
-
-          <section className="insight-docs-section insight-docs-section--cta">
-            <div className="insight-inline-cta">
-              <p className="insight-inline-cta-label">Need a practical read on your workflow?</p>
-              <h3>{article.finalCtaTitle ?? 'Translate this into execution'}</h3>
-              <p>
-                {article.finalCtaBody ?? 'Get a tailored implementation roadmap with clear milestones and ownership.'}
-              </p>
-              <button type="button" className="btn-primary" onClick={onContact}>
-                {article.finalCtaButtonLabel ?? 'Book a strategy call'}
-              </button>
-            </div>
-          </section>
-
-          {faqSection && article.faqItems.length > 0 && (
-            <section key={faqSection.id} id={faqSection.id} className="insight-docs-section">
-              <h2>{faqSection.title}</h2>
-              <StructuredSectionContent section={faqSection} article={article} />
+          {status === 'loading' && (
+            <section className="insight-docs-section insight-docs-section--loading">
+              <div className="insight-loading-block" aria-live="polite">
+                <p>Loading article...</p>
+              </div>
             </section>
           )}
 
-          <section className="insight-docs-section insight-docs-section--tail">
-            {article.authorBio && (
-              <div className="insight-author-bio">
-                <p>{article.authorBio}</p>
-              </div>
-            )}
+          {status === 'ready' && article && (
+            <>
+              {mainSections.map((section) => (
+                <section key={section.id} id={section.id} className="insight-docs-section">
+                  <h2>{section.title}</h2>
+                  <StructuredSectionContent section={section} article={article} />
+                </section>
+              ))}
 
-            {relatedLinks.length > 0 && (
-              <div className="insight-related-links">
-                <p className="insight-related-label">Keep reading</p>
-                <div className="insight-related-list">
-                  {relatedLinks.map((item) => (
-                    <a key={item.slug} href={item.url}>
-                      {item.title}
-                    </a>
-                  ))}
+              <section className="insight-docs-section insight-docs-section--cta">
+                <div className="insight-inline-cta">
+                  <p className="insight-inline-cta-label">Need a practical read on your workflow?</p>
+                  <h3>{article.finalCtaTitle ?? 'Translate this into execution'}</h3>
+                  <p>
+                    {article.finalCtaBody ?? 'Get a tailored implementation roadmap with clear milestones and ownership.'}
+                  </p>
+                  <button type="button" className="btn-primary" onClick={onContact}>
+                    {article.finalCtaButtonLabel ?? 'Book a strategy call'}
+                  </button>
                 </div>
+              </section>
+
+              {faqSection && article.faqItems.length > 0 && (
+                <section key={faqSection.id} id={faqSection.id} className="insight-docs-section">
+                  <h2>{faqSection.title}</h2>
+                  <StructuredSectionContent section={faqSection} article={article} />
+                </section>
+              )}
+
+              <section className="insight-docs-section insight-docs-section--tail">
+                {article.authorBio && (
+                  <div className="insight-author-bio">
+                    <p>{article.authorBio}</p>
+                  </div>
+                )}
+
+                {relatedLinks.length > 0 && (
+                  <div className="insight-related-links">
+                    <p className="insight-related-label">Keep reading</p>
+                    <div className="insight-related-list">
+                      {relatedLinks.map((item) => (
+                        <a key={item.slug} href={item.url}>
+                          {item.title}
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </section>
+            </>
+          )}
+
+          {(status === 'missing' || status === 'error') && (
+            <section className="insight-docs-section insight-docs-section--loading">
+              <div className="insight-loading-block">
+                <p>Could not load this article right now. Please try again.</p>
               </div>
-            )}
-          </section>
+            </section>
+          )}
         </article>
       </div>
     </InsightsLayout>

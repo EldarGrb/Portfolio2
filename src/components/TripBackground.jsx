@@ -8,7 +8,9 @@ function TripBackground() {
     if (!el) return undefined;
 
     const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    if (motionQuery.matches) return undefined;
+    const pointerQuery = window.matchMedia('(pointer: fine)');
+    const shouldAnimate = !motionQuery.matches && pointerQuery.matches && window.innerWidth > 900;
+    if (!shouldAnimate) return undefined;
 
     let frameId = 0;
     let targetX = 0;
@@ -36,7 +38,7 @@ function TripBackground() {
       if (!frameId) frameId = window.requestAnimationFrame(tick);
     };
 
-    const onMouseMove = (event) => {
+    const onPointerMove = (event) => {
       const normalizedX = event.clientX / window.innerWidth - 0.5;
       const normalizedY = event.clientY / window.innerHeight - 0.5;
       targetX = normalizedX * maxX;
@@ -44,18 +46,18 @@ function TripBackground() {
       requestTick();
     };
 
-    const onMouseLeave = () => {
+    const onPointerLeave = () => {
       targetX = 0;
       targetY = 0;
       requestTick();
     };
 
-    window.addEventListener('mousemove', onMouseMove);
-    window.addEventListener('mouseleave', onMouseLeave);
+    window.addEventListener('pointermove', onPointerMove, { passive: true });
+    window.addEventListener('mouseleave', onPointerLeave);
 
     return () => {
-      window.removeEventListener('mousemove', onMouseMove);
-      window.removeEventListener('mouseleave', onMouseLeave);
+      window.removeEventListener('pointermove', onPointerMove);
+      window.removeEventListener('mouseleave', onPointerLeave);
       if (frameId) window.cancelAnimationFrame(frameId);
     };
   }, []);
