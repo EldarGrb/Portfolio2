@@ -2,6 +2,9 @@
 html { scroll-behavior: smooth; }
 :root {
   --accent-primary: #eefcb3;
+  --ai-emphasis-color: #f1ebe0;
+  --ai-emphasis-fill: linear-gradient(135deg, #f6f1e8 0%, #ddd0bb 38%, #f2ece0 72%, #ccbea8 100%);
+  --ai-emphasis-text-fill: transparent;
   --text-main: #e8e8e8;
   --wide-content-max: 1540px;
   --ultra-content-max: 1760px;
@@ -2641,6 +2644,9 @@ textarea:focus-visible {
   --line-strong: rgba(235, 232, 224, 0.2);
   --accent-primary: #ddd3c0;
   --accent-secondary: #b6ab9a;
+  --ai-emphasis-color: #f1ebe0;
+  --ai-emphasis-fill: linear-gradient(135deg, #f6f1e8 0%, #ddd0bb 38%, #f2ece0 72%, #ccbea8 100%);
+  --ai-emphasis-text-fill: transparent;
   --text-main: #f1eee7;
   --text-muted: rgba(241, 238, 231, 0.72);
   --text-soft: rgba(241, 238, 231, 0.54);
@@ -2691,6 +2697,32 @@ body {
 
 .section-signature {
   color: rgba(221, 211, 192, 0.62);
+}
+
+.ai-emphasis {
+  color: var(--ai-emphasis-color);
+  background-image: var(--ai-emphasis-fill);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  -webkit-text-fill-color: var(--ai-emphasis-text-fill);
+}
+
+.ai-emphasis--inline {
+  background-position: 0 55%;
+}
+
+.ai-emphasis--subtle {
+  background-image: none;
+  -webkit-text-fill-color: currentColor;
+}
+
+.service-header .ai-emphasis,
+.service-body .ai-emphasis {
+  --ai-emphasis-fill: linear-gradient(135deg, #f0e9dd 0%, #d6c7b1 48%, #ece4d6 100%);
 }
 
 .navbar {

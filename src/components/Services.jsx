@@ -25,6 +25,48 @@ function Services({ onContact }) {
     return () => mediaQuery.removeListener(onChange);
   }, []);
 
+  const renderServiceTitle = (service) => {
+    if (service.visual === 'aiWorkflows') {
+      return (
+        <>
+          <span className="ai-emphasis">AI-enhanced workflows</span> that cut repetitive admin work
+        </>
+      );
+    }
+
+    if (service.visual === 'assistants') {
+      return (
+        <>
+          <span className="ai-emphasis">Voice and chat assistants</span> that handle first-response work
+        </>
+      );
+    }
+
+    return service.title;
+  };
+
+  const renderServiceDescription = (service) => {
+    if (service.visual === 'aiWorkflows') {
+      return (
+        <>
+          Practical automation flows that connect your tools, move information where it belongs,
+          and reduce manual follow-up with <span className="ai-emphasis ai-emphasis--inline">AI-enhanced workflow logic</span>.
+        </>
+      );
+    }
+
+    if (service.visual === 'assistants') {
+      return (
+        <>
+          <span className="ai-emphasis ai-emphasis--inline">AI assistants</span> for lead capture,
+          support triage, and appointment or intake flows, designed to feel useful rather than gimmicky.
+        </>
+      );
+    }
+
+    return service.description;
+  };
+
   return (
     <section className="section services" id="services" ref={ref} style={{ opacity: 0, transform: 'translateY(30px)', transition: 'opacity 0.8s, transform 0.8s' }}>
       <div className="services-header">
@@ -55,7 +97,7 @@ function Services({ onContact }) {
                   aria-controls={panelId}
                 >
                   <span className="service-header-icon"><Icon /></span>
-                  <h3>{s.title}</h3>
+                  <h3>{renderServiceTitle(s)}</h3>
                   {s.featured && <span className="service-featured-badge">Featured</span>}
                 </button>
                 <div
@@ -66,7 +108,7 @@ function Services({ onContact }) {
                   hidden={i !== active}
                 >
                   <div className="service-body-inner">
-                    <p>{s.description}</p>
+                    <p>{renderServiceDescription(s)}</p>
                     <div className="service-tags">
                       {s.tags.map((t, j) => <span className="service-tag" key={j}>{t}</span>)}
                     </div>
