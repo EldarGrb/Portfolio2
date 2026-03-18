@@ -92,7 +92,13 @@ function SiteNav({ currentPath, onContact, variant = 'default' }) {
               <ul className="nav-links">
                 {navLinks.map((item) => (
                   <li key={item.label}>
-                    <a href={item.href} className={item.active ? 'active' : ''}>{item.label}</a>
+                    <a
+                      href={item.href}
+                      className={item.active ? 'active' : ''}
+                      aria-current={item.active ? 'page' : undefined}
+                    >
+                      {item.label}
+                    </a>
                   </li>
                 ))}
               </ul>
@@ -140,7 +146,13 @@ function SiteNav({ currentPath, onContact, variant = 'default' }) {
             </div>
             <div className="nav-mobile-links">
               {navLinks.map((item) => (
-                <a key={item.label} href={item.href} className={item.active ? 'active' : ''} onClick={handleMenuClose}>
+                <a
+                  key={item.label}
+                  href={item.href}
+                  className={item.active ? 'active' : ''}
+                  aria-current={item.active ? 'page' : undefined}
+                  onClick={handleMenuClose}
+                >
                   {item.label}
                 </a>
               ))}

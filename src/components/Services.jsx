@@ -78,7 +78,7 @@ function Services({ onContact }) {
             clearer delivery, smoother internal work, or less first-response admin.
           </p>
         </div>
-        <button className="btn-secondary" onClick={onContact}>Request proposal</button>
+        <button type="button" className="btn-secondary" onClick={onContact}>Request proposal</button>
       </div>
       <div className="services-content">
         <div className="service-accordion">

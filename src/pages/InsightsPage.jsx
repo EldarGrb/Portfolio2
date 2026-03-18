@@ -80,6 +80,7 @@ function InsightsPage({ currentPath, onContact }) {
             type="button"
             className={`insights-topic-chip ${selectedCategory === 'All' ? 'active' : ''}`}
             onClick={() => setSelectedCategory('All')}
+            aria-pressed={selectedCategory === 'All'}
           >
             All posts
           </button>
@@ -89,6 +90,7 @@ function InsightsPage({ currentPath, onContact }) {
               key={category}
               className={`insights-topic-chip ${selectedCategory === category ? 'active' : ''}`}
               onClick={() => setSelectedCategory(category)}
+              aria-pressed={selectedCategory === category}
             >
               {category}
             </button>

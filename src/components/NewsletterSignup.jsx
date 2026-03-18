@@ -130,6 +130,7 @@ function NewsletterSignup({
             placeholder={placeholder}
             aria-label="Email address"
             required
+            disabled={status === 'sending'}
             value={email}
             onChange={(event) => {
               setEmail(event.target.value);
