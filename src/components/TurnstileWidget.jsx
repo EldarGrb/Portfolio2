@@ -40,12 +40,22 @@ function TurnstileWidget({
 }) {
   const containerRef = useRef(null);
   const widgetIdRef = useRef(null);
+  const onTokenChangeRef = useRef(onTokenChange);
+  const onErrorRef = useRef(onError);
+
+  useEffect(() => {
+    onTokenChangeRef.current = onTokenChange;
+  }, [onTokenChange]);
+
+  useEffect(() => {
+    onErrorRef.current = onError;
+  }, [onError]);
 
   useEffect(() => {
     let disposed = false;
 
     if (!siteKey || !containerRef.current) {
-      onTokenChange('');
+      onTokenChangeRef.current?.('');
       return undefined;
     }
 
@@ -56,17 +66,17 @@ function TurnstileWidget({
         widgetIdRef.current = turnstile.render(containerRef.current, {
           sitekey: siteKey,
           theme,
-          callback: (token) => onTokenChange(token || ''),
-          'expired-callback': () => onTokenChange(''),
+          callback: (token) => onTokenChangeRef.current?.(token || ''),
+          'expired-callback': () => onTokenChangeRef.current?.(''),
           'error-callback': () => {
-            onTokenChange('');
-            onError?.();
+            onTokenChangeRef.current?.('');
+            onErrorRef.current?.();
           },
         });
       })
       .catch(() => {
-        onTokenChange('');
-        onError?.();
+        onTokenChangeRef.current?.('');
+        onErrorRef.current?.();
       });
 
     return () => {
@@ -76,13 +86,13 @@ function TurnstileWidget({
       }
       widgetIdRef.current = null;
     };
-  }, [onError, onTokenChange, siteKey, theme]);
+  }, [siteKey, theme]);
 
   useEffect(() => {
     if (widgetIdRef.current === null || !window.turnstile?.reset) return;
     window.turnstile.reset(widgetIdRef.current);
-    onTokenChange('');
-  }, [onTokenChange, resetKey]);
+    onTokenChangeRef.current?.('');
+  }, [resetKey]);
 
   if (!siteKey) return null;
 
