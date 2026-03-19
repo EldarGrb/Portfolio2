@@ -1,6 +1,5 @@
 import { useEffect, useRef } from 'react';
-
-const DEFAULT_OG_IMAGE = 'https://uroboros-systems.com/images/og-image.webp';
+import { DEFAULT_OG_IMAGE } from '../data/siteConfig';
 
 function upsertMeta(attribute, key, content) {
   if (!content) return;

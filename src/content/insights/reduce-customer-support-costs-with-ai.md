@@ -7,7 +7,7 @@ keywords: ai customer support, reduce support costs, ai support automation, cust
 publishedAt: 2026-03-16
 updatedAt: 2026-03-16
 readTime: 8
-canonical: https://uroboros-systems.com/insights/reduce-customer-support-costs-with-ai
+canonical: https://uroboros.digital/insights/reduce-customer-support-costs-with-ai
 finalCtaTitle: Book a free 15-minute call
 finalCtaBody: I can review your current support setup and tell you where automation makes sense and where it does not.
 finalCtaButtonLabel: Book a free 15-minute call

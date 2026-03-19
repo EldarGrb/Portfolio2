@@ -7,7 +7,7 @@ keywords: reporting automation, operations quality, workflow checkpoints, error 
 publishedAt: 2026-03-01
 updatedAt: 2026-03-07
 readTime: 8
-canonical: https://uroboros-systems.com/insights/cut-reporting-errors-with-ops-automation-checkpoints
+canonical: https://uroboros.digital/insights/cut-reporting-errors-with-ops-automation-checkpoints
 ---
 ## Problem Statement
 Operations teams often rely on manual copy-paste reporting across multiple tools. Small data mistakes then multiply across dashboards, executive summaries, and client updates.

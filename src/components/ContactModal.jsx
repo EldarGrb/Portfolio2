@@ -1,40 +1,68 @@
-import { useEffect, useId, useRef, useState } from 'react';
+import { useCallback, useEffect, useId, useRef, useState } from 'react';
+import { useAnalytics } from '../analytics/useAnalytics';
+import { ANALYTICS_CONFIG } from '../analytics/env';
+import { submitLead } from '../lib/leadSubmission';
+import TurnstileWidget from './TurnstileWidget';
 
-function ContactModal({ open, onClose }) {
+function ContactModal({ open, onClose, context = {} }) {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
   const [status, setStatus] = useState('idle'); // idle | sending | success | error
+  const [turnstileToken, setTurnstileToken] = useState('');
+  const [turnstileResetKey, setTurnstileResetKey] = useState(0);
+  const [verificationError, setVerificationError] = useState('');
   const modalRef = useRef(null);
   const closeButtonRef = useRef(null);
   const previousFocusedElementRef = useRef(null);
   const titleId = useId();
   const subtitleId = useId();
+  const { track } = useAnalytics();
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     onClose();
     setStatus('idle');
-  };
+    setVerificationError('');
+    setTurnstileToken('');
+    setTurnstileResetKey((value) => value + 1);
+  }, [onClose]);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+    if (status === 'error') {
+      setStatus('idle');
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (ANALYTICS_CONFIG.turnstileSiteKey && !turnstileToken) {
+      setVerificationError('Please complete the verification before sending your message.');
+      return;
+    }
+
+    track('contact_form_submit_attempt', context);
     setStatus('sending');
+    setVerificationError('');
     try {
-      const res = await fetch('https://worker-proud-breeze-0b51.eldar-jahic-gb.workers.dev/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
+      const res = await submitLead({
+        ...form,
+        type: 'contact',
+        turnstile_token: turnstileToken,
+        cta_placement: context.cta_placement || '',
+        cta_label: context.cta_label || '',
       });
       if (res.ok) {
         setStatus('success');
         setForm({ name: '', email: '', message: '' });
+        setTurnstileToken('');
+        setTurnstileResetKey((value) => value + 1);
+        track('contact_form_submit_success', context);
       } else {
         setStatus('error');
+        track('contact_form_submit_error', context);
       }
     } catch {
       setStatus('error');
+      track('contact_form_submit_error', context);
     }
   };
 
@@ -56,8 +84,7 @@ function ContactModal({ open, onClose }) {
     const onKeyDown = (event) => {
       if (event.key === 'Escape') {
         event.preventDefault();
-        onClose();
-        setStatus('idle');
+        handleClose();
         return;
       }
 
@@ -89,7 +116,7 @@ function ContactModal({ open, onClose }) {
         previousFocusedElementRef.current.focus();
       }
     };
-  }, [open, onClose]);
+  }, [handleClose, onClose, open]);
 
   if (!open) return null;
 
@@ -150,6 +177,19 @@ function ContactModal({ open, onClose }) {
                 onChange={handleChange}
               />
             </div>
+            <TurnstileWidget
+              siteKey={ANALYTICS_CONFIG.turnstileSiteKey}
+              theme={ANALYTICS_CONFIG.turnstileTheme}
+              resetKey={turnstileResetKey}
+              onTokenChange={(token) => {
+                setTurnstileToken(token);
+                if (token) setVerificationError('');
+              }}
+              onError={() => setVerificationError('Verification could not load. Please refresh and try again.')}
+            />
+            {verificationError && (
+              <p className="modal-helper-text" role="alert">{verificationError}</p>
+            )}
             {status === 'error' && (
               <p className="modal-error" role="alert">We couldn&apos;t send your message right now. Please try again.</p>
             )}

@@ -7,7 +7,7 @@ keywords: sales handoff, intake automation, lead qualification, delivery kickoff
 publishedAt: 2026-02-24
 updatedAt: 2026-03-06
 readTime: 6
-canonical: https://uroboros-systems.com/insights/speed-up-sales-handoffs-with-intake-automation
+canonical: https://uroboros.digital/insights/speed-up-sales-handoffs-with-intake-automation
 ---
 ## Problem Statement
 Sales-to-delivery handoffs often stall because critical project details are collected too late. Delivery teams then spend kickoff meetings re-gathering basics instead of planning execution.

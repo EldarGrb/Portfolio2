@@ -7,7 +7,7 @@ keywords: support workflow, self-serve help, ticket reduction, process automatio
 publishedAt: 2026-03-05
 updatedAt: 2026-03-05
 readTime: 7
-canonical: https://uroboros-systems.com/insights/reduce-support-tickets-with-self-serve-workflows
+canonical: https://uroboros.digital/insights/reduce-support-tickets-with-self-serve-workflows
 ---
 ## Problem Statement
 Support teams spend too much time answering the same low-complexity requests. As volume grows, response times slip, senior staff get pulled into simple tasks, and urgent customer issues wait longer than they should.

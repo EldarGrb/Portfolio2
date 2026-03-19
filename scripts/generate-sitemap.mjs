@@ -2,8 +2,7 @@ import { readdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseArticleFile } from '../src/data/insights/articleParser.js';
-
-const SITE_URL = 'https://uroboros-systems.com';
+import { SITE_URL } from '../src/data/siteConfig.js';
 
 function toIsoDate(input) {
   return new Date(input).toISOString().slice(0, 10);

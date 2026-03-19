@@ -1,6 +1,8 @@
-import { useEffect, useId, useRef, useState } from 'react';
-
-const WORKER_ENDPOINT = 'https://worker-proud-breeze-0b51.eldar-jahic-gb.workers.dev/';
+import { useCallback, useEffect, useId, useRef, useState } from 'react';
+import { useAnalytics } from '../analytics/useAnalytics';
+import { ANALYTICS_CONFIG } from '../analytics/env';
+import { submitLead } from '../lib/leadSubmission';
+import TurnstileWidget from './TurnstileWidget';
 
 function NewsletterSignup({
   variant = 'footer',
@@ -10,15 +12,28 @@ function NewsletterSignup({
   description,
   placeholder = 'Enter your email',
   buttonLabel = 'Subscribe',
+  placement = 'newsletter',
 }) {
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState('idle');
   const [modalOpen, setModalOpen] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState('');
+  const [turnstileResetKey, setTurnstileResetKey] = useState(0);
+  const [verificationError, setVerificationError] = useState('');
   const modalRef = useRef(null);
   const closeButtonRef = useRef(null);
   const previousFocusedElementRef = useRef(null);
   const titleId = useId();
   const bodyId = useId();
+  const { track } = useAnalytics();
+
+  const handleCloseModal = useCallback(() => {
+    setModalOpen(false);
+    setStatus('idle');
+    setVerificationError('');
+    setTurnstileToken('');
+    setTurnstileResetKey((value) => value + 1);
+  }, []);
 
   useEffect(() => {
     if (!modalOpen) return undefined;
@@ -31,7 +46,7 @@ function NewsletterSignup({
     const onKeyDown = (event) => {
       if (event.key === 'Escape') {
         event.preventDefault();
-        setModalOpen(false);
+        handleCloseModal();
         return;
       }
 
@@ -65,24 +80,28 @@ function NewsletterSignup({
         previousFocusedElementRef.current.focus();
       }
     };
-  }, [modalOpen]);
+  }, [handleCloseModal, modalOpen]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (!email.trim()) return;
+    if (ANALYTICS_CONFIG.turnstileSiteKey && !turnstileToken) {
+      setVerificationError('Please complete the verification before subscribing.');
+      return;
+    }
 
+    track('newsletter_submit_attempt', { placement });
     setStatus('sending');
+    setVerificationError('');
 
     try {
-      const response = await fetch(WORKER_ENDPOINT, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: 'Newsletter subscriber',
-          email: email.trim(),
-          message: 'Newsletter subscription request from portfolio footer.',
-          type: 'newsletter_subscribe',
-        }),
+      const response = await submitLead({
+        name: 'Newsletter subscriber',
+        email: email.trim(),
+        message: `Newsletter subscription request from ${placement}.`,
+        type: 'newsletter_subscribe',
+        turnstile_token: turnstileToken,
+        cta_placement: placement,
       });
 
       if (!response.ok) throw new Error('Subscription request failed');
@@ -90,8 +109,12 @@ function NewsletterSignup({
       setStatus('success');
       setEmail('');
       setModalOpen(true);
+      setTurnstileToken('');
+      setTurnstileResetKey((value) => value + 1);
+      track('newsletter_submit_success', { placement });
     } catch {
       setStatus('error');
+      track('newsletter_submit_error', { placement });
     }
   };
 
@@ -135,6 +158,7 @@ function NewsletterSignup({
             onChange={(event) => {
               setEmail(event.target.value);
               if (status === 'error') setStatus('idle');
+              if (verificationError) setVerificationError('');
             }}
           />
           <button
@@ -146,6 +170,19 @@ function NewsletterSignup({
             {status === 'sending' ? 'Subscribing...' : buttonLabel}
           </button>
         </form>
+        <TurnstileWidget
+          siteKey={ANALYTICS_CONFIG.turnstileSiteKey}
+          theme={ANALYTICS_CONFIG.turnstileTheme}
+          resetKey={turnstileResetKey}
+          onTokenChange={(token) => {
+            setTurnstileToken(token);
+            if (token) setVerificationError('');
+          }}
+          onError={() => setVerificationError('Verification could not load. Please refresh and try again.')}
+        />
+        {verificationError && (
+          <p className="modal-helper-text" role="alert">{verificationError}</p>
+        )}
         {status === 'error' && (
           <p className={isEditorial ? 'newsletter-signup-error' : 'subscribe-error'} role="alert">
             Could not subscribe right now. Please try again.
@@ -158,7 +195,7 @@ function NewsletterSignup({
           className="modal-backdrop"
           onClick={(event) => {
             if (event.target === event.currentTarget) {
-              setModalOpen(false);
+              handleCloseModal();
             }
           }}
         >
@@ -172,7 +209,7 @@ function NewsletterSignup({
           >
             <button
               className="modal-close"
-              onClick={() => setModalOpen(false)}
+              onClick={handleCloseModal}
               ref={closeButtonRef}
               aria-label="Close subscription message"
             >
@@ -182,7 +219,7 @@ function NewsletterSignup({
             <p className="modal-subtitle" id={bodyId}>
               Thanks for joining our newsletter. Your first update will arrive soon.
             </p>
-            <button className="btn-primary modal-submit" type="button" onClick={() => setModalOpen(false)}>
+            <button className="btn-primary modal-submit" type="button" onClick={handleCloseModal}>
               Close
             </button>
           </div>

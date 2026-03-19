@@ -5,11 +5,11 @@ import {
   featuredArticle,
   insightCategories,
   insightsArticles,
-  SITE_URL,
 } from '../data/insights/articles';
 import { formatDateLabel } from '../data/insights/articleParser';
 import { filterInsightsArticles } from '../data/insights/navigation';
 import { useSeo } from '../hooks/useSeo';
+import { getInsightsSeo } from '../seo/pageSeo';
 
 function InsightsPage({ currentPath, onContact }) {
   const [selectedCategory, setSelectedCategory] = useState('All');
@@ -34,29 +34,7 @@ function InsightsPage({ currentPath, onContact }) {
     [featuredResult, filteredArticles],
   );
 
-  const schemas = useMemo(() => [
-    {
-      '@context': 'https://schema.org',
-      '@type': 'CollectionPage',
-      name: 'Uroboros Systems Insights',
-      description: 'Playbooks for reducing operational errors, saving time, and improving execution quality.',
-      url: `${SITE_URL}/insights`,
-      hasPart: insightsArticles.map((article) => ({
-        '@type': 'Article',
-        headline: article.title,
-        url: article.canonical,
-      })),
-    },
-  ], []);
-
-  useSeo({
-    title: 'Insights | Uroboros Systems',
-    description: 'Actionable problem-solution playbooks for teams that want to reduce errors, save time, and ship faster.',
-    canonical: `${SITE_URL}/insights`,
-    url: `${SITE_URL}/insights`,
-    type: 'website',
-    schemas,
-  });
+  useSeo(getInsightsSeo());
 
   return (
     <InsightsLayout
@@ -145,6 +123,7 @@ function InsightsPage({ currentPath, onContact }) {
           title="Occasional notes on practical systems, delivery, and AI workflows."
           description="Useful updates for teams that want clearer execution, fewer bottlenecks, and more grounded technical decisions."
           placeholder="Enter your work email"
+          placement="insights_newsletter"
         />
       </div>
     </InsightsLayout>

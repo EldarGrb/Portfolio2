@@ -42,7 +42,13 @@ function Hero({ onContact, currentPath }) {
               without the noise of a generic agency process.
             </p>
             <div className="hero-actions">
-              <button type="button" className="btn-primary hero-cta-btn" onClick={onContact}>Start a project</button>
+              <button
+                type="button"
+                className="btn-primary hero-cta-btn"
+                onClick={() => onContact({ cta_label: 'Start a project', cta_placement: 'hero_primary' })}
+              >
+                Start a project
+              </button>
               <a href="#services" className="btn-secondary hero-secondary-btn">See services</a>
             </div>
           </div>

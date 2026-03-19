@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useAnalytics } from '../analytics/useAnalytics';
 import Icons from './Icons';
 import { useFadeIn } from '../hooks/useFadeIn';
 
@@ -27,6 +28,7 @@ function CTA({ onContact }) {
   const [selected, setSelected] = useState(options[0].id);
   const activeOption = options.find((item) => item.id === selected) || options[0];
   const ref = useFadeIn();
+  const { track } = useAnalytics();
 
   return (
     <section className="cta-section" id="contact" ref={ref} style={{ opacity: 0, transform: 'translateY(30px)', transition: 'opacity 0.8s, transform 0.8s' }}>
@@ -45,7 +47,13 @@ function CTA({ onContact }) {
                   key={option.id}
                   type="button"
                   className={`cta-selector ${selected === option.id ? 'active' : ''}`}
-                  onClick={() => setSelected(option.id)}
+                  onClick={() => {
+                    setSelected(option.id);
+                    track('cta_click', {
+                      cta_label: option.label,
+                      cta_placement: 'cta_selector',
+                    });
+                  }}
                   aria-pressed={selected === option.id}
                 >
                   {option.label}
@@ -56,7 +64,14 @@ function CTA({ onContact }) {
             <div className="cta-response" aria-live="polite">
               <h3>{activeOption.label}</h3>
               <p>{activeOption.summary}</p>
-              <button type="button" className="btn-primary cta-dynamic-btn" onClick={onContact}>
+              <button
+                type="button"
+                className="btn-primary cta-dynamic-btn"
+                onClick={() => onContact({
+                  cta_label: activeOption.cta,
+                  cta_placement: `cta_dynamic_${activeOption.id}`,
+                })}
+              >
                 {activeOption.cta}
               </button>
             </div>

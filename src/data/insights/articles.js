@@ -1,6 +1,7 @@
+import { SITE_URL } from '../siteConfig';
 import { parseArticleFile } from './articleParser';
 
-export const SITE_URL = 'https://uroboros-systems.com';
+export { SITE_URL };
 
 const articleIndex = [
   {
@@ -27,7 +28,7 @@ const articleIndex = [
     readTime: 8,
     canonical: `${SITE_URL}/insights/cut-reporting-errors-with-ops-automation-checkpoints`,
     url: '/insights/cut-reporting-errors-with-ops-automation-checkpoints',
-    sourcePath: '../../content/insights/cut-reporting-errors-with-ops-automation-checkpoints.md',
+    sourcePath: '../../content/insights/cut-reporting-errors-with-ops-automation.md',
   },
   {
     title: 'Speed up sales handoffs with intake automation',

@@ -1,9 +1,11 @@
 import { useEffect, useMemo, useState } from 'react';
+import { useAnalytics } from '../analytics/useAnalytics';
 import InsightsLayout from '../components/InsightsLayout';
-import { loadArticleBySlug, SITE_URL } from '../data/insights/articles';
+import { loadArticleBySlug } from '../data/insights/articles';
 import { buildSidebarRelatedLinks } from '../data/insights/navigation';
 import { formatDateLabel, renderMarkdownContent } from '../data/insights/articleParser';
 import { useSeo } from '../hooks/useSeo';
+import { getInsightArticleSeo } from '../seo/pageSeo';
 
 const SECTION_BLOCK_TOKENS = {
   problemStatement: '[INTRO_QUOTES]',
@@ -150,11 +152,14 @@ function StructuredSectionContent({ section, article }) {
   );
 }
 
-function InsightArticlePage({ articleSlug, articleMeta, currentPath, onContact }) {
-  const [article, setArticle] = useState(null);
-  const [status, setStatus] = useState('loading');
+function InsightArticlePage({ articleSlug, articleMeta, currentPath, onContact, initialArticle = null }) {
+  const [article, setArticle] = useState(initialArticle);
+  const [status, setStatus] = useState(initialArticle ? 'ready' : 'loading');
+  const { track } = useAnalytics();
 
   useEffect(() => {
+    if (initialArticle) return undefined;
+
     let ignore = false;
 
     loadArticleBySlug(articleSlug)
@@ -173,7 +178,7 @@ function InsightArticlePage({ articleSlug, articleMeta, currentPath, onContact }
     return () => {
       ignore = true;
     };
-  }, [articleSlug]);
+  }, [articleSlug, initialArticle]);
 
   const relatedLinks = useMemo(
     () => buildSidebarRelatedLinks(articleMeta.slug, 3),
@@ -187,80 +192,9 @@ function InsightArticlePage({ articleSlug, articleMeta, currentPath, onContact }
 
   const faqSection = article?.sections.faqBlock ?? null;
 
-  const schemas = useMemo(() => {
-    if (!article) return [];
+  const seo = useMemo(() => getInsightArticleSeo(articleMeta, article), [article, articleMeta]);
 
-    const output = [
-      {
-        '@context': 'https://schema.org',
-        '@type': 'Article',
-        headline: article.title,
-        description: article.excerpt,
-        datePublished: article.publishedAt,
-        dateModified: article.updatedAt,
-        keywords: article.keywords.join(', '),
-        mainEntityOfPage: article.canonical,
-        author: {
-          '@type': 'Organization',
-          name: 'Uroboros Systems',
-        },
-        publisher: {
-          '@type': 'Organization',
-          name: 'Uroboros Systems',
-        },
-      },
-      {
-        '@context': 'https://schema.org',
-        '@type': 'BreadcrumbList',
-        itemListElement: [
-          {
-            '@type': 'ListItem',
-            position: 1,
-            name: 'Home',
-            item: `${SITE_URL}/`,
-          },
-          {
-            '@type': 'ListItem',
-            position: 2,
-            name: 'Insights',
-            item: `${SITE_URL}/insights`,
-          },
-          {
-            '@type': 'ListItem',
-            position: 3,
-            name: article.title,
-            item: article.canonical,
-          },
-        ],
-      },
-    ];
-
-    if (article.faqItems.length) {
-      output.push({
-        '@context': 'https://schema.org',
-        '@type': 'FAQPage',
-        mainEntity: article.faqItems.map((item) => ({
-          '@type': 'Question',
-          name: item.question,
-          acceptedAnswer: {
-            '@type': 'Answer',
-            text: item.answer,
-          },
-        })),
-      });
-    }
-
-    return output;
-  }, [article]);
-
-  useSeo({
-    title: `${articleMeta.title} | Uroboros Systems Insights`,
-    description: articleMeta.excerpt,
-    canonical: articleMeta.canonical,
-    url: articleMeta.canonical,
-    type: 'article',
-    schemas,
-  });
+  useSeo(seo);
 
   return (
     <InsightsLayout
@@ -310,7 +244,22 @@ function InsightArticlePage({ articleSlug, articleMeta, currentPath, onContact }
                   <p>
                     {article.finalCtaBody ?? 'Get a tailored implementation roadmap with clear milestones and ownership.'}
                   </p>
-                  <button type="button" className="btn-primary" onClick={onContact}>
+                  <button
+                    type="button"
+                    className="btn-primary"
+                    onClick={() => {
+                      track('insight_article_cta_click', {
+                        article_slug: articleMeta.slug,
+                        article_title: articleMeta.title,
+                      });
+                      onContact({
+                        article_slug: articleMeta.slug,
+                        article_title: articleMeta.title,
+                        cta_label: article.finalCtaButtonLabel ?? 'Book a strategy call',
+                        cta_placement: 'insight_article_inline',
+                      });
+                    }}
+                  >
                     {article.finalCtaButtonLabel ?? 'Book a strategy call'}
                   </button>
                 </div>

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useAnalytics } from '../analytics/useAnalytics';
 import Icons from './Icons';
 import ServiceVisual from './ServiceVisual';
 import { services } from '../data/servicesData';
@@ -11,6 +12,7 @@ function Services({ onContact }) {
   ));
   const ref = useFadeIn();
   const activeService = services[active];
+  const { track } = useAnalytics();
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(max-width: 900px)');
@@ -78,7 +80,13 @@ function Services({ onContact }) {
             clearer delivery, smoother internal work, or less first-response admin.
           </p>
         </div>
-        <button type="button" className="btn-secondary" onClick={onContact}>Request proposal</button>
+        <button
+          type="button"
+          className="btn-secondary"
+          onClick={() => onContact({ cta_label: 'Request proposal', cta_placement: 'services_header' })}
+        >
+          Request proposal
+        </button>
       </div>
       <div className="services-content">
         <div className="service-accordion">
@@ -92,7 +100,15 @@ function Services({ onContact }) {
                   id={headerId}
                   className="service-header"
                   type="button"
-                  onClick={() => setActive(i)}
+                  onClick={() => {
+                    setActive(i);
+                    if (i !== active) {
+                      track('service_accordion_open', {
+                        service_id: s.visual,
+                        service_name: s.title,
+                      });
+                    }
+                  }}
                   aria-expanded={i === active}
                   aria-controls={panelId}
                 >

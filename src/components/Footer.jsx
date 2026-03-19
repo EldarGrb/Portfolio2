@@ -35,7 +35,11 @@ function Footer({ onContact, currentPath = '/', variant = 'default' }) {
 
           <div className="footer-minimal-cta">
             <p>Need help applying one of these ideas to your workflow?</p>
-            <button className="btn-primary" type="button" onClick={onContact}>
+            <button
+              className="btn-primary"
+              type="button"
+              onClick={() => onContact({ cta_label: 'Start a project', cta_placement: 'footer_minimal' })}
+            >
               Start a project
             </button>
           </div>
@@ -57,7 +61,11 @@ function Footer({ onContact, currentPath = '/', variant = 'default' }) {
               instead of distracting from it.
             </p>
             <div className="footer-actions">
-              <button className="btn-primary footer-primary-action" type="button" onClick={onContact}>
+              <button
+                className="btn-primary footer-primary-action"
+                type="button"
+                onClick={() => onContact({ cta_label: 'Start a project', cta_placement: 'footer_primary' })}
+              >
                 Start a project
               </button>
               <a className="btn-secondary footer-secondary-action" href="/insights">
@@ -82,6 +90,7 @@ function Footer({ onContact, currentPath = '/', variant = 'default' }) {
             eyebrow="Practical software notes"
             title="Occasional notes on web systems, AI workflows, and clearer delivery."
             description="Short, useful updates for teams planning a website, web app, or operational workflow."
+            placement="footer_newsletter"
           />
 
           <nav className="footer-links-panel" aria-label="Footer navigation">
@@ -113,7 +122,11 @@ function Footer({ onContact, currentPath = '/', variant = 'default' }) {
                 <p>Available worldwide<br />Remote-first</p>
               </div>
             </div>
-            <button className="footer-contact-link" type="button" onClick={onContact}>
+            <button
+              className="footer-contact-link"
+              type="button"
+              onClick={() => onContact({ cta_label: 'Tell me what you\'re building', cta_placement: 'footer_detail' })}
+            >
               Tell me what you&apos;re building
             </button>
           </div>

@@ -74,7 +74,10 @@ function SiteNav({ currentPath, onContact, variant = 'default' }) {
   const handleMenuClose = () => setMenuOpen(false);
   const handleContact = () => {
     setMenuOpen(false);
-    onContact();
+    onContact({
+      cta_label: 'Start a project',
+      cta_placement: useInsightsNav ? 'nav_mobile_insights' : 'nav_mobile',
+    });
   };
 
   return (
@@ -89,7 +92,11 @@ function SiteNav({ currentPath, onContact, variant = 'default' }) {
               <a href="/" className={`btn-secondary nav-home-link ${isEditorial ? 'nav-home-link--editorial' : ''}`.trim()}>
                 Go to main page
               </a>
-              <button type="button" className={`nav-cta ${isEditorial ? 'nav-cta--editorial' : ''}`.trim()} onClick={onContact}>
+              <button
+                type="button"
+                className={`nav-cta ${isEditorial ? 'nav-cta--editorial' : ''}`.trim()}
+                onClick={() => onContact({ cta_label: 'Start a project', cta_placement: 'nav_insights' })}
+              >
                 Start a project
               </button>
               <button
@@ -119,7 +126,11 @@ function SiteNav({ currentPath, onContact, variant = 'default' }) {
                 ))}
               </ul>
               <div className="nav-actions">
-                <button type="button" className={`nav-cta ${isEditorial ? 'nav-cta--editorial' : ''}`.trim()} onClick={onContact}>
+                <button
+                  type="button"
+                  className={`nav-cta ${isEditorial ? 'nav-cta--editorial' : ''}`.trim()}
+                  onClick={() => onContact({ cta_label: 'Start a project', cta_placement: 'nav_primary' })}
+                >
                   Start a project
                 </button>
                 <button
