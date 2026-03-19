@@ -27,6 +27,14 @@ function NewsletterSignup({
   const bodyId = useId();
   const { track } = useAnalytics();
 
+  const trackValidationError = useCallback((reason, fieldName = '') => {
+    track('newsletter_validation_error', {
+      placement,
+      validation_reason: reason,
+      validation_field: fieldName,
+    });
+  }, [placement, track]);
+
   const handleCloseModal = useCallback(() => {
     setModalOpen(false);
     setStatus('idle');
@@ -87,6 +95,7 @@ function NewsletterSignup({
     if (!email.trim()) return;
     if (ANALYTICS_CONFIG.turnstileSiteKey && !turnstileToken) {
       setVerificationError('Please complete the verification before subscribing.');
+      trackValidationError('turnstile_missing');
       return;
     }
 
@@ -145,6 +154,14 @@ function NewsletterSignup({
         <form
           className={isEditorial ? 'newsletter-signup-form' : 'subscribe-form'}
           onSubmit={handleSubmit}
+          onInvalidCapture={(event) => {
+            const target = event.target;
+            if (!(target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement || target instanceof HTMLSelectElement)) {
+              return;
+            }
+
+            trackValidationError('field_invalid', target.name || target.id || 'unknown');
+          }}
         >
           <input
             className={isEditorial ? 'newsletter-signup-input' : 'subscribe-input'}

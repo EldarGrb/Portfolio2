@@ -17,6 +17,14 @@ function ContactModal({ open, onClose, context = {} }) {
   const subtitleId = useId();
   const { track } = useAnalytics();
 
+  const trackValidationError = useCallback((reason, fieldName = '') => {
+    track('contact_form_validation_error', {
+      ...context,
+      validation_reason: reason,
+      validation_field: fieldName,
+    });
+  }, [context, track]);
+
   const handleClose = useCallback(() => {
     onClose();
     setStatus('idle');
@@ -36,6 +44,7 @@ function ContactModal({ open, onClose, context = {} }) {
     e.preventDefault();
     if (ANALYTICS_CONFIG.turnstileSiteKey && !turnstileToken) {
       setVerificationError('Please complete the verification before sending your message.');
+      trackValidationError('turnstile_missing');
       return;
     }
 
@@ -140,7 +149,18 @@ function ContactModal({ open, onClose, context = {} }) {
             <button className="btn-primary" onClick={handleClose}>Close</button>
           </div>
         ) : (
-          <form className="modal-form" onSubmit={handleSubmit}>
+          <form
+            className="modal-form"
+            onSubmit={handleSubmit}
+            onInvalidCapture={(event) => {
+              const target = event.target;
+              if (!(target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement || target instanceof HTMLSelectElement)) {
+                return;
+              }
+
+              trackValidationError('field_invalid', target.name || target.id || 'unknown');
+            }}
+          >
             <div className="modal-field">
               <label htmlFor="contact-name">Name</label>
               <input
