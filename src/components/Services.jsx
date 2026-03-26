@@ -52,7 +52,7 @@ function Services({ onContact }) {
       return (
         <>
           Practical automation flows that connect your tools, move information where it belongs,
-          and reduce manual follow-up with <span className="ai-emphasis ai-emphasis--inline">AI-enhanced workflow logic</span>.
+          and reduce manual follow-up with <span className="ai-emphasis ai-emphasis--inline">automation where it actually saves time</span>.
         </>
       );
     }

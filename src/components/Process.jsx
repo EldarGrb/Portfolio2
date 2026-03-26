@@ -108,10 +108,10 @@ function Process() {
       <div className="process-layout">
         <div className="process-left">
           <span className="section-signature" aria-hidden="true"><Icons.Logo /></span>
-          <h2 className="section-title">A delivery process built to reduce guesswork and keep momentum visible.</h2>
+          <h2 className="section-title">This should feel like progress, not project theater.</h2>
           <p>
-            The work moves from clear scope to focused implementation to measured improvement,
-            so the system supports the business instead of becoming another source of friction.
+            We figure out what&apos;s actually broken, build the critical path first, then tighten
+            it based on what happens live.
           </p>
           <div className="process-chart">
             <svg className="process-chart-svg" viewBox="0 0 600 220" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Process growth chart">

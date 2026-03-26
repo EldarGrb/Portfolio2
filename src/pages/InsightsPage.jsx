@@ -120,7 +120,7 @@ function InsightsPage({ currentPath, onContact }) {
           variant="compact"
           className="insights-newsletter"
           eyebrow="Subscribe"
-          title="Occasional notes on practical systems, delivery, and AI workflows."
+          title="Occasional notes on broken flows, fixes that actually help, and where AI is worth using."
           description="Useful updates for teams that want clearer execution, fewer bottlenecks, and more grounded technical decisions."
           placeholder="Enter your work email"
           placement="insights_newsletter"

@@ -140,8 +140,8 @@ function ContactModal({ open, onClose, context = {} }) {
         ref={modalRef}
       >
         <button className="modal-close" onClick={handleClose} ref={closeButtonRef} aria-label="Close contact form">&times;</button>
-        <h2 className="modal-title" id={titleId}>Start your project</h2>
-        <p className="modal-subtitle" id={subtitleId}>Share your goals, timeline, and scope. We reply within 24 hours.</p>
+        <h2 className="modal-title" id={titleId}>Tell me what&apos;s slowing the business down</h2>
+        <p className="modal-subtitle" id={subtitleId}>Tell me what&apos;s broken, what&apos;s manual, or what you&apos;re trying to launch. We reply within 24 hours.</p>
 
         {status === 'success' ? (
           <div className="modal-success">

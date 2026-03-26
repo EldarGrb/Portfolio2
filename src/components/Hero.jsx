@@ -7,7 +7,7 @@ function Hero({ onContact, currentPath }) {
     {
       icon: 'Shield',
       label: 'Reliability first',
-      title: 'Clear scope before build',
+      title: 'Know what gets fixed before build starts',
       description: 'Projects are shaped around the operational problem that needs solving, not generic deliverables.',
     },
     {
@@ -49,7 +49,7 @@ function Hero({ onContact, currentPath }) {
               >
                 Start a project
               </button>
-              <a href="#services" className="btn-secondary hero-secondary-btn">See services</a>
+              <a href="#services" className="btn-secondary hero-secondary-btn">See what I build</a>
             </div>
           </div>
 

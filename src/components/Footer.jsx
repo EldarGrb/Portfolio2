@@ -37,9 +37,9 @@ function Footer({ onContact, currentPath = '/', variant = 'default' }) {
             <button
               className="btn-primary"
               type="button"
-              onClick={() => onContact({ cta_label: 'Start a project', cta_placement: 'footer_minimal' })}
+              onClick={() => onContact({ cta_label: "Tell me what's slowing the business down", cta_placement: 'footer_minimal' })}
             >
-              Start a project
+              Tell me what&apos;s slowing the business down
             </button>
           </div>
         </div>
@@ -65,13 +65,13 @@ function Footer({ onContact, currentPath = '/', variant = 'default' }) {
           </div>
 
           <div className="footer-cta-block">
-            <p className="footer-cta-label">Need a sharper next step?</p>
+            <p className="footer-cta-label">Need a clear first fix?</p>
             <button
               className="btn-primary footer-primary-action"
               type="button"
-              onClick={() => onContact({ cta_label: 'Start a project', cta_placement: 'footer_primary' })}
+              onClick={() => onContact({ cta_label: "Tell me what's slowing the business down", cta_placement: 'footer_primary' })}
             >
-              Start a project
+              Tell me what&apos;s slowing the business down
             </button>
           </div>
         </div>

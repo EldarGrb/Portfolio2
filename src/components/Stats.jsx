@@ -15,10 +15,10 @@ function Stats() {
         </div>
         <div className="stats-text">
           <span className="section-signature" aria-hidden="true"><Icons.Logo /></span>
-          <h2 className="section-title">The engagement model is designed to stay clear and dependable.</h2>
+          <h2 className="section-title">You should never be guessing what&apos;s happening on a project.</h2>
           <p>
-            Strong delivery is not just about code quality. It is about ownership,
-            communication rhythm, and choosing the right system for the business problem.
+            Good work is not just code. It&apos;s clear replies, clear ownership, and fixing
+            the right problem first.
           </p>
           <div className="stats-evidence">
             <div className="stats-grid">

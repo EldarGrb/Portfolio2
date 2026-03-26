@@ -38,7 +38,7 @@ function CTA({ onContact }) {
           <div className="cta-intro">
             <span className="section-signature cta-signature" aria-hidden="true"><Icons.Logo /></span>
             <div>
-              <h2>Choose the system that would make the biggest difference right now.</h2>
+              <h2>What&apos;s costing you more right now: weak conversion, messy ops, or too much manual follow-up?</h2>
               <p className="cta-note">Start with the bottleneck that matters most. We can scope the right first build from there.</p>
             </div>
           </div>

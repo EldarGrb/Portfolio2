@@ -75,7 +75,7 @@ function SiteNav({ currentPath, onContact, variant = 'default' }) {
   const handleContact = () => {
     setMenuOpen(false);
     onContact({
-      cta_label: 'Start a project',
+      cta_label: "Tell me what's slowing the business down",
       cta_placement: useInsightsNav ? 'nav_mobile_insights' : 'nav_mobile',
     });
   };
@@ -95,9 +95,9 @@ function SiteNav({ currentPath, onContact, variant = 'default' }) {
               <button
                 type="button"
                 className={`nav-cta ${isEditorial ? 'nav-cta--editorial' : ''}`.trim()}
-                onClick={() => onContact({ cta_label: 'Start a project', cta_placement: 'nav_insights' })}
+                onClick={() => onContact({ cta_label: "Tell me what's slowing the business down", cta_placement: 'nav_insights' })}
               >
-                Start a project
+                Tell me what&apos;s slowing the business down
               </button>
               <button
                 type="button"
@@ -129,9 +129,9 @@ function SiteNav({ currentPath, onContact, variant = 'default' }) {
                 <button
                   type="button"
                   className={`nav-cta ${isEditorial ? 'nav-cta--editorial' : ''}`.trim()}
-                  onClick={() => onContact({ cta_label: 'Start a project', cta_placement: 'nav_primary' })}
+                  onClick={() => onContact({ cta_label: "Tell me what's slowing the business down", cta_placement: 'nav_primary' })}
                 >
-                  Start a project
+                  Tell me what&apos;s slowing the business down
                 </button>
                 <button
                   type="button"
@@ -185,7 +185,7 @@ function SiteNav({ currentPath, onContact, variant = 'default' }) {
               ))}
             </div>
             <button type="button" className="btn-primary nav-mobile-cta" onClick={handleContact}>
-              Start a project
+              Tell me what&apos;s slowing the business down
             </button>
           </div>
         </div>

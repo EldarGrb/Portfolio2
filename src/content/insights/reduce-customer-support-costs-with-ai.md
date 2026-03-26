@@ -20,7 +20,7 @@ rootCauseCards: [{"title":"The source material is weak","body":"If your help doc
 outcomeCards: [{"label":"Typical 3-person e-commerce support team","outcome":"AI handles around 55% of common tickets, which helps the business avoid hiring another person at roughly $3,500 per month."},{"label":"Typical SaaS company with 8 support reps","outcome":"AI-assisted replies cut average handle time by about 40%, which lets the team absorb a growth spike without adding headcount."},{"label":"Typical solo service business owner","outcome":"A simple chatbot plus better FAQ content can reduce support email time from about 2 hours a day to 25 minutes."}]
 ---
 ## Problem Statement
-There is no shortage of advice about AI in customer support right now, but most of it skips the part that actually matters.
+Most AI support advice sounds good until you're the one deciding what happens when the bot gets it wrong.
 
 [INTRO_QUOTES]
 
