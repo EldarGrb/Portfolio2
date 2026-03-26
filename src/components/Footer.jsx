@@ -53,7 +53,7 @@ function Footer({ onContact, currentPath = '/', variant = 'default' }) {
       <div className="footer-frame footer-frame--default">
         <div className="footer-primary">
           <div className="footer-brand-block">
-            <p className="footer-kicker section-label">Ready for a steadier build</p>
+            <p className="footer-kicker section-label">Fix the bottleneck</p>
             <div className="footer-logo">
               <Icons.Logo />
               Uroboros Systems
