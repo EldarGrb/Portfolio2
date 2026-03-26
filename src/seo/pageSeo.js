@@ -39,6 +39,37 @@ export function getHomeSeo() {
   };
 }
 
+export function getAboutSeo() {
+  return {
+    title: `About | ${SITE_NAME}`,
+    description: 'Meet Eldar Jahic and learn how Uroboros Systems grew into a calm, capable software partner for businesses that need clearer operations.',
+    canonical: `${SITE_URL}/about`,
+    url: `${SITE_URL}/about`,
+    type: 'website',
+    image: DEFAULT_OG_IMAGE,
+    schemas: [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'WebPage',
+        name: `About ${SITE_NAME}`,
+        description: 'A short story about the person behind Uroboros Systems and the kind of work the studio does.',
+        url: `${SITE_URL}/about`,
+      },
+      {
+        '@context': 'https://schema.org',
+        '@type': 'Person',
+        name: 'Eldar Jahic',
+        jobTitle: 'Founder and Developer',
+        worksFor: {
+          '@type': 'Organization',
+          name: SITE_NAME,
+          url: SITE_URL,
+        },
+      },
+    ],
+  };
+}
+
 export function getInsightsSeo() {
   return {
     title: `Insights | ${SITE_NAME}`,
@@ -157,6 +188,11 @@ export async function buildPrerenderRoutes() {
       path: '/',
       initialArticle: null,
       seo: getHomeSeo(),
+    },
+    {
+      path: '/about',
+      initialArticle: null,
+      seo: getAboutSeo(),
     },
     {
       path: '/insights',

@@ -9,11 +9,13 @@ function SiteNav({ currentPath, onContact, variant = 'default' }) {
   const inInsights = currentPath.startsWith('/insights');
   const useInsightsNav = inInsights;
   const isEditorial = variant === 'editorial';
-  const servicesHref = inInsights ? '/#services' : '#services';
-  const processHref = inInsights ? '/#process' : '#process';
-  const contactHref = inInsights ? '/#contact' : '#contact';
+  const useHomeAnchors = currentPath !== '/';
+  const servicesHref = useHomeAnchors ? '/#services' : '#services';
+  const processHref = useHomeAnchors ? '/#process' : '#process';
+  const contactHref = useHomeAnchors ? '/#contact' : '#contact';
   const navLinks = [
     { href: '/', label: 'Home', active: currentPath === '/' },
+    { href: '/about', label: 'About', active: currentPath === '/about' },
     { href: '/insights', label: 'Insights', active: inInsights },
     { href: servicesHref, label: 'Services', active: false },
     { href: processHref, label: 'Process', active: false },

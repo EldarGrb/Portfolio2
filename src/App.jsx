@@ -3,6 +3,7 @@ import { useAnalytics } from './analytics/useAnalytics';
 import { SpeedInsights } from '@vercel/speed-insights/react';
 import ContactModal from './components/ContactModal';
 import { getArticleBySlug } from './data/insights/articles';
+import AboutPage from './pages/AboutPage';
 import HomePage from './pages/HomePage';
 import InsightsPage from './pages/InsightsPage';
 import InsightArticlePage from './pages/InsightArticlePage';
@@ -44,6 +45,7 @@ function App({ currentPathOverride, prerender = false, initialArticle = null }) 
   const insightPrefix = '/insights/';
   const isInsightsHub = currentPath === '/insights';
   const isInsightArticle = currentPath.startsWith(insightPrefix);
+  const isAboutPage = currentPath === '/about';
   const articleSlug = isInsightArticle ? currentPath.slice(insightPrefix.length) : '';
   const articleMeta = articleSlug ? getArticleBySlug(articleSlug) : null;
 
@@ -64,6 +66,8 @@ function App({ currentPathOverride, prerender = false, initialArticle = null }) 
         initialArticle={initialArticle}
       />
     );
+  } else if (isAboutPage) {
+    page = <AboutPage onContact={handleOpenModal} currentPath={currentPath} />;
   } else {
     page = <NotFoundPage currentPath={currentPath} onContact={handleOpenModal} />;
   }

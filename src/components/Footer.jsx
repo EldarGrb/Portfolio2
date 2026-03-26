@@ -4,10 +4,11 @@ function Footer({ onContact, currentPath = '/', variant = 'default' }) {
   const isMinimal = variant === 'minimal';
   const isEditorial = variant === 'editorial' || variant === 'minimal';
 
-  const inInsights = currentPath.startsWith('/insights');
-  const servicesHref = inInsights ? '/#services' : '#services';
-  const processHref = inInsights ? '/#process' : '#process';
-  const contactHref = inInsights ? '/#contact' : '#contact';
+  const useHomeAnchors = currentPath !== '/';
+  const servicesHref = useHomeAnchors ? '/#services' : '#services';
+  const processHref = useHomeAnchors ? '/#process' : '#process';
+  const contactHref = useHomeAnchors ? '/#contact' : '#contact';
+  const aboutHref = '/about';
 
   if (isMinimal) {
     return (
@@ -26,6 +27,7 @@ function Footer({ onContact, currentPath = '/', variant = 'default' }) {
 
           <nav className="footer-minimal-nav" aria-label="Footer navigation">
             <a href="/">Home</a>
+            <a href={aboutHref}>About</a>
             <a href="/insights">Insights</a>
             <a href={servicesHref}>Services</a>
             <a href={processHref}>Process</a>
@@ -34,13 +36,18 @@ function Footer({ onContact, currentPath = '/', variant = 'default' }) {
 
           <div className="footer-minimal-cta">
             <p>Need help applying one of these ideas to your workflow?</p>
-            <button
-              className="btn-primary"
-              type="button"
-              onClick={() => onContact({ cta_label: "Tell me what's slowing the business down", cta_placement: 'footer_minimal' })}
-            >
-              Tell me what&apos;s slowing the business down
-            </button>
+            <div className="footer-cta-actions">
+              <button
+                className="btn-primary"
+                type="button"
+                onClick={() => onContact({ cta_label: "Tell me what's slowing the business down", cta_placement: 'footer_minimal' })}
+              >
+                Tell me what&apos;s slowing the business down
+              </button>
+              <a href={aboutHref} className="btn-secondary footer-secondary-action">
+                About
+              </a>
+            </div>
           </div>
         </div>
       </footer>
@@ -66,18 +73,25 @@ function Footer({ onContact, currentPath = '/', variant = 'default' }) {
 
           <div className="footer-cta-block">
             <p className="footer-cta-label">Need a clear first fix?</p>
-            <button
-              className="btn-primary footer-primary-action"
-              type="button"
-              onClick={() => onContact({ cta_label: "Tell me what's slowing the business down", cta_placement: 'footer_primary' })}
-            >
-              Tell me what&apos;s slowing the business down
-            </button>
+            <div className="footer-cta-actions">
+              <button
+                className="btn-primary footer-primary-action"
+                type="button"
+                onClick={() => onContact({ cta_label: "Tell me what's slowing the business down", cta_placement: 'footer_primary' })}
+              >
+                Tell me what&apos;s slowing the business down
+              </button>
+              <a href={aboutHref} className="btn-secondary footer-secondary-action">
+                About
+              </a>
+            </div>
           </div>
         </div>
 
         <div className="footer-bottom">
           <nav className="footer-nav" aria-label="Footer navigation">
+            <a href="/">Home</a>
+            <a href={aboutHref}>About</a>
             <a href="/insights">Insights</a>
             <a href={servicesHref}>Services</a>
             <a href={processHref}>Process</a>

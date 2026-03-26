@@ -55,6 +55,12 @@ async function main() {
       priority: '1.0',
     },
     {
+      loc: `${SITE_URL}/about`,
+      lastmod: toIsoDate(latestArticleDate),
+      changefreq: 'monthly',
+      priority: '0.7',
+    },
+    {
       loc: `${SITE_URL}/insights`,
       lastmod: toIsoDate(latestArticleDate),
       changefreq: 'weekly',
