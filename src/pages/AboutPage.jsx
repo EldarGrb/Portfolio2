@@ -47,13 +47,18 @@ function AboutPage({ currentPath, onContact }) {
           <figure className="about-portrait">
             <div className="about-portrait-frame">
               {portraitReady ? (
-                <img
-                  className="about-portrait-photo"
-                  src="/images/about-portrait.png"
-                  alt="Portrait of Eldar Jahic"
-                  loading="eager"
-                  onError={() => setPortraitReady(false)}
-                />
+                <picture>
+                  <source srcSet="/images/about-portrait.webp" type="image/webp" />
+                  <img
+                    className="about-portrait-photo"
+                    src="/images/about-portrait.png"
+                    alt="Portrait of Eldar Jahic"
+                    width="819"
+                    height="1250"
+                    loading="eager"
+                    onError={() => setPortraitReady(false)}
+                  />
+                </picture>
               ) : (
                 <div className="about-portrait-image about-portrait-image--placeholder" aria-label="Portrait fallback">
                   <div className="about-portrait-labels">
