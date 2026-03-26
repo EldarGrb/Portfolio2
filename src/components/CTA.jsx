@@ -35,33 +35,43 @@ function CTA({ onContact }) {
       <div className="cta-main">
         <div className="cta-bg" />
         <div className="cta-content">
-          <span className="section-signature cta-signature" aria-hidden="true"><Icons.Logo /></span>
-          <h2>Choose the system that would make the biggest difference right now.</h2>
-          <p className="cta-note">Start with the bottleneck that matters most. We can scope the right first build from there.</p>
+          <div className="cta-intro">
+            <span className="section-signature cta-signature" aria-hidden="true"><Icons.Logo /></span>
+            <div>
+              <h2>Choose the system that would make the biggest difference right now.</h2>
+              <p className="cta-note">Start with the bottleneck that matters most. We can scope the right first build from there.</p>
+            </div>
+          </div>
 
           <div className="cta-conversation">
-            <p className="cta-question">Where do you need the most help?</p>
-            <div className="cta-selectors" aria-label="Project type options">
-              {options.map((option) => (
-                <button
-                  key={option.id}
-                  type="button"
-                  className={`cta-selector ${selected === option.id ? 'active' : ''}`}
-                  onClick={() => {
-                    setSelected(option.id);
-                    track('cta_click', {
-                      cta_label: option.label,
-                      cta_placement: 'cta_selector',
-                    });
-                  }}
-                  aria-pressed={selected === option.id}
-                >
-                  {option.label}
-                </button>
-              ))}
+            <div className="cta-choice-list">
+              <p className="cta-question">Where do you need the most help?</p>
+              <div className="cta-selectors" aria-label="Project type options">
+                {options.map((option) => (
+                  <button
+                    key={option.id}
+                    type="button"
+                    className={`cta-selector ${selected === option.id ? 'active' : ''}`}
+                    onClick={() => {
+                      setSelected(option.id);
+                      track('cta_click', {
+                        cta_label: option.label,
+                        cta_placement: 'cta_selector',
+                      });
+                    }}
+                    aria-pressed={selected === option.id}
+                  >
+                    <span>{option.label}</span>
+                    <span className="cta-selector-mark" aria-hidden="true">
+                      {selected === option.id ? 'Selected' : 'View'}
+                    </span>
+                  </button>
+                ))}
+              </div>
             </div>
 
             <div className="cta-response" aria-live="polite">
+              <p className="cta-response-label">Recommended first step</p>
               <h3>{activeOption.label}</h3>
               <p>{activeOption.summary}</p>
               <button
