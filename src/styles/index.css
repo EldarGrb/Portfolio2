@@ -2907,7 +2907,7 @@ summary {
 
 .hero-content {
   display: grid;
-  grid-template-columns: minmax(0, 1.22fr) minmax(280px, 0.78fr);
+  grid-template-columns: minmax(0, 1fr);
   align-items: end;
   gap: 42px;
   padding: 136px 40px 48px;
@@ -2956,7 +2956,7 @@ summary {
 }
 
 .hero-proof-grid {
-  display: grid;
+  display: none;
   gap: 12px;
   max-width: 360px;
   justify-self: end;
@@ -3671,6 +3671,7 @@ summary {
   }
 
   .hero-proof-grid {
+    display: grid;
     gap: 0;
     margin-top: 8px;
     border-top: 1px solid rgba(235, 232, 224, 0.08);
