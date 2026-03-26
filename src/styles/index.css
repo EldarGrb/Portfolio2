@@ -2909,12 +2909,17 @@ summary {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   align-items: end;
+  justify-items: center;
   gap: 42px;
   padding: 136px 40px 48px;
+  text-align: center;
 }
 
 .hero-copy {
-  max-width: 720px;
+  max-width: 860px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .hero-eyebrow {
@@ -2926,7 +2931,7 @@ summary {
 }
 
 .hero-card h1 {
-  max-width: 11ch;
+  max-width: 13ch;
   font-size: clamp(3.4rem, 5.4vw, 5.8rem);
   line-height: 1.02;
   letter-spacing: -0.045em;
@@ -2936,7 +2941,7 @@ summary {
 
 .hero-summary {
   margin-top: 22px;
-  max-width: 50ch;
+  max-width: 58ch;
   color: rgba(241, 238, 231, 0.78);
   font-size: 1.02rem;
   line-height: 1.78;
@@ -2946,6 +2951,7 @@ summary {
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 16px;
   margin-top: 38px;
 }
@@ -3640,9 +3646,14 @@ summary {
   .hero-content {
     grid-template-columns: 1fr;
     align-items: end;
+    justify-items: stretch;
     padding: 104px 20px 28px;
     gap: 20px;
     text-align: left;
+  }
+
+  .hero-copy {
+    align-items: flex-start;
   }
 
   .hero-card h1 {
@@ -3661,6 +3672,7 @@ summary {
 
   .hero-actions {
     width: 100%;
+    justify-content: flex-start;
     margin-top: 30px;
   }
 
