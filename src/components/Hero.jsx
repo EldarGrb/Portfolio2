@@ -33,7 +33,7 @@ function Hero({ onContact, currentPath }) {
           <div className="hero-copy">
             <p className="hero-eyebrow">Software systems for businesses that need clearer operations</p>
             <h1>
-              Websites, web apps, and <span className="ai-emphasis">AI workflows</span> that help your
+              Websites, web apps, and <span className="ai-emphasis">AI Workflows</span> that help your
               business run better.
             </h1>
             <p className="hero-summary">
