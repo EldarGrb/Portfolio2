@@ -4838,6 +4838,8 @@ summary {
 }
 
 .page-shell--editorial .insight-article-header h1 {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
   color: #171411;
   font-size: clamp(2.9rem, 5vw, 4.4rem);
   line-height: 0.98;
@@ -5056,9 +5058,12 @@ summary {
 }
 
 .page-shell--editorial .insight-docs-section h2 {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
   color: #171411;
   font-size: clamp(1.95rem, 3vw, 2.7rem);
   line-height: 1;
+  letter-spacing: -0.045em;
 }
 
 .page-shell--editorial .insight-docs-section h3 {
@@ -5344,6 +5349,8 @@ summary {
 }
 
 .insights-shell--article .insight-article-header h1 {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
   max-width: 12ch;
   margin: 0;
   color: #171411;
@@ -5376,10 +5383,13 @@ summary {
 }
 
 .insights-shell--article .insight-docs-section h2 {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
   margin: 0 0 16px;
   color: #171411;
   font-size: clamp(1.9rem, 3vw, 2.5rem);
   line-height: 1.02;
+  letter-spacing: -0.045em;
 }
 
 .insights-shell--article .insight-docs-section h3 {

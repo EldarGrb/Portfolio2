@@ -5,6 +5,19 @@ export { SITE_URL };
 
 const articleIndex = [
   {
+    title: 'Fix slow lead follow-up with an AI chatbot and enrichment pipeline',
+    slug: 'fix-slow-lead-follow-up-with-ai-chatbot-and-enrichment',
+    excerpt: 'A marketing agency was losing 3-4 leads per month to slow follow-up and spreadsheet chaos. We replaced the mess with a chatbot, lead enrichment, and auto-assignment.',
+    category: 'Lead Operations',
+    keywords: ['AI chatbot', 'lead enrichment', 'CRM automation', 'lead follow-up', 'marketing agency'],
+    publishedAt: '2026-03-26',
+    updatedAt: '2026-03-26',
+    readTime: 5,
+    canonical: `${SITE_URL}/insights/fix-slow-lead-follow-up-with-ai-chatbot-and-enrichment`,
+    url: '/insights/fix-slow-lead-follow-up-with-ai-chatbot-and-enrichment',
+    sourcePath: '../../content/insights/fix-slow-lead-follow-up-with-ai-chatbot-and-enrichment.md',
+  },
+  {
     title: 'How to Reduce Customer Support Costs With AI Without Making Support Worse',
     slug: 'reduce-customer-support-costs-with-ai',
     excerpt: 'Most advice about AI in customer support skips the hard part: what to automate, what should stay human, and how to cut costs without making support worse.',
