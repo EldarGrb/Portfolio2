@@ -37,17 +37,17 @@ function Hero({ onContact, currentPath }) {
               business run better.
             </h1>
             <p className="hero-summary">
-              Uroboros Systems works with small businesses and solo founders who need
+              Uroboros Systems works with small/medium businesses and solo founders who need
               practical software, stronger digital presence, and <span className="ai-emphasis ai-emphasis--inline">AI-enhanced workflows</span>{' '}
               without the noise of a generic agency process.
             </p>
             <div className="hero-actions">
               <button
                 type="button"
-                className="btn-primary hero-cta-btn"
+                className="btn-primary hero-cta-btn hero-cta-btn--teal-selected"
                 onClick={() => onContact({ cta_label: 'Start a project', cta_placement: 'hero_primary' })}
               >
-                Start a project
+                <span>Start a project</span>
               </button>
               <a href="#services" className="btn-secondary hero-secondary-btn">See what I build</a>
             </div>

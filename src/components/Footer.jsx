@@ -66,7 +66,7 @@ function Footer({ onContact, currentPath = '/', variant = 'default' }) {
               Uroboros Systems
             </div>
             <p className="footer-summary">
-              Practical websites, web apps, and AI workflows for small businesses and solo founders
+              Practical websites, web apps, and AI workflows for small/medium businesses and solo founders
               who want clearer operations and calmer delivery.
             </p>
           </div>
