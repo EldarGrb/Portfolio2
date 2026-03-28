@@ -1,17 +1,10 @@
 import SiteNav from '../components/SiteNav';
 import Footer from '../components/Footer';
-import { SITE_URL } from '../data/insights/articles';
+import { getNotFoundSeo } from '../seo/pageSeo';
 import { useSeo } from '../hooks/useSeo';
 
 function NotFoundPage({ currentPath, onContact }) {
-  useSeo({
-    title: 'Page Not Found | Uroboros Systems',
-    description: 'The page you requested could not be found.',
-    canonical: `${SITE_URL}${currentPath}`,
-    url: `${SITE_URL}${currentPath}`,
-    type: 'website',
-    schemas: [],
-  });
+  useSeo(getNotFoundSeo(currentPath));
 
   return (
     <div className="page-shell insights-page-shell">

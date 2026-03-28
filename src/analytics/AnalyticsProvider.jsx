@@ -59,6 +59,7 @@ export function AnalyticsProvider({ children }) {
   const track = useCallback((eventName, properties = {}) => {
     const payload = {
       page_path: typeof window !== 'undefined' ? window.location.pathname : '',
+      ...attribution,
       ...properties,
     };
 
@@ -70,14 +71,16 @@ export function AnalyticsProvider({ children }) {
 
     window.gtag('event', eventName, payload);
     return true;
-  }, [consentStatus]);
+  }, [attribution, consentStatus]);
 
-  const trackPageView = useCallback((currentPath) => {
+  const trackPageView = useCallback((currentPath, properties = {}) => {
     const payload = {
       page_path: currentPath,
       page_location: typeof window !== 'undefined' ? window.location.href : currentPath,
       page_title: typeof document !== 'undefined' ? document.title : '',
       page_referrer: attribution.referrer || (typeof document !== 'undefined' ? document.referrer : ''),
+      ...attribution,
+      ...properties,
     };
 
     logDebug('page_view', payload);
@@ -88,7 +91,7 @@ export function AnalyticsProvider({ children }) {
 
     window.gtag('event', 'page_view', payload);
     return true;
-  }, [attribution.referrer, consentStatus]);
+  }, [attribution, consentStatus]);
 
   const contextValue = useMemo(() => ({
     attribution,

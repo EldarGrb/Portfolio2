@@ -1,4 +1,10 @@
-import { DEFAULT_OG_IMAGE, SITE_DESCRIPTION, SITE_NAME, SITE_URL } from '../data/siteConfig';
+import {
+  DEFAULT_OG_IMAGE,
+  SITE_AUTHOR,
+  SITE_DESCRIPTION,
+  SITE_NAME,
+  SITE_URL,
+} from '../data/siteConfig';
 import { insightsArticles, loadArticleBySlug } from '../data/insights/articles';
 
 function buildOrganizationSchema() {
@@ -27,6 +33,30 @@ function buildOrganizationSchema() {
   };
 }
 
+function buildWebsiteSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: SITE_NAME,
+    url: SITE_URL,
+    description: SITE_DESCRIPTION,
+    inLanguage: 'en',
+  };
+}
+
+function buildBreadcrumbSchema(items) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.name,
+      item: item.url,
+    })),
+  };
+}
+
 export function getHomeSeo() {
   return {
     title: `${SITE_NAME} - Websites, Web Apps, and AI Workflows`,
@@ -35,7 +65,29 @@ export function getHomeSeo() {
     url: `${SITE_URL}/`,
     type: 'website',
     image: DEFAULT_OG_IMAGE,
-    schemas: [buildOrganizationSchema()],
+    author: SITE_AUTHOR,
+    keywords: [
+      'web development for small businesses',
+      'website strategy',
+      'web app development',
+      'AI workflow automation',
+      'automation systems for founders',
+    ],
+    imageAlt: 'Uroboros Systems abstract brand graphic',
+    schemas: [
+      buildOrganizationSchema(),
+      buildWebsiteSchema(),
+      {
+        '@context': 'https://schema.org',
+        '@type': 'WebPage',
+        name: `${SITE_NAME} home`,
+        description: SITE_DESCRIPTION,
+        url: `${SITE_URL}/`,
+      },
+      buildBreadcrumbSchema([
+        { name: 'Home', url: `${SITE_URL}/` },
+      ]),
+    ],
   };
 }
 
@@ -47,6 +99,14 @@ export function getAboutSeo() {
     url: `${SITE_URL}/about`,
     type: 'website',
     image: DEFAULT_OG_IMAGE,
+    author: SITE_AUTHOR,
+    keywords: [
+      'about Eldar Jahic',
+      'Uroboros Systems founder',
+      'software developer Bosnia and Herzegovina',
+      'software partner for small business',
+    ],
+    imageAlt: 'Uroboros Systems abstract brand graphic',
     schemas: [
       {
         '@context': 'https://schema.org',
@@ -58,7 +118,7 @@ export function getAboutSeo() {
       {
         '@context': 'https://schema.org',
         '@type': 'Person',
-        name: 'Eldar Jahic',
+        name: SITE_AUTHOR,
         jobTitle: 'Founder and Developer',
         worksFor: {
           '@type': 'Organization',
@@ -66,6 +126,10 @@ export function getAboutSeo() {
           url: SITE_URL,
         },
       },
+      buildBreadcrumbSchema([
+        { name: 'Home', url: `${SITE_URL}/` },
+        { name: 'About', url: `${SITE_URL}/about` },
+      ]),
     ],
   };
 }
@@ -78,6 +142,15 @@ export function getInsightsSeo() {
     url: `${SITE_URL}/insights`,
     type: 'website',
     image: DEFAULT_OG_IMAGE,
+    author: SITE_AUTHOR,
+    keywords: [
+      'AI workflow insights',
+      'operations automation articles',
+      'small business systems blog',
+      'lead follow-up automation',
+      'customer support automation',
+    ],
+    imageAlt: 'Uroboros Systems insights cover image',
     schemas: [
       {
         '@context': 'https://schema.org',
@@ -91,6 +164,10 @@ export function getInsightsSeo() {
           url: article.canonical,
         })),
       },
+      buildBreadcrumbSchema([
+        { name: 'Home', url: `${SITE_URL}/` },
+        { name: 'Insights', url: `${SITE_URL}/insights` },
+      ]),
     ],
   };
 }
@@ -108,40 +185,25 @@ export function getInsightArticleSeo(articleMeta, article) {
         datePublished: article.publishedAt,
         dateModified: article.updatedAt,
         keywords: article.keywords.join(', '),
-        mainEntityOfPage: article.canonical,
+        mainEntityOfPage: {
+          '@type': 'WebPage',
+          '@id': article.canonical,
+        },
         author: {
-          '@type': 'Organization',
-          name: SITE_NAME,
+          '@type': 'Person',
+          name: SITE_AUTHOR,
         },
         publisher: {
           '@type': 'Organization',
           name: SITE_NAME,
+          url: SITE_URL,
         },
       },
-      {
-        '@context': 'https://schema.org',
-        '@type': 'BreadcrumbList',
-        itemListElement: [
-          {
-            '@type': 'ListItem',
-            position: 1,
-            name: 'Home',
-            item: `${SITE_URL}/`,
-          },
-          {
-            '@type': 'ListItem',
-            position: 2,
-            name: 'Insights',
-            item: `${SITE_URL}/insights`,
-          },
-          {
-            '@type': 'ListItem',
-            position: 3,
-            name: article.title,
-            item: article.canonical,
-          },
-        ],
-      },
+      buildBreadcrumbSchema([
+        { name: 'Home', url: `${SITE_URL}/` },
+        { name: 'Insights', url: `${SITE_URL}/insights` },
+        { name: article.title, url: article.canonical },
+      ]),
     );
 
     if (article.faqItems.length) {
@@ -167,7 +229,36 @@ export function getInsightArticleSeo(articleMeta, article) {
     url: articleMeta.canonical,
     type: 'article',
     image: DEFAULT_OG_IMAGE,
+    author: SITE_AUTHOR,
+    keywords: articleMeta.keywords,
+    imageAlt: `${articleMeta.title} article cover`,
     schemas,
+  };
+}
+
+export function getNotFoundSeo(currentPath) {
+  const resolvedPath = currentPath?.startsWith('/') ? currentPath : '/';
+  const url = `${SITE_URL}${resolvedPath}`;
+
+  return {
+    title: `Page Not Found | ${SITE_NAME}`,
+    description: 'The page you requested could not be found.',
+    canonical: url,
+    url,
+    type: 'website',
+    image: DEFAULT_OG_IMAGE,
+    author: SITE_AUTHOR,
+    robots: 'noindex, nofollow',
+    imageAlt: 'Uroboros Systems abstract brand graphic',
+    schemas: [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'WebPage',
+        name: 'Page not found',
+        description: 'A missing page on the Uroboros Systems website.',
+        url,
+      },
+    ],
   };
 }
 
@@ -219,7 +310,11 @@ export function renderSeoTags(seo) {
   return [
     `  <title>${escapeAttribute(seo.title)}</title>`,
     `  <meta name="description" content="${escapeAttribute(seo.description)}" />`,
-    '  <meta name="robots" content="index, follow" />',
+    `  <meta name="robots" content="${escapeAttribute(seo.robots ?? 'index, follow')}" />`,
+    `  <meta name="author" content="${escapeAttribute(seo.author ?? SITE_AUTHOR)}" />`,
+    seo.keywords?.length
+      ? `  <meta name="keywords" content="${escapeAttribute(seo.keywords.join(', '))}" />`
+      : '',
     `  <link rel="canonical" href="${escapeAttribute(seo.canonical)}" />`,
     '  <meta name="theme-color" content="#000000" />',
     '  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />',
@@ -231,6 +326,7 @@ export function renderSeoTags(seo) {
     `  <meta property="og:url" content="${escapeAttribute(seo.url)}" />`,
     `  <meta property="og:site_name" content="${escapeAttribute(SITE_NAME)}" />`,
     `  <meta property="og:image" content="${escapeAttribute(seo.image)}" />`,
+    `  <meta property="og:image:alt" content="${escapeAttribute(seo.imageAlt ?? seo.title)}" />`,
     '  <meta property="og:image:width" content="1200" />',
     '  <meta property="og:image:height" content="630" />',
     '',
@@ -239,8 +335,9 @@ export function renderSeoTags(seo) {
     `  <meta name="twitter:title" content="${escapeAttribute(seo.title)}" />`,
     `  <meta name="twitter:description" content="${escapeAttribute(seo.description)}" />`,
     `  <meta name="twitter:image" content="${escapeAttribute(seo.image)}" />`,
+    `  <meta name="twitter:image:alt" content="${escapeAttribute(seo.imageAlt ?? seo.title)}" />`,
     '',
     '  <!-- Structured Data -->',
     schemaMarkup,
-  ].join('\n');
+  ].filter(Boolean).join('\n');
 }

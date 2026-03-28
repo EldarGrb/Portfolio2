@@ -1,9 +1,15 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
 import { DEFAULT_OG_IMAGE } from '../data/siteConfig';
 
+const useIsomorphicLayoutEffect = typeof window === 'undefined' ? useEffect : useLayoutEffect;
+
 function upsertMeta(attribute, key, content) {
-  if (!content) return;
   let element = document.head.querySelector(`meta[${attribute}="${key}"]`);
+
+  if (!content) {
+    element?.remove();
+    return;
+  }
 
   if (!element) {
     element = document.createElement('meta');
@@ -49,25 +55,34 @@ export function useSeo({
   url,
   type = 'website',
   image = DEFAULT_OG_IMAGE,
+  imageAlt,
+  robots = 'index, follow',
+  author,
+  keywords = [],
   schemas = [],
 }) {
   const previousSchemaSignatureRef = useRef('');
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (title) {
       document.title = title;
     }
 
     upsertMeta('name', 'description', description);
+    upsertMeta('name', 'robots', robots);
+    upsertMeta('name', 'author', author);
+    upsertMeta('name', 'keywords', keywords.length ? keywords.join(', ') : '');
     upsertMeta('property', 'og:type', type);
     upsertMeta('property', 'og:title', title);
     upsertMeta('property', 'og:description', description);
     upsertMeta('property', 'og:url', url ?? canonical);
     upsertMeta('property', 'og:image', image);
+    upsertMeta('property', 'og:image:alt', imageAlt ?? title);
     upsertMeta('name', 'twitter:card', 'summary_large_image');
     upsertMeta('name', 'twitter:title', title);
     upsertMeta('name', 'twitter:description', description);
     upsertMeta('name', 'twitter:image', image);
+    upsertMeta('name', 'twitter:image:alt', imageAlt ?? title);
 
     upsertCanonical(canonical);
 
@@ -83,5 +98,5 @@ export function useSeo({
       clearSeoSchemas();
       previousSchemaSignatureRef.current = '';
     };
-  }, [title, description, canonical, url, type, image, schemas]);
+  }, [title, description, canonical, url, type, image, imageAlt, robots, author, keywords, schemas]);
 }

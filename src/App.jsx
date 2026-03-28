@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useAnalytics } from './analytics/useAnalytics';
 import { SpeedInsights } from '@vercel/speed-insights/react';
 import ContactModal from './components/ContactModal';
@@ -23,11 +23,6 @@ function App({ currentPathOverride, prerender = false, initialArticle = null }) 
 
   const currentPath = normalizePath(currentPathOverride ?? browserPath);
 
-  useEffect(() => {
-    if (!isHydrated) return;
-    trackPageView(currentPath);
-  }, [consentStatus, currentPath, isHydrated, trackPageView]);
-
   const handleOpenModal = useCallback((source = {}) => {
     setContactContext(source);
     if (source.cta_placement) {
@@ -48,6 +43,56 @@ function App({ currentPathOverride, prerender = false, initialArticle = null }) 
   const isAboutPage = currentPath === '/about';
   const articleSlug = isInsightArticle ? currentPath.slice(insightPrefix.length) : '';
   const articleMeta = articleSlug ? getArticleBySlug(articleSlug) : null;
+
+  const pageAnalytics = useMemo(() => {
+    if (currentPath === '/') {
+      return {
+        page_type: 'home',
+        content_group: 'marketing_site',
+      };
+    }
+
+    if (isAboutPage) {
+      return {
+        page_type: 'about',
+        content_group: 'marketing_site',
+      };
+    }
+
+    if (isInsightsHub) {
+      return {
+        page_type: 'insights_hub',
+        content_group: 'insights',
+      };
+    }
+
+    if (isInsightArticle && articleMeta) {
+      return {
+        page_type: 'insight_article',
+        content_group: 'insights',
+        article_slug: articleMeta.slug,
+        article_title: articleMeta.title,
+        article_category: articleMeta.category,
+      };
+    }
+
+    return {
+      page_type: 'not_found',
+      content_group: 'error_page',
+    };
+  }, [articleMeta, currentPath, isAboutPage, isInsightArticle, isInsightsHub]);
+
+  useEffect(() => {
+    if (!isHydrated || typeof window === 'undefined') return undefined;
+
+    const frameId = window.requestAnimationFrame(() => {
+      trackPageView(currentPath, pageAnalytics);
+    });
+
+    return () => {
+      window.cancelAnimationFrame(frameId);
+    };
+  }, [consentStatus, currentPath, isHydrated, pageAnalytics, trackPageView]);
 
   let page = null;
 
