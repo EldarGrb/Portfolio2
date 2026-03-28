@@ -128,6 +128,22 @@ function Services({ onContact }) {
                     <div className="service-tags">
                       {s.tags.map((t, j) => <span className="service-tag" key={j}>{t}</span>)}
                     </div>
+                    <div className="service-actions">
+                      <button
+                        type="button"
+                        className="btn-primary"
+                        onClick={() => onContact({
+                          cta_label: `Talk through ${s.title}`,
+                          cta_placement: `service_${s.visual}`,
+                          service_name: s.title,
+                        })}
+                      >
+                        Talk through this service
+                      </button>
+                      <a href={s.supportingHref} className="service-inline-link">
+                        {s.supportingLabel}
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>

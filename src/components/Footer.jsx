@@ -7,7 +7,7 @@ function Footer({ onContact, currentPath = '/', variant = 'default' }) {
   const useHomeAnchors = currentPath !== '/';
   const servicesHref = useHomeAnchors ? '/#services' : '#services';
   const processHref = useHomeAnchors ? '/#process' : '#process';
-  const contactHref = useHomeAnchors ? '/#contact' : '#contact';
+  const contactHref = '/contact';
   const aboutHref = '/about';
 
   if (isMinimal) {

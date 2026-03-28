@@ -262,6 +262,11 @@ function InsightArticlePage({ articleSlug, articleMeta, currentPath, onContact, 
                   >
                     {article.finalCtaButtonLabel ?? 'Book a strategy call'}
                   </button>
+                  <div className="insight-inline-links">
+                    <a href="/contact" className="btn-secondary">Go to contact</a>
+                    <a href="/#services" className="insight-inline-link">Browse services</a>
+                    <a href="/about" className="insight-inline-link">About how I work</a>
+                  </div>
                 </div>
               </section>
 

@@ -12,7 +12,7 @@ function SiteNav({ currentPath, onContact, variant = 'default' }) {
   const useHomeAnchors = currentPath !== '/';
   const servicesHref = useHomeAnchors ? '/#services' : '#services';
   const processHref = useHomeAnchors ? '/#process' : '#process';
-  const contactHref = useHomeAnchors ? '/#contact' : '#contact';
+  const contactHref = '/contact';
   const navLinks = [
     { href: '/', label: 'Home', active: currentPath === '/' },
     { href: '/about', label: 'About', active: currentPath === '/about' },

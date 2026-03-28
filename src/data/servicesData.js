@@ -6,6 +6,8 @@ export const services = [
     tags: ['Positioning', 'Responsive design', 'Conversion pages', 'Content systems'],
     visual: 'websites',
     imageAlt: 'Service visual showing a structured landing-page layout with clear hierarchy, supporting modules, and a highlighted conversion path.',
+    supportingHref: '/about',
+    supportingLabel: 'See how projects are scoped',
   },
   {
     icon: 'Layers',
@@ -14,6 +16,8 @@ export const services = [
     tags: ['Product UX', 'Dashboards', 'APIs', 'Operational tooling'],
     visual: 'webApps',
     imageAlt: 'Service visual showing a clean application workspace with layered dashboards, navigation, and operational charts.',
+    supportingHref: '/insights',
+    supportingLabel: 'Read implementation notes',
   },
   {
     icon: 'Zap',
@@ -22,6 +26,8 @@ export const services = [
     tags: ['Workflow automation', 'n8n', 'CRM handoffs', 'Internal operations'],
     visual: 'aiWorkflows',
     imageAlt: 'Service visual showing connected workflow steps, routed handoffs, and operational automation paths.',
+    supportingHref: '/insights/fix-slow-lead-follow-up-with-ai-chatbot-and-enrichment',
+    supportingLabel: 'Read a workflow example',
   },
   {
     icon: 'Monitor',
@@ -31,6 +37,8 @@ export const services = [
     tags: ['Voice assistants', 'Chat assistants', 'Lead capture', 'Support routing'],
     visual: 'assistants',
     imageAlt: 'Service visual showing a calm conversational system with response states, routing, and first-response support cues.',
+    supportingHref: '/insights/reduce-customer-support-costs-with-ai',
+    supportingLabel: 'Read an assistant strategy note',
   },
   {
     icon: 'BarChart',
@@ -39,5 +47,7 @@ export const services = [
     tags: ['Performance', 'SEO', 'Refactoring', 'Platform cleanups'],
     visual: 'performance',
     imageAlt: 'Service visual showing rising performance trends, system tuning signals, and a cleaner rebuild-oriented workspace.',
+    supportingHref: '/contact',
+    supportingLabel: 'Talk through the cleanup',
   },
 ];

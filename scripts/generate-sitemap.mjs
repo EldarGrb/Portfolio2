@@ -66,6 +66,12 @@ async function main() {
       changefreq: 'weekly',
       priority: '0.8',
     },
+    {
+      loc: `${SITE_URL}/contact`,
+      lastmod: toIsoDate(latestArticleDate),
+      changefreq: 'monthly',
+      priority: '0.8',
+    },
     ...articles.map((article) => ({
       loc: `${SITE_URL}${article.url}`,
       lastmod: toIsoDate(article.updatedAt),

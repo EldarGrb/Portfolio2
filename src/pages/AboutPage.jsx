@@ -115,6 +115,27 @@ function AboutPage({ currentPath, onContact }) {
             </ul>
           </aside>
         </section>
+
+        <section className="about-teaser section" aria-labelledby="about-next-steps-title">
+          <div className="about-teaser-inner">
+            <div className="about-teaser-copy">
+              <p className="section-label">Next step</p>
+              <h2 id="about-next-steps-title">Use the path that gives you the clearest next move.</h2>
+              <p>
+                If you want to understand the working style first, stay here. If you want examples,
+                read the insights. If you already know the bottleneck, go straight to the contact page.
+              </p>
+            </div>
+            <div className="about-teaser-actions">
+              <a href="/insights" className="btn-secondary">
+                Read insights
+              </a>
+              <a href="/contact" className="btn-primary">
+                Go to contact
+              </a>
+            </div>
+          </div>
+        </section>
       </main>
 
       <Footer onContact={onContact} currentPath={currentPath} />

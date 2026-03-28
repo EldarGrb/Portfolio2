@@ -5,6 +5,7 @@ import {
   SITE_NAME,
   SITE_URL,
 } from '../data/siteConfig';
+import { services } from '../data/servicesData';
 import { insightsArticles, loadArticleBySlug } from '../data/insights/articles';
 
 function buildOrganizationSchema() {
@@ -57,6 +58,38 @@ function buildBreadcrumbSchema(items) {
   };
 }
 
+function buildServiceSchemas() {
+  return services.map((service) => ({
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: service.title,
+    description: service.description,
+    provider: {
+      '@type': 'Organization',
+      name: SITE_NAME,
+      url: SITE_URL,
+    },
+    serviceType: service.tags.join(', '),
+    areaServed: 'Worldwide',
+    url: `${SITE_URL}/#services`,
+  }));
+}
+
+const contactFaqItems = [
+  {
+    question: 'What should I include in the first message?',
+    answer: 'The most helpful message includes the main bottleneck, the desired outcome, and any timing pressure that matters.',
+  },
+  {
+    question: 'What kinds of projects fit best?',
+    answer: 'Website rebuilds, web apps, workflow automation, AI-assisted intake, and cleanup work where the current setup is getting in the way.',
+  },
+  {
+    question: 'How quickly do you reply?',
+    answer: 'New project messages get a reply within 24 hours with a practical next step.',
+  },
+];
+
 export function getHomeSeo() {
   return {
     title: `${SITE_NAME} - Websites, Web Apps, and AI Workflows`,
@@ -87,6 +120,7 @@ export function getHomeSeo() {
       buildBreadcrumbSchema([
         { name: 'Home', url: `${SITE_URL}/` },
       ]),
+      ...buildServiceSchemas(),
     ],
   };
 }
@@ -168,6 +202,52 @@ export function getInsightsSeo() {
         { name: 'Home', url: `${SITE_URL}/` },
         { name: 'Insights', url: `${SITE_URL}/insights` },
       ]),
+    ],
+  };
+}
+
+export function getContactSeo() {
+  return {
+    title: `Contact | ${SITE_NAME}`,
+    description: 'Start the conversation with the bottleneck that is costing the business the most: weak conversion, messy operations, or too much manual follow-up.',
+    canonical: `${SITE_URL}/contact`,
+    url: `${SITE_URL}/contact`,
+    type: 'website',
+    image: DEFAULT_OG_IMAGE,
+    author: SITE_AUTHOR,
+    keywords: [
+      'contact Uroboros Systems',
+      'website project inquiry',
+      'workflow automation consultation',
+      'AI assistant project contact',
+      'software partner contact',
+    ],
+    imageAlt: 'Uroboros Systems contact page cover image',
+    schemas: [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'ContactPage',
+        name: `Contact ${SITE_NAME}`,
+        description: 'Contact page for website, app, automation, and AI assistant inquiries.',
+        url: `${SITE_URL}/contact`,
+      },
+      {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: contactFaqItems.map((item) => ({
+          '@type': 'Question',
+          name: item.question,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: item.answer,
+          },
+        })),
+      },
+      buildBreadcrumbSchema([
+        { name: 'Home', url: `${SITE_URL}/` },
+        { name: 'Contact', url: `${SITE_URL}/contact` },
+      ]),
+      ...buildServiceSchemas(),
     ],
   };
 }
@@ -289,6 +369,11 @@ export async function buildPrerenderRoutes() {
       path: '/insights',
       initialArticle: null,
       seo: getInsightsSeo(),
+    },
+    {
+      path: '/contact',
+      initialArticle: null,
+      seo: getContactSeo(),
     },
     ...articleRoutes,
   ];

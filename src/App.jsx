@@ -4,6 +4,7 @@ import { SpeedInsights } from '@vercel/speed-insights/react';
 import ContactModal from './components/ContactModal';
 import { getArticleBySlug } from './data/insights/articles';
 import AboutPage from './pages/AboutPage';
+import ContactPage from './pages/ContactPage';
 import HomePage from './pages/HomePage';
 import InsightsPage from './pages/InsightsPage';
 import InsightArticlePage from './pages/InsightArticlePage';
@@ -41,6 +42,7 @@ function App({ currentPathOverride, prerender = false, initialArticle = null }) 
   const isInsightsHub = currentPath === '/insights';
   const isInsightArticle = currentPath.startsWith(insightPrefix);
   const isAboutPage = currentPath === '/about';
+  const isContactPage = currentPath === '/contact';
   const articleSlug = isInsightArticle ? currentPath.slice(insightPrefix.length) : '';
   const articleMeta = articleSlug ? getArticleBySlug(articleSlug) : null;
 
@@ -55,6 +57,13 @@ function App({ currentPathOverride, prerender = false, initialArticle = null }) 
     if (isAboutPage) {
       return {
         page_type: 'about',
+        content_group: 'marketing_site',
+      };
+    }
+
+    if (isContactPage) {
+      return {
+        page_type: 'contact',
         content_group: 'marketing_site',
       };
     }
@@ -80,7 +89,7 @@ function App({ currentPathOverride, prerender = false, initialArticle = null }) 
       page_type: 'not_found',
       content_group: 'error_page',
     };
-  }, [articleMeta, currentPath, isAboutPage, isInsightArticle, isInsightsHub]);
+  }, [articleMeta, currentPath, isAboutPage, isContactPage, isInsightArticle, isInsightsHub]);
 
   useEffect(() => {
     if (!isHydrated || typeof window === 'undefined') return undefined;
@@ -113,6 +122,8 @@ function App({ currentPathOverride, prerender = false, initialArticle = null }) 
     );
   } else if (isAboutPage) {
     page = <AboutPage onContact={handleOpenModal} currentPath={currentPath} />;
+  } else if (isContactPage) {
+    page = <ContactPage onContact={handleOpenModal} currentPath={currentPath} />;
   } else {
     page = <NotFoundPage currentPath={currentPath} onContact={handleOpenModal} />;
   }
