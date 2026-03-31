@@ -71,8 +71,25 @@ function buildServiceSchemas() {
     },
     serviceType: service.tags.join(', '),
     areaServed: 'Worldwide',
-    url: `${SITE_URL}/#services`,
+    url: `${SITE_URL}${service.href}`,
   }));
+}
+
+function buildSingleServiceSchema(service) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: service.title,
+    description: service.description,
+    provider: {
+      '@type': 'Organization',
+      name: SITE_NAME,
+      url: SITE_URL,
+    },
+    serviceType: service.tags.join(', '),
+    areaServed: 'Worldwide',
+    url: `${SITE_URL}${service.href}`,
+  };
 }
 
 const contactFaqItems = [
@@ -252,6 +269,36 @@ export function getContactSeo() {
   };
 }
 
+export function getServiceSeo(service) {
+  const canonical = `${SITE_URL}${service.href}`;
+
+  return {
+    title: `${service.pageEyebrow} | ${SITE_NAME}`,
+    description: service.description,
+    canonical,
+    url: canonical,
+    type: 'website',
+    image: DEFAULT_OG_IMAGE,
+    author: SITE_AUTHOR,
+    keywords: service.tags.map((tag) => tag.toLowerCase()),
+    imageAlt: `${service.pageEyebrow} service page cover`,
+    schemas: [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'WebPage',
+        name: service.title,
+        description: service.description,
+        url: canonical,
+      },
+      buildSingleServiceSchema(service),
+      buildBreadcrumbSchema([
+        { name: 'Home', url: `${SITE_URL}/` },
+        { name: service.pageEyebrow, url: canonical },
+      ]),
+    ],
+  };
+}
+
 export function getInsightArticleSeo(articleMeta, article) {
   const schemas = [];
 
@@ -353,6 +400,11 @@ export async function buildPrerenderRoutes() {
       };
     }),
   );
+  const serviceRoutes = services.map((service) => ({
+    path: service.href,
+    initialArticle: null,
+    seo: getServiceSeo(service),
+  }));
 
   return [
     {
@@ -375,6 +427,7 @@ export async function buildPrerenderRoutes() {
       initialArticle: null,
       seo: getContactSeo(),
     },
+    ...serviceRoutes,
     ...articleRoutes,
   ];
 }

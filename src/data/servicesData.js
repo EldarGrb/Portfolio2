@@ -1,5 +1,6 @@
-export const services = [
+const serviceEntries = [
   {
+    slug: 'websites',
     icon: 'Code',
     title: 'Websites that explain your offer and earn trust quickly',
     description: 'Marketing sites and landing pages built to sharpen positioning, reduce drop-off, and give buyers a clear next step.',
@@ -8,8 +9,38 @@ export const services = [
     imageAlt: 'Service visual showing a structured landing-page layout with clear hierarchy, supporting modules, and a highlighted conversion path.',
     supportingHref: '/about',
     supportingLabel: 'See how projects are scoped',
+    pageEyebrow: 'Websites',
+    pageLabel: 'Website systems',
+    pageTitle: 'Websites built to explain the offer, earn trust, and make the next step obvious.',
+    pageIntro: 'This is for businesses that have something real to offer but still lose momentum because the website is vague, thin, or harder to trust than it should be.',
+    pageSummary: 'The work usually combines offer clarity, page structure, conversion paths, and content hierarchy so buyers understand what you do and what they should do next.',
+    problems: [
+      'The site looks acceptable, but buyers still leave without understanding the offer.',
+      'Pages are too generic, too thin, or too fragmented to support sales conversations.',
+      'The current setup cannot support campaigns, new service lines, or clearer lead capture.',
+    ],
+    outcomes: [
+      'Sharper positioning and page hierarchy',
+      'A cleaner buyer journey from first impression to inquiry',
+      'A site that is easier to expand with service pages, insights, and campaigns',
+    ],
+    deliverables: [
+      'Homepage and core page strategy',
+      'Page-level copy structure and conversion path planning',
+      'Responsive frontend build and CMS-friendly content structure',
+      'Analytics, SEO foundations, and launch hardening',
+    ],
+    fit: 'Best for service businesses, consultants, and small teams that need the site to support revenue, trust, and a clearer sales conversation.',
+    process: [
+      'Clarify what the buyer needs to understand first',
+      'Design the page structure around the commercial path',
+      'Ship a site that is easier to maintain and easier to grow',
+    ],
+    signal: 'Useful when the website looks finished but still does not pull its weight commercially.',
+    relatedInsights: ['fix-slow-lead-follow-up-with-ai-chatbot-and-enrichment'],
   },
   {
+    slug: 'web-apps',
     icon: 'Layers',
     title: 'Web apps that remove friction from day-to-day operations',
     description: 'Internal tools and client-facing products designed to simplify workflows, centralize information, and support reliable delivery.',
@@ -18,8 +49,38 @@ export const services = [
     imageAlt: 'Service visual showing a clean application workspace with layered dashboards, navigation, and operational charts.',
     supportingHref: '/insights',
     supportingLabel: 'Read implementation notes',
+    pageEyebrow: 'Web apps',
+    pageLabel: 'Operational tools',
+    pageTitle: 'Web apps that reduce friction, centralize information, and support steadier delivery.',
+    pageIntro: 'This fits when the business has grown past spreadsheets, disconnected tools, or half-manual internal work and now needs software shaped around the real operating flow.',
+    pageSummary: 'The goal is not feature theater. It is a product or internal tool that makes handoffs clearer, decisions faster, and execution easier to trust.',
+    problems: [
+      'Important information lives across too many tools or too many people.',
+      'The team is still stitching together process with manual workarounds.',
+      'The current product or internal flow feels inconsistent, fragile, or expensive to maintain.',
+    ],
+    outcomes: [
+      'Cleaner workflows and fewer repeated manual steps',
+      'A stronger operational source of truth',
+      'A calmer product experience for internal teams or external users',
+    ],
+    deliverables: [
+      'Workflow mapping and product scope definition',
+      'Frontend interface design and application states',
+      'API integration planning and implementation support',
+      'Quality checks for real usage paths, edge cases, and handoff clarity',
+    ],
+    fit: 'Best for businesses that need a dependable internal tool, dashboard, client portal, or focused web product.',
+    process: [
+      'Map the operational flow before deciding the screens',
+      'Build the critical path first and validate it against real usage',
+      'Stabilize the app with analytics, QA, and a clean handoff',
+    ],
+    signal: 'Useful when daily work depends on too much memory, too many tabs, or too many repeated clarifications.',
+    relatedInsights: ['fix-slow-lead-follow-up-with-ai-chatbot-and-enrichment'],
   },
   {
+    slug: 'ai-workflows',
     icon: 'Zap',
     title: 'AI-enhanced workflows that cut repetitive admin work',
     description: 'Practical automation flows that connect your tools, move information where it belongs, and reduce manual follow-up.',
@@ -28,8 +89,38 @@ export const services = [
     imageAlt: 'Service visual showing connected workflow steps, routed handoffs, and operational automation paths.',
     supportingHref: '/insights/fix-slow-lead-follow-up-with-ai-chatbot-and-enrichment',
     supportingLabel: 'Read a workflow example',
+    pageEyebrow: 'AI workflows',
+    pageLabel: 'Automation systems',
+    pageTitle: 'AI-enhanced workflows that reduce manual follow-up and keep work moving.',
+    pageIntro: 'This is for teams that are still burning time on lead routing, internal updates, repetitive admin, or tool handoffs that should already be handled for them.',
+    pageSummary: 'AI is treated as practical infrastructure here: triage, enrichment, routing, summarizing, and moving information between systems without adding more overhead to the team.',
+    problems: [
+      'Leads, requests, or tasks stall between tools and people.',
+      'The same information has to be rewritten, forwarded, or checked repeatedly.',
+      'Automation attempts already exist but are brittle, opaque, or hard to trust.',
+    ],
+    outcomes: [
+      'Less manual follow-up and less operational drag',
+      'Faster routing and cleaner ownership across systems',
+      'Automation that is easier to understand, monitor, and improve',
+    ],
+    deliverables: [
+      'Workflow audit and bottleneck mapping',
+      'Automation logic, routing rules, and AI decision boundaries',
+      'n8n or integration-layer implementation',
+      'Failure-state handling, analytics, and post-launch tuning',
+    ],
+    fit: 'Best for service teams, agencies, and operating teams that need automation to save time without creating new chaos.',
+    process: [
+      'Identify where the expensive manual step actually happens',
+      'Design a workflow with clear ownership and fallback logic',
+      'Launch with monitoring so automation stays trustworthy',
+    ],
+    signal: 'Useful when a business has already felt the pain of repetitive admin and knows that process speed is now a revenue issue.',
+    relatedInsights: ['fix-slow-lead-follow-up-with-ai-chatbot-and-enrichment', 'reduce-customer-support-costs-with-ai'],
   },
   {
+    slug: 'voice-chat-assistants',
     icon: 'Monitor',
     featured: true,
     title: 'Voice and chat assistants that handle first-response work',
@@ -39,8 +130,38 @@ export const services = [
     imageAlt: 'Service visual showing a calm conversational system with response states, routing, and first-response support cues.',
     supportingHref: '/insights/reduce-customer-support-costs-with-ai',
     supportingLabel: 'Read an assistant strategy note',
+    pageEyebrow: 'Assistants',
+    pageLabel: 'First-response systems',
+    pageTitle: 'Voice and chat assistants built for first-response work, triage, and cleaner intake.',
+    pageIntro: 'This works best when too much early communication still depends on a human answering the same questions, triaging the same requests, or collecting the same intake details.',
+    pageSummary: 'The assistant is not the product. It is the first-response layer that supports the real business process behind support, sales, scheduling, or intake.',
+    problems: [
+      'The team loses time to repetitive first-response questions.',
+      'Leads or support requests arrive without structure, context, or routing logic.',
+      'Existing bots feel robotic, brittle, or disconnected from the actual workflow.',
+    ],
+    outcomes: [
+      'Cleaner intake before a human handoff',
+      'Faster response coverage without extra admin load',
+      'Assistant behavior that reflects the real business process',
+    ],
+    deliverables: [
+      'Conversation flow design and boundary definition',
+      'Lead, support, or intake routing logic',
+      'Assistant implementation across voice or chat touchpoints',
+      'Escalation design, analytics, and operational review after launch',
+    ],
+    fit: 'Best for businesses that need better first-response systems for leads, support, intake, or appointment flows.',
+    process: [
+      'Define what the assistant should handle and what should stay human',
+      'Design the flow around intake quality and routing clarity',
+      'Launch with fallback paths so coverage improves without adding risk',
+    ],
+    signal: 'Useful when the business has enough inbound volume that first-response quality now affects speed, revenue, or service consistency.',
+    relatedInsights: ['reduce-customer-support-costs-with-ai', 'fix-slow-lead-follow-up-with-ai-chatbot-and-enrichment'],
   },
   {
+    slug: 'performance-rebuilds',
     icon: 'BarChart',
     title: 'Performance and rebuild work when the current setup is in the way',
     description: 'Audits, refactors, and rebuilds for teams that need a cleaner stack, better performance, or a more dependable delivery foundation.',
@@ -49,5 +170,43 @@ export const services = [
     imageAlt: 'Service visual showing rising performance trends, system tuning signals, and a cleaner rebuild-oriented workspace.',
     supportingHref: '/contact',
     supportingLabel: 'Talk through the cleanup',
+    pageEyebrow: 'Performance and rebuilds',
+    pageLabel: 'Cleanup work',
+    pageTitle: 'Rebuilds, audits, and cleanup work when the current setup is slowing everything down.',
+    pageIntro: 'Sometimes the right next step is not a brand-new product. It is cleaning up the system that is already in the way: slow pages, weak SEO foundations, fragile code, or a stack no one trusts anymore.',
+    pageSummary: 'This work creates breathing room. It gives the business a cleaner technical base so future launches, SEO work, and operational improvements are easier to support.',
+    problems: [
+      'The current site or app is slow, brittle, or difficult to extend.',
+      'SEO, analytics, or conversion basics are weak because the foundation is messy.',
+      'The team is avoiding changes because the current system feels risky to touch.',
+    ],
+    outcomes: [
+      'A more dependable technical foundation',
+      'Better performance, stronger SEO hygiene, and cleaner maintainability',
+      'A setup that supports future work instead of resisting it',
+    ],
+    deliverables: [
+      'Current-state audit and risk map',
+      'Priority fix plan for performance, SEO, or architecture issues',
+      'Focused rebuild or refactor on the critical path',
+      'Verification, QA, and a practical post-fix roadmap',
+    ],
+    fit: 'Best for teams that already have something live but need it cleaned up before the next meaningful growth step.',
+    process: [
+      'Audit the current stack and identify the real blockers',
+      'Fix the highest-leverage foundation issues first',
+      'Leave the system cleaner, faster, and easier to build on',
+    ],
+    signal: 'Useful when every future improvement feels harder than it should because the current setup is carrying too much technical debt.',
+    relatedInsights: ['reduce-customer-support-costs-with-ai'],
   },
 ];
+
+export const services = serviceEntries.map((service) => ({
+  ...service,
+  href: `/services/${service.slug}`,
+}));
+
+export function getServiceBySlug(slug) {
+  return services.find((service) => service.slug === slug) ?? null;
+}

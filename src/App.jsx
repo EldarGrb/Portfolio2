@@ -3,12 +3,14 @@ import { useAnalytics } from './analytics/useAnalytics';
 import { SpeedInsights } from '@vercel/speed-insights/react';
 import ContactModal from './components/ContactModal';
 import { getArticleBySlug } from './data/insights/articles';
+import { getServiceBySlug } from './data/servicesData';
 import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
 import HomePage from './pages/HomePage';
 import InsightsPage from './pages/InsightsPage';
 import InsightArticlePage from './pages/InsightArticlePage';
 import NotFoundPage from './pages/NotFoundPage';
+import ServicePage from './pages/ServicePage';
 
 function normalizePath(pathname) {
   if (!pathname) return '/';
@@ -39,12 +41,16 @@ function App({ currentPathOverride, prerender = false, initialArticle = null }) 
   }, []);
 
   const insightPrefix = '/insights/';
+  const servicesPrefix = '/services/';
   const isInsightsHub = currentPath === '/insights';
   const isInsightArticle = currentPath.startsWith(insightPrefix);
+  const isServicePage = currentPath.startsWith(servicesPrefix);
   const isAboutPage = currentPath === '/about';
   const isContactPage = currentPath === '/contact';
   const articleSlug = isInsightArticle ? currentPath.slice(insightPrefix.length) : '';
   const articleMeta = articleSlug ? getArticleBySlug(articleSlug) : null;
+  const serviceSlug = isServicePage ? currentPath.slice(servicesPrefix.length) : '';
+  const serviceMeta = serviceSlug ? getServiceBySlug(serviceSlug) : null;
 
   const pageAnalytics = useMemo(() => {
     if (currentPath === '/') {
@@ -65,6 +71,15 @@ function App({ currentPathOverride, prerender = false, initialArticle = null }) 
       return {
         page_type: 'contact',
         content_group: 'marketing_site',
+      };
+    }
+
+    if (isServicePage && serviceMeta) {
+      return {
+        page_type: 'service',
+        content_group: 'services',
+        service_slug: serviceMeta.slug,
+        service_name: serviceMeta.title,
       };
     }
 
@@ -89,7 +104,7 @@ function App({ currentPathOverride, prerender = false, initialArticle = null }) 
       page_type: 'not_found',
       content_group: 'error_page',
     };
-  }, [articleMeta, currentPath, isAboutPage, isContactPage, isInsightArticle, isInsightsHub]);
+  }, [articleMeta, currentPath, isAboutPage, isContactPage, isInsightArticle, isInsightsHub, isServicePage, serviceMeta]);
 
   useEffect(() => {
     if (!isHydrated || typeof window === 'undefined') return undefined;
@@ -120,6 +135,8 @@ function App({ currentPathOverride, prerender = false, initialArticle = null }) 
         initialArticle={initialArticle}
       />
     );
+  } else if (isServicePage && serviceMeta) {
+    page = <ServicePage currentPath={currentPath} onContact={handleOpenModal} serviceSlug={serviceSlug} />;
   } else if (isAboutPage) {
     page = <AboutPage onContact={handleOpenModal} currentPath={currentPath} />;
   } else if (isContactPage) {

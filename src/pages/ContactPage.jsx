@@ -37,19 +37,25 @@ const contactOptions = [
 const trustSignals = [
   {
     icon: 'Shield',
-    title: 'Clear first step',
-    copy: 'You do not need a full spec. A short note on what feels broken is enough to start.',
+    title: '1. Send the bottleneck',
+    copy: 'A short note about what is not working is enough.',
   },
   {
     icon: 'Rocket',
-    title: 'Fast reply window',
-    copy: 'You will get a response within 24 hours with a sensible next step, not a generic sales reply.',
+    title: '2. Get a practical reply',
+    copy: 'You will get a useful next step within 24 hours.',
   },
   {
     icon: 'Globe',
-    title: 'Remote-first delivery',
-    copy: 'Projects are scoped for async collaboration, clear handoffs, and practical rollout across time zones.',
+    title: '3. Decide the shape',
+    copy: 'From there we can tell if this is a build, cleanup, or workflow job.',
   },
+];
+
+const contactChecklist = [
+  'What feels slow, unclear, or fragile',
+  'What you want to improve next',
+  'Any launch or timing pressure that matters',
 ];
 
 function ContactPage({ currentPath, onContact }) {
@@ -68,11 +74,12 @@ function ContactPage({ currentPath, onContact }) {
               If the website is not converting, operations feel messy, or follow-up is still too
               manual, this page is the cleanest place to start.
             </p>
-            <p className="contact-body">
-              Send a short note about what is blocking progress, what you are trying to launch, or
-              where the current setup is falling apart. From there, we can decide whether the right
-              first move is a website, a workflow rebuild, or an AI-assisted layer.
-            </p>
+
+            <div className="contact-mini-list" aria-label="Useful details to include">
+              {contactChecklist.map((item) => (
+                <span key={item}>{item}</span>
+              ))}
+            </div>
 
             <div className="contact-actions">
               <button
@@ -98,8 +105,8 @@ function ContactPage({ currentPath, onContact }) {
           </div>
 
           <aside className="contact-hero-aside" aria-labelledby="contact-trust-title">
-            <p className="section-label">What to expect</p>
-            <h2 id="contact-trust-title">A calmer path into the project.</h2>
+            <p className="section-label">What happens next</p>
+            <h2 id="contact-trust-title">You do not need a polished brief to start.</h2>
             <div className="contact-trust-list">
               {trustSignals.map((signal) => {
                 const Icon = Icons[signal.icon];
@@ -122,12 +129,8 @@ function ContactPage({ currentPath, onContact }) {
 
         <section className="contact-paths" aria-labelledby="contact-paths-title">
           <div className="contact-section-heading">
-            <p className="section-label">Choose the closest fit</p>
-            <h2 id="contact-paths-title">Three common starting points.</h2>
-            <p>
-              Pick the path that sounds closest. It only shapes the conversation so the first reply
-              is more useful.
-            </p>
+            <p className="section-label">Pick the closest start</p>
+            <h2 id="contact-paths-title">Choose the path that sounds most familiar.</h2>
           </div>
 
           <div className="contact-path-grid">
@@ -159,12 +162,7 @@ function ContactPage({ currentPath, onContact }) {
         <section className="contact-proof" aria-labelledby="contact-proof-title">
           <div className="contact-proof-main">
             <p className="section-label">Before you reach out</p>
-            <h2 id="contact-proof-title">The most helpful note is a practical one.</h2>
-            <p>
-              A strong message usually includes one operational problem, one desired outcome, and any
-              timeline pressure that matters. That is enough to decide whether the first move should be
-              strategy, a focused build, or a cleanup pass.
-            </p>
+            <h2 id="contact-proof-title">Useful links if you want a little more context first.</h2>
           </div>
 
           <div className="contact-proof-links" aria-label="Helpful next steps">

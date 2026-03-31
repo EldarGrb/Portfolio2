@@ -49,7 +49,7 @@ function Hero({ onContact, currentPath }) {
               >
                 <span>Start a project</span>
               </button>
-              <a href="#services" className="btn-secondary hero-secondary-btn">See what I build</a>
+              <a href="#services" className="btn-secondary hero-secondary-btn">What I built</a>
             </div>
           </div>
 
