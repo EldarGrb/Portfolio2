@@ -129,9 +129,6 @@ function Services({ onContact }) {
                       {s.tags.map((t, j) => <span className="service-tag" key={j}>{t}</span>)}
                     </div>
                     <div className="service-actions">
-                      <a href={s.href} className="btn-secondary">
-                        View service page
-                      </a>
                       <button
                         type="button"
                         className="btn-primary"
