@@ -5,6 +5,19 @@ export { SITE_URL };
 
 const articleIndex = [
   {
+    title: 'What FreeFlow Gets Right About AI Voice Input on a Computer',
+    slug: 'what-freeflow-gets-right-about-ai-voice-input-on-a-computer',
+    excerpt: 'FreeFlow looks more interesting than a typical AI voice app because it treats voice as workflow input, not just speech-to-text.',
+    category: 'AI Tooling',
+    keywords: ['AI voice input', 'FreeFlow', 'speech to text', 'workflow tools', 'dictation'],
+    publishedAt: '2026-04-06',
+    updatedAt: '2026-04-06',
+    readTime: 4,
+    canonical: `${SITE_URL}/insights/what-freeflow-gets-right-about-ai-voice-input-on-a-computer`,
+    url: '/insights/what-freeflow-gets-right-about-ai-voice-input-on-a-computer',
+    sourcePath: '../../content/insights/what-freeflow-gets-right-about-ai-voice-input-on-a-computer.md',
+  },
+  {
     title: 'Fix slow lead follow-up with an AI chatbot and enrichment pipeline',
     slug: 'fix-slow-lead-follow-up-with-ai-chatbot-and-enrichment',
     excerpt: 'A marketing agency was losing 3-4 leads per month to slow follow-up and spreadsheet chaos. We replaced the mess with a chatbot, lead enrichment, and auto-assignment.',

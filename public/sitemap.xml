@@ -2,27 +2,33 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://uroboros.digital/</loc>
-    <lastmod>2026-03-26</lastmod>
+    <lastmod>2026-04-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://uroboros.digital/about</loc>
-    <lastmod>2026-03-26</lastmod>
+    <lastmod>2026-04-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://uroboros.digital/insights</loc>
-    <lastmod>2026-03-26</lastmod>
+    <lastmod>2026-04-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://uroboros.digital/contact</loc>
-    <lastmod>2026-03-26</lastmod>
+    <lastmod>2026-04-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://uroboros.digital/insights/what-freeflow-gets-right-about-ai-voice-input-on-a-computer</loc>
+    <lastmod>2026-04-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://uroboros.digital/insights/fix-slow-lead-follow-up-with-ai-chatbot-and-enrichment</loc>
