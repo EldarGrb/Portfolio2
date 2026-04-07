@@ -45,6 +45,7 @@ function Hero({ onContact, currentPath }) {
               <button
                 type="button"
                 className="btn-primary hero-cta-btn hero-cta-btn--teal-selected"
+                data-contact-trigger="true"
                 onClick={() => onContact({ cta_label: 'Start a project', cta_placement: 'hero_primary' })}
               >
                 <span>Start a project</span>

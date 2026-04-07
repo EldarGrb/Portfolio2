@@ -30,6 +30,7 @@ function HomePage({ onContact }) {
             <button
               type="button"
               className="btn-primary"
+              data-contact-trigger="true"
               onClick={() => onContact({ cta_label: 'Start a project', cta_placement: 'home_about_teaser' })}
             >
               Start a project

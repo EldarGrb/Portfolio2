@@ -1,8 +1,11 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useAnalytics } from './analytics/useAnalytics';
 import { SpeedInsights } from '@vercel/speed-insights/react';
+import BookingModal from './components/BookingModal';
+import ContactChoiceModal from './components/ContactChoiceModal';
 import ContactModal from './components/ContactModal';
 import { getArticleBySlug } from './data/insights/articles';
+import { loadCalendlyScript, warmCalendlyResources } from './lib/calendly';
 import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
 import HomePage from './pages/HomePage';
@@ -16,7 +19,7 @@ function normalizePath(pathname) {
 }
 
 function App({ currentPathOverride, prerender = false, initialArticle = null }) {
-  const [modalOpen, setModalOpen] = useState(false);
+  const [activeContactModal, setActiveContactModal] = useState(null);
   const [contactContext, setContactContext] = useState({});
   const browserPath = typeof window !== 'undefined' ? window.location.pathname : '/';
   const showSpeedInsights = !prerender && typeof window !== 'undefined';
@@ -24,18 +27,77 @@ function App({ currentPathOverride, prerender = false, initialArticle = null }) 
 
   const currentPath = normalizePath(currentPathOverride ?? browserPath);
 
-  const handleOpenModal = useCallback((source = {}) => {
+  useEffect(() => {
+    if (!isHydrated || typeof window === 'undefined') return undefined;
+
+    warmCalendlyResources();
+
+    const preloadCalendly = () => {
+      loadCalendlyScript().catch(() => {});
+    };
+
+    if ('requestIdleCallback' in window) {
+      const idleId = window.requestIdleCallback(preloadCalendly, { timeout: 2500 });
+      return () => window.cancelIdleCallback(idleId);
+    }
+
+    const timeoutId = window.setTimeout(preloadCalendly, 1200);
+    return () => window.clearTimeout(timeoutId);
+  }, [isHydrated]);
+
+  useEffect(() => {
+    if (!isHydrated || typeof document === 'undefined') return undefined;
+
+    const handleIntentWarmup = (event) => {
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+      if (!target.closest('[data-contact-trigger="true"]')) return;
+
+      warmCalendlyResources();
+      loadCalendlyScript().catch(() => {});
+    };
+
+    document.addEventListener('pointerover', handleIntentWarmup);
+    document.addEventListener('focusin', handleIntentWarmup);
+
+    return () => {
+      document.removeEventListener('pointerover', handleIntentWarmup);
+      document.removeEventListener('focusin', handleIntentWarmup);
+    };
+  }, [isHydrated]);
+
+  const handleOpenContactOptions = useCallback((source = {}) => {
     setContactContext(source);
+    warmCalendlyResources();
+    loadCalendlyScript().catch(() => {});
     if (source.cta_placement) {
       track('cta_click', source);
     }
-    track('contact_modal_open', source);
-    setModalOpen(true);
+    track('contact_choice_open', source);
+    setActiveContactModal('choice');
   }, [track]);
 
   const handleCloseModal = useCallback(() => {
-    setModalOpen(false);
+    setActiveContactModal(null);
     setContactContext({});
+  }, []);
+
+  const handleChooseMessage = useCallback(() => {
+    const payload = { ...contactContext, contact_path: 'message' };
+    track('contact_path_selected', payload);
+    track('contact_modal_open', payload);
+    setActiveContactModal('message');
+  }, [contactContext, track]);
+
+  const handleChooseBooking = useCallback(() => {
+    const payload = { ...contactContext, contact_path: 'booking' };
+    track('contact_path_selected', payload);
+    track('contact_booking_open', payload);
+    setActiveContactModal('booking');
+  }, [contactContext, track]);
+
+  const handleReturnToChoice = useCallback(() => {
+    setActiveContactModal('choice');
   }, []);
 
   const insightPrefix = '/insights/';
@@ -106,9 +168,9 @@ function App({ currentPathOverride, prerender = false, initialArticle = null }) 
   let page = null;
 
   if (currentPath === '/') {
-    page = <HomePage onContact={handleOpenModal} />;
+    page = <HomePage onContact={handleOpenContactOptions} />;
   } else if (isInsightsHub) {
-    page = <InsightsPage currentPath={currentPath} onContact={handleOpenModal} />;
+    page = <InsightsPage currentPath={currentPath} onContact={handleOpenContactOptions} />;
   } else if (isInsightArticle && articleMeta) {
     page = (
       <InsightArticlePage
@@ -116,22 +178,40 @@ function App({ currentPathOverride, prerender = false, initialArticle = null }) 
         articleSlug={articleSlug}
         articleMeta={articleMeta}
         currentPath={currentPath}
-        onContact={handleOpenModal}
+        onContact={handleOpenContactOptions}
         initialArticle={initialArticle}
       />
     );
   } else if (isAboutPage) {
-    page = <AboutPage onContact={handleOpenModal} currentPath={currentPath} />;
+    page = <AboutPage onContact={handleOpenContactOptions} currentPath={currentPath} />;
   } else if (isContactPage) {
-    page = <ContactPage onContact={handleOpenModal} currentPath={currentPath} />;
+    page = <ContactPage onContact={handleOpenContactOptions} currentPath={currentPath} />;
   } else {
-    page = <NotFoundPage currentPath={currentPath} onContact={handleOpenModal} />;
+    page = <NotFoundPage currentPath={currentPath} onContact={handleOpenContactOptions} />;
   }
 
   return (
     <>
       {page}
-      <ContactModal open={modalOpen} onClose={handleCloseModal} context={contactContext} />
+      <ContactChoiceModal
+        open={activeContactModal === 'choice'}
+        onClose={handleCloseModal}
+        onSelectMessage={handleChooseMessage}
+        onSelectBooking={handleChooseBooking}
+      />
+      <ContactModal
+        open={activeContactModal === 'message'}
+        onClose={handleCloseModal}
+        onBack={handleReturnToChoice}
+        context={contactContext}
+      />
+      <BookingModal
+        open={activeContactModal === 'booking'}
+        onClose={handleCloseModal}
+        onBack={handleReturnToChoice}
+        onSendMessage={handleChooseMessage}
+        context={contactContext}
+      />
       {showSpeedInsights ? <SpeedInsights /> : null}
     </>
   );

@@ -98,6 +98,7 @@ function SiteNav({ currentPath, onContact, variant = 'default' }) {
               <button
                 type="button"
                 className={`nav-cta ${isEditorial ? 'nav-cta--editorial' : ''}`.trim()}
+                data-contact-trigger="true"
                 onClick={() => onContact({ cta_label: "Tell me what's slowing the business down", cta_placement: 'nav_insights' })}
               >
                 Tell me what&apos;s slowing the business down
@@ -132,6 +133,7 @@ function SiteNav({ currentPath, onContact, variant = 'default' }) {
                 <button
                   type="button"
                   className={`nav-cta ${isEditorial ? 'nav-cta--editorial' : ''}`.trim()}
+                  data-contact-trigger="true"
                   onClick={() => onContact({ cta_label: "Tell me what's slowing the business down", cta_placement: 'nav_primary' })}
                 >
                   Tell me what&apos;s slowing the business down
@@ -187,7 +189,7 @@ function SiteNav({ currentPath, onContact, variant = 'default' }) {
                 </a>
               ))}
             </div>
-            <button type="button" className="btn-primary nav-mobile-cta" onClick={handleContact}>
+            <button type="button" className="btn-primary nav-mobile-cta" data-contact-trigger="true" onClick={handleContact}>
               Tell me what&apos;s slowing the business down
             </button>
           </div>

@@ -83,6 +83,7 @@ function Services({ onContact }) {
         <button
           type="button"
           className="btn-secondary"
+          data-contact-trigger="true"
           onClick={() => onContact({ cta_label: 'Request proposal', cta_placement: 'services_header' })}
         >
           Request proposal
@@ -132,6 +133,7 @@ function Services({ onContact }) {
                       <button
                         type="button"
                         className="btn-primary"
+                        data-contact-trigger="true"
                         onClick={() => onContact({
                           cta_label: `Talk through ${s.title}`,
                           cta_placement: `service_${s.visual}`,

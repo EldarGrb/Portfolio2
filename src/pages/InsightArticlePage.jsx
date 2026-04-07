@@ -247,6 +247,7 @@ function InsightArticlePage({ articleSlug, articleMeta, currentPath, onContact, 
                   <button
                     type="button"
                     className="btn-primary"
+                    data-contact-trigger="true"
                     onClick={() => {
                       track('insight_article_cta_click', {
                         article_slug: articleMeta.slug,

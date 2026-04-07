@@ -133,6 +133,7 @@ function ServicePage({ currentPath, onContact, serviceSlug }) {
                 <button
                   type="button"
                   className="btn-primary"
+                  data-contact-trigger="true"
                   onClick={() => onContact({
                     cta_label: `Talk through ${service.pageLabel.toLowerCase()}`,
                     cta_placement: `service_page_${service.slug}_hero`,
@@ -239,6 +240,7 @@ function ServicePage({ currentPath, onContact, serviceSlug }) {
                 <button
                   type="button"
                   className="btn-primary"
+                  data-contact-trigger="true"
                   onClick={() => onContact({
                     cta_label: `Start ${service.pageLabel.toLowerCase()} conversation`,
                     cta_placement: `service_page_${service.slug}_footer`,
@@ -275,6 +277,7 @@ function ServicePage({ currentPath, onContact, serviceSlug }) {
                 <button
                   type="button"
                   className="btn-primary"
+                  data-contact-trigger="true"
                   onClick={() => onContact({
                     cta_label: `Talk through ${service.pageLabel.toLowerCase()}`,
                     cta_placement: `service_page_${service.slug}_hero`,
@@ -374,6 +377,7 @@ function ServicePage({ currentPath, onContact, serviceSlug }) {
                 <button
                   type="button"
                   className="btn-primary"
+                  data-contact-trigger="true"
                   onClick={() => onContact({
                     cta_label: `Start ${service.pageLabel.toLowerCase()} conversation`,
                     cta_placement: `service_page_${service.slug}_footer`,
@@ -410,6 +414,7 @@ function ServicePage({ currentPath, onContact, serviceSlug }) {
                 <button
                   type="button"
                   className="btn-primary"
+                  data-contact-trigger="true"
                   onClick={() => onContact({
                     cta_label: `Talk through ${service.pageLabel.toLowerCase()}`,
                     cta_placement: `service_page_${service.slug}_hero`,
@@ -512,6 +517,7 @@ function ServicePage({ currentPath, onContact, serviceSlug }) {
                 <button
                   type="button"
                   className="btn-primary"
+                  data-contact-trigger="true"
                   onClick={() => onContact({
                     cta_label: `Start ${service.pageLabel.toLowerCase()} conversation`,
                     cta_placement: `service_page_${service.slug}_footer`,
@@ -547,6 +553,7 @@ function ServicePage({ currentPath, onContact, serviceSlug }) {
               <button
                 type="button"
                 className="btn-primary"
+                data-contact-trigger="true"
                 onClick={() => onContact({
                   cta_label: `Talk through ${service.pageLabel.toLowerCase()}`,
                   cta_placement: `service_page_${service.slug}_hero`,
@@ -634,6 +641,7 @@ function ServicePage({ currentPath, onContact, serviceSlug }) {
               <button
                 type="button"
                 className="btn-primary"
+                data-contact-trigger="true"
                 onClick={() => onContact({
                   cta_label: `Start ${service.pageLabel.toLowerCase()} conversation`,
                   cta_placement: `service_page_${service.slug}_footer`,

@@ -40,6 +40,7 @@ function Footer({ onContact, currentPath = '/', variant = 'default' }) {
               <button
                 className="btn-primary"
                 type="button"
+                data-contact-trigger="true"
                 onClick={() => onContact({ cta_label: "Tell me what's slowing the business down", cta_placement: 'footer_minimal' })}
               >
                 Tell me what&apos;s slowing the business down
@@ -77,6 +78,7 @@ function Footer({ onContact, currentPath = '/', variant = 'default' }) {
               <button
                 className="btn-primary footer-primary-action"
                 type="button"
+                data-contact-trigger="true"
                 onClick={() => onContact({ cta_label: "Tell me what's slowing the business down", cta_placement: 'footer_primary' })}
               >
                 Tell me what&apos;s slowing the business down
@@ -100,6 +102,7 @@ function Footer({ onContact, currentPath = '/', variant = 'default' }) {
           <button
             className="footer-contact-link"
             type="button"
+            data-contact-trigger="true"
             onClick={() => onContact({ cta_label: 'Tell me what you\'re building', cta_placement: 'footer_detail' })}
           >
             Tell me what you&apos;re building

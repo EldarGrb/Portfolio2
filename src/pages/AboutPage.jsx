@@ -34,6 +34,7 @@ function AboutPage({ currentPath, onContact }) {
               <button
                 type="button"
                 className="btn-primary"
+                data-contact-trigger="true"
                 onClick={() => onContact({ cta_label: "Tell me what's slowing the business down", cta_placement: 'about_page_hero' })}
               >
                 Tell me what&apos;s slowing the business down

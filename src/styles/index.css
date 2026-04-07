@@ -7,6 +7,14 @@ html {
   --accent-primary: #eefcb3;
   --ai-emphasis-color: #a44e3f;
   --text-main: #e8e8e8;
+  --cta-photo-gradient:
+    radial-gradient(circle at -4% 18%, rgba(247, 201, 138, 0.96) 0%, rgba(247, 201, 138, 0.82) 18%, rgba(247, 201, 138, 0.06) 34%, transparent 46%),
+    linear-gradient(135deg, #b7dced 0%, #53bdf1 26%, #1f87e2 62%, #96d9f1 100%);
+  --cta-photo-gradient-hover:
+    radial-gradient(circle at -2% 14%, rgba(255, 212, 157, 0.98) 0%, rgba(255, 212, 157, 0.84) 18%, rgba(255, 212, 157, 0.08) 34%, transparent 48%),
+    linear-gradient(118deg, #c4e4f2 0%, #67c6f2 24%, #1780df 58%, #8ad1ee 82%, #d2eef8 100%);
+  --cta-photo-border: rgba(163, 201, 225, 0.38);
+  --cta-photo-border-strong: rgba(205, 225, 238, 0.54);
   --wide-content-max: 1540px;
   --ultra-content-max: 1760px;
   --wide-section-pad-y: 120px;
@@ -146,10 +154,11 @@ textarea:focus-visible {
 }
 .nav-cta {
   padding: 10px 24px;
-  border: 1px solid rgba(103, 149, 216, 0.34);
+  border: 1px solid var(--cta-photo-border);
   color: #eef5ff;
   background:
-    linear-gradient(135deg, rgba(33, 69, 234, 0.34), rgba(43, 99, 234, 0.24) 42%, rgba(47, 143, 213, 0.18) 72%, rgba(111, 214, 200, 0.18) 100%),
+    radial-gradient(circle at -10% 20%, rgba(247, 201, 138, 0.42) 0%, rgba(247, 201, 138, 0.2) 20%, transparent 44%),
+    linear-gradient(135deg, rgba(183, 220, 237, 0.24), rgba(83, 189, 241, 0.22) 28%, rgba(31, 135, 226, 0.22) 62%, rgba(150, 217, 241, 0.18) 100%),
     rgba(13, 17, 24, 0.78);
   border-radius: 40px;
   font-size: 0.9rem;
@@ -160,9 +169,10 @@ textarea:focus-visible {
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
 .nav-cta:hover {
-  border-color: rgba(126, 180, 229, 0.5);
+  border-color: var(--cta-photo-border-strong);
   background:
-    linear-gradient(135deg, rgba(33, 69, 234, 0.44), rgba(43, 99, 234, 0.3) 42%, rgba(47, 143, 213, 0.24) 72%, rgba(111, 214, 200, 0.22) 100%),
+    radial-gradient(circle at -6% 18%, rgba(255, 212, 157, 0.5) 0%, rgba(255, 212, 157, 0.22) 22%, transparent 46%),
+    linear-gradient(135deg, rgba(196, 228, 242, 0.32), rgba(103, 198, 242, 0.3) 28%, rgba(23, 128, 223, 0.3) 60%, rgba(138, 209, 238, 0.24) 100%),
     rgba(15, 20, 28, 0.92);
   color: #f8fbff;
   transform: translateY(-1px);
@@ -200,8 +210,8 @@ textarea:focus-visible {
   isolation: isolate;
   overflow: hidden;
   padding: 16px 36px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: linear-gradient(135deg, #2145ea 0%, #2b63ea 32%, #2f8fd5 66%, #6fd6c8 100%);
+  border: 1px solid rgba(209, 227, 239, 0.26);
+  background: var(--cta-photo-gradient);
   color: #f6f8fb;
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.12),
@@ -221,7 +231,7 @@ textarea:focus-visible {
   content: '';
   position: absolute;
   inset: -18%;
-  background: linear-gradient(115deg, #1d3fda 8%, #2462ef 34%, #2f91d9 64%, #6fd6c8 84%, #1d3fda 100%);
+  background: var(--cta-photo-gradient-hover);
   background-size: 220% 220%;
   background-position: 24% 50%;
   opacity: 0;
@@ -247,7 +257,7 @@ textarea:focus-visible {
 .hero-cta-btn--teal-selected.btn-primary,
 .hero-cta-btn--teal-selected.btn-primary:hover,
 .hero-cta-btn--teal-selected.btn-primary:focus-visible {
-  background: linear-gradient(135deg, #2145ea 0%, #2b63ea 32%, #2f8fd5 66%, #6fd6c8 100%);
+  background: var(--cta-photo-gradient);
   color: #f6f8fb;
 }
 
@@ -1185,6 +1195,7 @@ textarea:focus-visible {
   align-items: center;
   justify-content: center;
   padding: 24px;
+  overflow-y: auto;
   animation: modalFadeIn 0.25s ease;
 }
 @keyframes modalFadeIn {
@@ -1193,12 +1204,18 @@ textarea:focus-visible {
 }
 .modal-content {
   position: relative;
-  background: #161a18;
-  border: 1px solid rgba(255,255,255,0.08);
+  background:
+    linear-gradient(180deg, rgba(30, 31, 34, 0.98), rgba(18, 19, 22, 0.98));
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 20px;
   padding: 40px;
   width: 100%;
   max-width: 480px;
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  box-shadow:
+    0 28px 80px rgba(0, 0, 0, 0.48),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
   animation: modalSlideUp 0.3s ease;
 }
 @keyframes modalSlideUp {
@@ -1210,23 +1227,102 @@ textarea:focus-visible {
   top: 16px; right: 20px;
   background: none;
   border: none;
-  color: rgba(255,255,255,0.4);
+  color: var(--text-soft);
   font-size: 1.6rem;
   cursor: pointer;
   transition: color 0.3s;
   line-height: 1;
 }
-.modal-close:hover { color: #fff; }
+.modal-close:hover { color: var(--text-main); }
 .modal-title {
   font-family: 'Playfair Display', serif;
   font-size: 1.6rem;
-  color: #eefcb3;
+  color: var(--text-main);
   margin-bottom: 8px;
 }
+.modal-utility-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 20px;
+}
+.modal-back-button,
+.modal-inline-action,
+.modal-inline-link {
+  border: none;
+  background: none;
+  padding: 0;
+  font: inherit;
+  color: var(--text-soft);
+  cursor: pointer;
+  text-decoration: none;
+}
+.modal-back-button {
+  font-size: 0.9rem;
+}
+.modal-back-button:hover,
+.modal-inline-action:hover,
+.modal-inline-link:hover {
+  color: var(--text-main);
+}
 .modal-subtitle {
-  color: rgba(255,255,255,0.45);
+  color: var(--text-soft);
   font-size: 0.9rem;
   margin-bottom: 28px;
+}
+.modal-content--choice {
+  max-width: 760px;
+}
+.modal-content--booking {
+  max-width: 1120px;
+}
+.contact-choice-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.contact-choice-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 18px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.028), rgba(255, 255, 255, 0.01)),
+    rgba(20, 21, 24, 0.88);
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.contact-choice-card:hover {
+  border-color: rgba(255, 255, 255, 0.18);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.034), rgba(255, 255, 255, 0.014)),
+    rgba(24, 25, 29, 0.94);
+  transform: translateY(-2px);
+}
+.contact-choice-card h3 {
+  font-family: 'Fraunces', serif;
+  font-size: 1.38rem;
+  color: var(--text-main);
+}
+.contact-choice-card p {
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+.contact-choice-eyebrow,
+.contact-choice-detail {
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.contact-choice-eyebrow {
+  color: var(--text-soft);
+}
+.contact-choice-detail {
+  color: rgba(241, 238, 231, 0.62);
 }
 .modal-form {
   display: flex;
@@ -1240,17 +1336,17 @@ textarea:focus-visible {
 }
 .modal-field label {
   font-size: 0.85rem;
-  color: rgba(255,255,255,0.5);
+  color: var(--text-soft);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 .modal-field input,
 .modal-field textarea {
   padding: 12px 16px;
-  background: #0a0a0a;
-  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(11, 12, 14, 0.96);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 10px;
-  color: #fff;
+  color: var(--text-main);
   font-size: 0.95rem;
   font-family: 'Inter', sans-serif;
   transition: border-color 0.3s;
@@ -1258,11 +1354,23 @@ textarea:focus-visible {
 }
 .modal-field input:focus,
 .modal-field textarea:focus {
-  border-color: rgba(238,252,179,0.3);
+  border-color: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.05);
 }
 .modal-field input::placeholder,
 .modal-field textarea::placeholder {
-  color: rgba(255,255,255,0.25);
+  color: rgba(241, 238, 231, 0.3);
+}
+.modal-content .btn-primary {
+  background: linear-gradient(180deg, #d9ddd9 0%, #bcc2bc 100%);
+  color: #141614;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.48),
+    0 10px 24px rgba(0, 0, 0, 0.18);
+}
+.modal-content .btn-primary:hover {
+  background: linear-gradient(180deg, #e4e7e4 0%, #c9cfc9 100%);
+  color: #101210;
 }
 .modal-submit {
   margin-top: 4px;
@@ -1278,7 +1386,7 @@ textarea:focus-visible {
   max-width: 520px;
 }
 .modal-error {
-  color: #ff6b6b;
+  color: #ff8f8f;
   font-size: 0.85rem;
 }
 .modal-success {
@@ -1286,12 +1394,68 @@ textarea:focus-visible {
   padding: 20px 0;
 }
 .modal-success p {
-  color: rgba(255,255,255,0.7);
+  color: var(--text-muted);
   font-size: 1rem;
   margin-bottom: 24px;
 }
 .modal-success .btn-primary {
   border-radius: 10px;
+}
+.booking-modal-panel {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 18px;
+  background: rgba(20, 21, 24, 0.94);
+  padding: 12px;
+  height: min(72vh, 760px);
+  overflow: hidden;
+}
+.calendly-embed-shell,
+.calendly-embed-root,
+.booking-modal-iframe {
+  width: 100%;
+  height: 100%;
+}
+.calendly-embed-shell {
+  position: relative;
+}
+.calendly-embed-root {
+  min-width: 320px;
+}
+.calendly-embed-status {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  color: var(--text-muted);
+  text-align: center;
+  background:
+    linear-gradient(180deg, rgba(25, 26, 29, 0.96), rgba(14, 15, 18, 0.92));
+  z-index: 1;
+}
+.booking-modal-iframe {
+  border: 0;
+  border-radius: 12px;
+  background: #ffffff;
+}
+.booking-modal-note {
+  margin-top: 16px;
+  color: var(--text-soft);
+  font-size: 0.92rem;
+}
+.booking-modal-fallback {
+  display: grid;
+  gap: 18px;
+  justify-items: flex-start;
+  padding: 24px;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(20, 21, 24, 0.92);
+}
+.booking-modal-fallback p {
+  color: var(--text-muted);
+  line-height: 1.7;
 }
 
 /* ===== INSIGHTS ===== */
@@ -4040,8 +4204,49 @@ summary {
 }
 
 .modal-content {
-  background: #141714;
-  border-color: var(--line-soft);
+  background:
+    linear-gradient(180deg, rgba(30, 31, 34, 0.98), rgba(18, 19, 22, 0.98));
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 820px) {
+  .modal-content--choice,
+  .modal-content--booking {
+    max-width: 100%;
+  }
+
+  .contact-choice-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .booking-modal-panel {
+    height: min(68vh, 680px);
+  }
+}
+
+@media (max-width: 540px) {
+  .modal-backdrop {
+    padding: 14px;
+  }
+
+  .modal-content {
+    padding: 28px 20px 22px;
+    border-radius: 18px;
+  }
+
+  .modal-title {
+    padding-right: 20px;
+    font-size: 1.4rem;
+  }
+
+  .contact-choice-card {
+    padding: 20px;
+  }
+
+  .booking-modal-panel {
+    padding: 8px;
+    height: min(64vh, 620px);
+  }
 }
 
 .insights-docs-sidebar,
@@ -7348,4 +7553,28 @@ summary {
     border-right: 0;
     border-bottom: 1px solid rgba(241, 238, 231, 0.08);
   }
+}
+
+/* Keep the display serif only for the main hero heading. */
+.section-title,
+.cta-main h2,
+.modal-title,
+.footer-lead h2,
+.about-teaser-copy h2,
+.about-hero-copy h1,
+.about-story-main h2,
+.contact-hero-copy h1,
+.contact-section-heading h2,
+.contact-proof-main h2,
+.contact-hero-aside h2,
+.service-page-copy h1,
+.service-page-scan-card h2,
+.service-page-delivery-copy h2,
+.service-page-next-copy h2,
+.workflow-poster-copy h1,
+.workflow-proof-head h2,
+.workflow-poster-cta-copy h2 {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.045em;
 }

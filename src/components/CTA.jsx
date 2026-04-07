@@ -77,6 +77,7 @@ function CTA({ onContact }) {
               <button
                 type="button"
                 className="btn-primary cta-dynamic-btn"
+                data-contact-trigger="true"
                 onClick={() => onContact({
                   cta_label: activeOption.cta,
                   cta_placement: `cta_dynamic_${activeOption.id}`,
