@@ -2,6 +2,7 @@ import { readdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseArticleFile } from '../src/data/insights/articleParser.js';
+import { services } from '../src/data/servicesData.js';
 import { SITE_URL } from '../src/data/siteConfig.js';
 
 function toIsoDate(input) {
@@ -72,6 +73,12 @@ async function main() {
       changefreq: 'monthly',
       priority: '0.8',
     },
+    ...services.map((service) => ({
+      loc: `${SITE_URL}${service.href}`,
+      lastmod: toIsoDate(latestArticleDate),
+      changefreq: 'monthly',
+      priority: '0.7',
+    })),
     ...articles.map((article) => ({
       loc: `${SITE_URL}${article.url}`,
       lastmod: toIsoDate(article.updatedAt),

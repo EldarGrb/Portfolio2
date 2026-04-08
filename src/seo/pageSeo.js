@@ -333,6 +333,54 @@ export function getInsightArticleSeo(articleMeta, article) {
   };
 }
 
+export function getServiceSeo(service) {
+  if (!service) return getNotFoundSeo('/services');
+
+  const faqItems = service.problems.map((problem, i) => ({
+    question: problem,
+    answer: service.outcomes[i] || service.pageSummary,
+  }));
+
+  return {
+    title: `${service.pageLabel} | ${SITE_NAME}`,
+    description: service.pageSummary,
+    canonical: `${SITE_URL}${service.href}`,
+    url: `${SITE_URL}${service.href}`,
+    type: 'website',
+    image: DEFAULT_OG_IMAGE,
+    author: SITE_AUTHOR,
+    keywords: service.tags,
+    imageAlt: service.imageAlt,
+    schemas: [
+      buildSingleServiceSchema(service),
+      {
+        '@context': 'https://schema.org',
+        '@type': 'WebPage',
+        name: service.pageTitle,
+        description: service.pageSummary,
+        url: `${SITE_URL}${service.href}`,
+      },
+      buildBreadcrumbSchema([
+        { name: 'Home', url: `${SITE_URL}/` },
+        { name: 'Services', url: `${SITE_URL}/#services` },
+        { name: service.pageLabel, url: `${SITE_URL}${service.href}` },
+      ]),
+      {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqItems.map((item) => ({
+          '@type': 'Question',
+          name: item.question,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: item.answer,
+          },
+        })),
+      },
+    ],
+  };
+}
+
 export function getNotFoundSeo(currentPath) {
   const resolvedPath = currentPath?.startsWith('/') ? currentPath : '/';
   const url = `${SITE_URL}${resolvedPath}`;
@@ -392,6 +440,11 @@ export async function buildPrerenderRoutes() {
       seo: getContactSeo(),
     },
     ...articleRoutes,
+    ...services.map((service) => ({
+      path: service.href,
+      initialArticle: null,
+      seo: getServiceSeo(service),
+    })),
   ];
 }
 

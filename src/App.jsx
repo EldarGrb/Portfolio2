@@ -12,6 +12,7 @@ import HomePage from './pages/HomePage';
 import InsightsPage from './pages/InsightsPage';
 import InsightArticlePage from './pages/InsightArticlePage';
 import NotFoundPage from './pages/NotFoundPage';
+import ServicePage from './pages/ServicePage';
 
 function normalizePath(pathname) {
   if (!pathname) return '/';
@@ -101,12 +102,15 @@ function App({ currentPathOverride, prerender = false, initialArticle = null }) 
   }, []);
 
   const insightPrefix = '/insights/';
+  const servicePrefix = '/services/';
   const isInsightsHub = currentPath === '/insights';
   const isInsightArticle = currentPath.startsWith(insightPrefix);
+  const isServicePage = currentPath.startsWith(servicePrefix);
   const isAboutPage = currentPath === '/about';
   const isContactPage = currentPath === '/contact';
   const articleSlug = isInsightArticle ? currentPath.slice(insightPrefix.length) : '';
   const articleMeta = articleSlug ? getArticleBySlug(articleSlug) : null;
+  const serviceSlug = isServicePage ? currentPath.slice(servicePrefix.length) : '';
 
   const pageAnalytics = useMemo(() => {
     if (currentPath === '/') {
@@ -147,6 +151,14 @@ function App({ currentPathOverride, prerender = false, initialArticle = null }) 
       };
     }
 
+    if (isServicePage && serviceSlug) {
+      return {
+        page_type: 'service',
+        content_group: 'services',
+        service_slug: serviceSlug,
+      };
+    }
+
     return {
       page_type: 'not_found',
       content_group: 'error_page',
@@ -163,7 +175,7 @@ function App({ currentPathOverride, prerender = false, initialArticle = null }) 
     return () => {
       window.cancelAnimationFrame(frameId);
     };
-  }, [consentStatus, currentPath, isHydrated, pageAnalytics, trackPageView]);
+  }, [consentStatus, currentPath, isHydrated, pageAnalytics, serviceSlug, trackPageView]);
 
   let page = null;
 
@@ -182,6 +194,8 @@ function App({ currentPathOverride, prerender = false, initialArticle = null }) 
         initialArticle={initialArticle}
       />
     );
+  } else if (isServicePage && serviceSlug) {
+    page = <ServicePage currentPath={currentPath} onContact={handleOpenContactOptions} serviceSlug={serviceSlug} />;
   } else if (isAboutPage) {
     page = <AboutPage onContact={handleOpenContactOptions} currentPath={currentPath} />;
   } else if (isContactPage) {
