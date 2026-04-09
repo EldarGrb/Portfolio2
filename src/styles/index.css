@@ -6075,6 +6075,18 @@ summary {
   padding-left: 1.25rem;
 }
 
+.insights-shell--article .insight-docs-section a {
+  color: #7f2a1f;
+  text-decoration-color: rgba(127, 42, 31, 0.3);
+  text-underline-offset: 3px;
+}
+
+.insights-shell--article .insight-docs-section a:hover,
+.insights-shell--article .insight-docs-section a:focus-visible {
+  color: #5e1f18;
+  text-decoration-color: rgba(94, 31, 24, 0.45);
+}
+
 .insights-shell--article .insight-inline-note {
   border-left: 2px solid rgba(141, 42, 30, 0.24);
   padding-left: 14px;
@@ -6166,6 +6178,28 @@ summary {
 
 .insights-shell--article .insight-inline-cta .btn-primary:hover {
   background: #302821;
+}
+
+.insights-shell--article .insight-inline-links .btn-secondary {
+  color: #171411;
+  border-color: rgba(33, 28, 24, 0.16);
+  background: rgba(33, 28, 24, 0.03);
+}
+
+.insights-shell--article .insight-inline-links .btn-secondary:hover,
+.insights-shell--article .insight-inline-links .btn-secondary:focus-visible {
+  color: #171411;
+  border-color: rgba(33, 28, 24, 0.28);
+  background: rgba(33, 28, 24, 0.07);
+}
+
+.insights-shell--article .insight-inline-link {
+  color: #7f2a1f;
+}
+
+.insights-shell--article .insight-inline-link:hover,
+.insights-shell--article .insight-inline-link:focus-visible {
+  color: #5e1f18;
 }
 
 .insights-shell--article .insight-related-links {
