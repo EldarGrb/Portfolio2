@@ -4,8 +4,8 @@ slug: how-to-automate-lead-follow-up-without-a-crm
 excerpt: Small businesses often think they need a CRM when the real problem is inconsistent follow-up. A simple routing and reply system is usually enough before a full sales tool.
 category: Lead Operations
 keywords: automate lead follow up without a crm, lead follow-up automation, lead routing, lead acknowledgement, crm alternative
-publishedAt: 2026-04-10
-updatedAt: 2026-04-10
+publishedAt: 2026-02-11
+updatedAt: 2026-02-11
 readTime: 5
 canonical: https://uroboros.digital/insights/how-to-automate-lead-follow-up-without-a-crm
 finalCtaTitle: Need a cleaner follow-up path?

@@ -4,8 +4,8 @@ slug: fix-slow-lead-follow-up-with-ai-chatbot-and-enrichment
 excerpt: A marketing agency was losing 3-4 leads per month to slow follow-up and spreadsheet chaos. We replaced the mess with a chatbot, lead enrichment, and auto-assignment.
 category: Lead Operations
 keywords: AI chatbot, lead enrichment, CRM automation, lead follow-up, marketing agency
-publishedAt: 2026-03-26
-updatedAt: 2026-03-26
+publishedAt: 2026-01-29
+updatedAt: 2026-01-29
 readTime: 5
 canonical: https://uroboros.digital/insights/fix-slow-lead-follow-up-with-ai-chatbot-and-enrichment
 ---

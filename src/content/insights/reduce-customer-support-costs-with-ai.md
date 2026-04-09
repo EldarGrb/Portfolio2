@@ -4,8 +4,8 @@ slug: reduce-customer-support-costs-with-ai
 excerpt: Most advice about AI in customer support skips the hard part: what to automate, what should stay human, and how to cut costs without making support worse.
 category: AI Automation
 keywords: ai customer support, reduce support costs, ai support automation, customer service automation
-publishedAt: 2026-03-16
-updatedAt: 2026-03-16
+publishedAt: 2026-01-14
+updatedAt: 2026-01-14
 readTime: 8
 canonical: https://uroboros.digital/insights/reduce-customer-support-costs-with-ai
 finalCtaTitle: Book a free 15-minute call

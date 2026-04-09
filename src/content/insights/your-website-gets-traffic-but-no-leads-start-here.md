@@ -4,8 +4,8 @@ slug: your-website-gets-traffic-but-no-leads-start-here
 excerpt: If your website gets visitors but almost nobody reaches out, the problem is usually not traffic. It is friction in the message, the path, or what happens after the click.
 category: Website Conversion
 keywords: website traffic no leads, website conversion, lead generation website, enquiry form friction, website conversion audit
-publishedAt: 2026-04-09
-updatedAt: 2026-04-09
+publishedAt: 2026-04-08
+updatedAt: 2026-04-08
 readTime: 6
 canonical: https://uroboros.digital/insights/your-website-gets-traffic-but-no-leads-start-here
 finalCtaTitle: Need a clear read on why your site is not converting?

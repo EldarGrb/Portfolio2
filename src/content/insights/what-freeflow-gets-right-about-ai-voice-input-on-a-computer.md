@@ -4,8 +4,8 @@ slug: what-freeflow-gets-right-about-ai-voice-input-on-a-computer
 excerpt: FreeFlow looks more interesting than a typical AI voice app because it treats voice as workflow input, not just speech-to-text.
 category: AI Tooling
 keywords: AI voice input, FreeFlow, speech to text, workflow tools, dictation
-publishedAt: 2026-04-06
-updatedAt: 2026-04-06
+publishedAt: 2026-03-31
+updatedAt: 2026-03-31
 readTime: 4
 canonical: https://uroboros.digital/insights/what-freeflow-gets-right-about-ai-voice-input-on-a-computer
 finalCtaTitle: Want a clearer read on where AI should fit into your workflow?

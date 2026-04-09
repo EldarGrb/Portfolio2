@@ -4,8 +4,8 @@ slug: what-to-fix-before-you-put-a-chatbot-on-your-website
 excerpt: A lot of businesses add a chatbot when what they really have is a clarity problem. If visitors still cannot understand the page or the next step, the bot just inherits the mess.
 category: Website Conversion
 keywords: before adding chatbot to website, website chatbot, website chat widget, chatbot routing, chatbot handoff
-publishedAt: 2026-04-10
-updatedAt: 2026-04-10
+publishedAt: 2026-03-13
+updatedAt: 2026-03-13
 readTime: 5
 canonical: https://uroboros.digital/insights/what-to-fix-before-you-put-a-chatbot-on-your-website
 finalCtaTitle: Thinking about adding a chatbot?

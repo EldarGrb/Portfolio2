@@ -4,8 +4,8 @@ slug: ai-automation-vs-hiring-what-to-automate-before-you-add-headcount
 excerpt: Hiring feels like the obvious fix when work piles up, but many small businesses are really carrying repetitive admin and broken handoffs that should be automated first.
 category: AI Automation
 keywords: automation vs hiring small business, what to automate before hiring, small business automation, repetitive admin automation, automation before headcount
-publishedAt: 2026-04-10
-updatedAt: 2026-04-10
+publishedAt: 2026-02-24
+updatedAt: 2026-02-24
 readTime: 5
 canonical: https://uroboros.digital/insights/ai-automation-vs-hiring-what-to-automate-before-you-add-headcount
 finalCtaTitle: Deciding between automation and a hire?
