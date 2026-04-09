@@ -5961,7 +5961,7 @@ summary {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
-  align-items: center;
+  align-items: baseline;
   gap: 8px 18px;
   margin: 0 0 14px;
 }
@@ -5973,6 +5973,7 @@ summary {
 .insights-shell--article .insight-article-meta-list {
   display: flex;
   flex-wrap: wrap;
+  align-items: baseline;
   gap: 8px 14px;
 }
 
