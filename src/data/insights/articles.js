@@ -5,6 +5,19 @@ export { SITE_URL };
 
 const articleIndex = [
   {
+    title: 'Your Website Gets Traffic but No Leads. Start Here.',
+    slug: 'your-website-gets-traffic-but-no-leads-start-here',
+    excerpt: 'If your website gets visitors but almost nobody reaches out, the problem is usually not traffic. It is friction in the message, the path, or what happens after the click.',
+    category: 'Website Conversion',
+    keywords: ['website traffic no leads', 'website conversion', 'lead generation website', 'enquiry form friction', 'website conversion audit'],
+    publishedAt: '2026-04-09',
+    updatedAt: '2026-04-09',
+    readTime: 6,
+    canonical: `${SITE_URL}/insights/your-website-gets-traffic-but-no-leads-start-here`,
+    url: '/insights/your-website-gets-traffic-but-no-leads-start-here',
+    sourcePath: '../../content/insights/your-website-gets-traffic-but-no-leads-start-here.md',
+  },
+  {
     title: 'What FreeFlow Gets Right About AI Voice Input on a Computer',
     slug: 'what-freeflow-gets-right-about-ai-voice-input-on-a-computer',
     excerpt: 'FreeFlow looks more interesting than a typical AI voice app because it treats voice as workflow input, not just speech-to-text.',
