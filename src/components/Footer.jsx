@@ -45,9 +45,6 @@ function Footer({ onContact, currentPath = '/', variant = 'default' }) {
               >
                 Tell me what&apos;s slowing the business down
               </button>
-              <a href={aboutHref} className="btn-secondary footer-secondary-action">
-                About
-              </a>
             </div>
           </div>
         </div>

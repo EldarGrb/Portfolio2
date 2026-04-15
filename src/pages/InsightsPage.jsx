@@ -116,28 +116,30 @@ function InsightsPage({ currentPath, onContact }) {
           ))}
         </section>
 
-        <NewsletterSignup
-          variant="compact"
-          className="insights-newsletter"
-          eyebrow="Subscribe"
-          title="Occasional notes on broken flows, fixes that actually help, and where AI is worth using."
-          description="Useful updates for teams that want clearer execution, fewer bottlenecks, and more grounded technical decisions."
-          placeholder="Enter your work email"
-          placement="insights_newsletter"
-        />
+        <div className="insights-prefooter">
+          <NewsletterSignup
+            variant="compact"
+            className="insights-newsletter"
+            eyebrow="Subscribe"
+            title="Occasional notes on broken flows, fixes that actually help, and where AI is worth using."
+            description="Useful updates for teams that want clearer execution, fewer bottlenecks, and more grounded technical decisions."
+            placeholder="Enter your work email"
+            placement="insights_newsletter"
+          />
 
-        <section className="insight-inline-cta insight-inline-cta--hub" aria-labelledby="insights-next-step-title">
-          <p className="insight-inline-cta-label">Need a practical second opinion?</p>
-          <h2 id="insights-next-step-title">Use the article archive to understand the approach, then start the conversation on a clearer page.</h2>
-          <p>
-            The contact page is the best next stop if you already know what feels slow, messy, or too manual.
-          </p>
-          <div className="insight-inline-links">
-            <a href="/contact" className="btn-primary">Go to contact</a>
-            <a href="/#services" className="btn-secondary">Review services</a>
-            <a href="/about" className="insight-inline-link">About how I work</a>
-          </div>
-        </section>
+          <section className="insight-inline-cta insight-inline-cta--hub" aria-labelledby="insights-next-step-title">
+            <p className="insight-inline-cta-label">Need a practical second opinion?</p>
+            <h2 id="insights-next-step-title">Use the article archive to understand the approach, then start the conversation on a clearer page.</h2>
+            <p>
+              The contact page is the best next stop if you already know what feels slow, messy, or too manual.
+            </p>
+            <div className="insight-inline-links">
+              <a href="/contact" className="btn-primary">Go to contact</a>
+              <a href="/#services" className="btn-secondary">Review services</a>
+              <a href="/about" className="insight-inline-link">About how I work</a>
+            </div>
+          </section>
+        </div>
       </div>
     </InsightsLayout>
   );

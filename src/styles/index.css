@@ -5636,6 +5636,18 @@ summary {
   margin-top: 6px;
 }
 
+.page-shell--editorial .insights-results-stream .insights-list-item:last-child {
+  border-bottom: 0;
+}
+
+.page-shell--editorial .insights-prefooter {
+  display: grid;
+  gap: clamp(2.25rem, 4vw, 3.5rem);
+  margin-top: 14px;
+  padding-top: clamp(2rem, 3vw, 2.75rem);
+  border-top: 1px solid rgba(33, 28, 24, 0.12);
+}
+
 .page-shell--editorial .newsletter-signup--compact {
   border: none;
   border-top: 1px solid rgba(33, 28, 24, 0.12);
@@ -5791,6 +5803,34 @@ summary {
 
 .page-shell--editorial .insight-inline-cta .btn-primary:hover {
   background: #302821;
+}
+
+.page-shell--editorial .insights-prefooter .insights-newsletter {
+  margin-top: 0;
+}
+
+.page-shell--editorial .insights-prefooter .newsletter-signup--compact {
+  border: 0;
+  padding: 0;
+}
+
+.page-shell--editorial .insights-prefooter .insight-inline-cta--hub {
+  border: 0;
+  padding: 0;
+}
+
+.page-shell--editorial .insights-prefooter .insight-inline-cta--hub h2 {
+  max-width: 22ch;
+  color: #171411;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.95rem, 3vw, 2.75rem);
+  line-height: 1.06;
+  letter-spacing: -0.045em;
+}
+
+.page-shell--editorial .insights-prefooter .insight-inline-links {
+  margin-top: 18px;
 }
 
 .page-shell--editorial .insight-author-bio p {
