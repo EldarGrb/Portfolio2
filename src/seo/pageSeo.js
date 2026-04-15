@@ -458,7 +458,7 @@ function escapeAttribute(value) {
 
 export function renderSeoTags(seo) {
   const schemaMarkup = seo.schemas
-    .map((schema) => `  <script type="application/ld+json">${JSON.stringify(schema)}</script>`)
+    .map((schema, index) => `  <script type="application/ld+json" data-seo-schema="true" id="seo-schema-${index}">${JSON.stringify(schema)}</script>`)
     .join('\n');
 
   return [
