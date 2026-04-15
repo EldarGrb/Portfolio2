@@ -5644,8 +5644,13 @@ summary {
   display: grid;
   gap: clamp(2.25rem, 4vw, 3.5rem);
   margin-top: 14px;
-  padding-top: clamp(2rem, 3vw, 2.75rem);
-  border-top: 1px solid rgba(33, 28, 24, 0.12);
+  padding: clamp(1.75rem, 3vw, 2.6rem);
+  border: 1px solid rgba(126, 92, 72, 0.14);
+  border-radius: 28px;
+  background:
+    linear-gradient(180deg, rgba(255, 252, 247, 0.84), rgba(243, 235, 223, 0.92)),
+    radial-gradient(circle at top right, rgba(141, 42, 30, 0.06), transparent 28%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.42);
 }
 
 .page-shell--editorial .newsletter-signup--compact {
@@ -5814,6 +5819,36 @@ summary {
   padding: 0;
 }
 
+.page-shell--editorial .insights-prefooter .newsletter-signup-title {
+  max-width: 20ch;
+}
+
+.page-shell--editorial .insights-prefooter .newsletter-signup-copy,
+.page-shell--editorial .insights-prefooter .insight-inline-cta--hub p {
+  color: rgba(47, 39, 33, 0.78);
+}
+
+.page-shell--editorial .insights-prefooter .newsletter-signup-input {
+  background: rgba(255, 252, 247, 0.88);
+  border-color: rgba(95, 72, 58, 0.2);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.48);
+}
+
+.page-shell--editorial .insights-prefooter .newsletter-signup-input::placeholder {
+  color: rgba(58, 48, 41, 0.46);
+}
+
+.page-shell--editorial .insights-prefooter .newsletter-signup-button,
+.page-shell--editorial .insights-prefooter .insight-inline-links .btn-primary {
+  background: #1b1714;
+  color: #f7f1e7;
+}
+
+.page-shell--editorial .insights-prefooter .newsletter-signup-button:hover,
+.page-shell--editorial .insights-prefooter .insight-inline-links .btn-primary:hover {
+  background: #312722;
+}
+
 .page-shell--editorial .insights-prefooter .insight-inline-cta--hub {
   border: 0;
   padding: 0;
@@ -5831,6 +5866,31 @@ summary {
 
 .page-shell--editorial .insights-prefooter .insight-inline-links {
   margin-top: 18px;
+}
+
+.page-shell--editorial .insights-prefooter .insight-inline-links .btn-secondary {
+  color: #2a211d;
+  border-color: rgba(87, 66, 53, 0.22);
+  background: rgba(255, 255, 255, 0.38);
+}
+
+.page-shell--editorial .insights-prefooter .insight-inline-links .btn-secondary:hover,
+.page-shell--editorial .insights-prefooter .insight-inline-links .btn-secondary:focus-visible {
+  background: rgba(255, 255, 255, 0.6);
+  border-color: rgba(87, 66, 53, 0.34);
+  color: #171411;
+}
+
+.page-shell--editorial .insights-prefooter .insight-inline-link {
+  color: #6f2a20;
+  font-weight: 600;
+  text-underline-offset: 3px;
+}
+
+.page-shell--editorial .insights-prefooter .insight-inline-link:hover,
+.page-shell--editorial .insights-prefooter .insight-inline-link:focus-visible {
+  color: #522018;
+  text-decoration: underline;
 }
 
 .page-shell--editorial .insight-author-bio p {
