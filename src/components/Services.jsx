@@ -1,9 +1,17 @@
 import { useEffect, useState } from 'react';
 import { useAnalytics } from '../analytics/useAnalytics';
 import Icons from './Icons';
-import ServiceVisual from './ServiceVisual';
+import ServicePreviewImage from './ServicePreviewImage';
 import { services } from '../data/servicesData';
 import { useFadeIn } from '../hooks/useFadeIn';
+
+const serviceCardIcons = {
+  websites: '/icons/services/globe.png',
+  webApps: '/icons/services/layers.png',
+  aiWorkflows: '/icons/services/workflow-alt.png',
+  assistants: '/icons/services/ai-assistant.png',
+  performance: '/icons/services/gauge-circle-plus.png',
+};
 
 function Services({ onContact }) {
   const [active, setActive] = useState(0);
@@ -92,9 +100,9 @@ function Services({ onContact }) {
       <div className="services-content">
         <div className="service-accordion">
           {services.map((s, i) => {
-            const Icon = Icons[s.icon];
             const headerId = `service-header-${i}`;
             const panelId = `service-panel-${i}`;
+            const serviceIcon = serviceCardIcons[s.visual];
             return (
               <div className={`service-item ${s.featured ? 'featured' : ''} ${i === active ? 'active' : ''}`} key={i}>
                 <button
@@ -113,7 +121,11 @@ function Services({ onContact }) {
                   aria-expanded={i === active}
                   aria-controls={panelId}
                 >
-                  <span className="service-header-icon"><Icon /></span>
+                  <span className="service-header-icon">
+                    {serviceIcon ? (
+                      <img src={serviceIcon} alt="" aria-hidden="true" />
+                    ) : null}
+                  </span>
                   <h3>{renderServiceTitle(s)}</h3>
                   {s.featured && <span className="service-featured-badge">Featured</span>}
                 </button>
@@ -129,20 +141,6 @@ function Services({ onContact }) {
                     <div className="service-tags">
                       {s.tags.map((t, j) => <span className="service-tag" key={j}>{t}</span>)}
                     </div>
-                    <div className="service-actions">
-                      <button
-                        type="button"
-                        className="btn-primary"
-                        data-contact-trigger="true"
-                        onClick={() => onContact({
-                          cta_label: `Talk through ${s.title}`,
-                          cta_placement: `service_${s.visual}`,
-                          service_name: s.title,
-                        })}
-                      >
-                        Talk through this service
-                      </button>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -151,7 +149,7 @@ function Services({ onContact }) {
         </div>
         {!isMobile && (
           <div className="service-image-wrapper">
-            <ServiceVisual
+            <ServicePreviewImage
               key={activeService.visual}
               visual={activeService.visual}
               label={activeService.imageAlt}

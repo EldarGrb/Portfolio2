@@ -1,5 +1,6 @@
 import Footer from '../components/Footer';
 import Icons from '../components/Icons';
+import ServicePreviewImage from '../components/ServicePreviewImage';
 import ServiceVisual from '../components/ServiceVisual';
 import SiteNav from '../components/SiteNav';
 import { getArticleBySlug } from '../data/insights/articles';
@@ -40,82 +41,53 @@ function ServicePage({ currentPath, onContact, serviceSlug }) {
   const isWebsitePoster = service?.slug === 'websites';
   const isWebAppsPoster = service?.slug === 'web-apps';
   const isAiWorkflowPoster = service?.slug === 'ai-workflows';
-  const websiteProofChips = [
-    'Clearer offer',
-    'Stronger trust',
-    'Better conversion path',
-  ];
-  const webAppsProofChips = [
-    'Less context switching',
-    'Clearer ownership',
-    'Steadier delivery',
-  ];
-  const supportBeforeItems = [
-    {
-      system: 'Support inbox',
-      target: 'Unread',
-      title: 'Where is my order?',
-      detail: 'Customer has already followed up and nobody owns the reply yet.',
-      status: 'Needs routing',
-      tone: 'warning',
-      variant: 'a',
-    },
-    {
-      system: 'Customer support',
-      target: 'Waiting',
-      title: 'Need help with setup',
-      detail: 'The request is sitting in the pile without a clear next step.',
-      status: 'Still waiting',
-      tone: 'muted',
-      variant: 'b',
-    },
-    {
-      system: 'Reply queue',
-      target: 'No owner',
-      title: 'Can someone reply?',
-      detail: 'Another message lands, but nobody knows who should pick it up.',
-      status: 'No owner',
-      tone: 'warning',
-      variant: 'c',
-    },
-  ];
-  const supportAfterItems = [
-    {
-      system: 'Urgent issue',
-      target: 'Owner set',
-      title: 'Urgent issue assigned',
-      detail: 'High-priority requests land with the right person immediately.',
-      status: 'Rule matched',
-      tone: 'success',
-    },
-    {
-      system: 'Setup question',
-      target: 'Reply ready',
-      title: 'Setup question summarized',
-      detail: 'The team gets the context without rereading the whole thread.',
-      status: 'Summary ready',
-      tone: 'success',
-    },
-    {
-      system: 'Billing request',
-      target: 'Next step clear',
-      title: 'Billing request routed',
-      detail: 'The handoff is visible, owned, and easy to follow.',
-      status: 'Routed cleanly',
-      tone: 'live',
-    },
-  ];
-  const supportProofChips = [
-    'Less back-and-forth',
-    'Faster first response',
-    'Clearer ownership',
-  ];
-
   useSeo(getServiceSeo(service));
 
   if (!service) {
     return null;
   }
+
+  const posterFaqTitle = {
+    websites: 'Questions that usually come up before a website rebuild or restructure starts.',
+    'web-apps': 'Questions that usually come up before a web app scope gets defined.',
+    'ai-workflows': 'Questions that usually come up before automation work begins.',
+  };
+
+  const renderPosterVisual = () => (
+    <div className="workflow-poster-visual">
+      <div className="workflow-poster-visual-frame workflow-poster-visual-frame--photo">
+        <div className="workflow-poster-image-shell service-image-wrapper">
+          <ServicePreviewImage visual={service.visual} label={service.imageAlt} />
+        </div>
+      </div>
+      <div className="workflow-poster-note">
+        <span className="service-page-visual-icon" aria-hidden="true">
+          <ServiceIcon />
+        </span>
+        <p>{service.signal}</p>
+      </div>
+    </div>
+  );
+
+  const renderFaqSection = (title) => (
+    service.faqs?.length ? (
+      <section className="service-page-faq" aria-labelledby={`service-faq-title-${service.slug}`}>
+        <div className="service-page-faq-head">
+          <p className="section-label">Q&A</p>
+          <h2 id={`service-faq-title-${service.slug}`}>{title}</h2>
+        </div>
+
+        <div className="insight-faq-list service-page-faq-list">
+          {service.faqs.map((item) => (
+            <details className="insight-faq-item service-page-faq-item" key={item.question}>
+              <summary>{item.question}</summary>
+              <p>{item.answer}</p>
+            </details>
+          ))}
+        </div>
+      </section>
+    ) : null
+  );
 
   if (isWebsitePoster) {
     return (
@@ -147,110 +119,35 @@ function ServicePage({ currentPath, onContact, serviceSlug }) {
               </div>
             </div>
 
-            <div className="workflow-poster-visual">
-              <div className="workflow-poster-visual-frame">
-                <ServiceVisual visual={service.visual} label={service.imageAlt} />
-              </div>
-              <div className="workflow-poster-note">
-                <span className="service-page-visual-icon" aria-hidden="true">
-                  <ServiceIcon />
-                </span>
-                <p>{service.signal}</p>
-              </div>
-            </div>
+            {renderPosterVisual()}
           </section>
 
-          <section className="website-proof" aria-labelledby="website-proof-title">
-            <div className="workflow-proof-head">
-              <p className="section-label">Before / After</p>
-              <h2 id="website-proof-title">From vague first impression to clear offer.</h2>
-            </div>
-
-            <div className="website-proof-board">
-              <div className="website-proof-window website-proof-window--before" aria-label="Before website clarity">
-                <div className="website-proof-browser">
-                  <span />
-                  <span />
-                  <span />
-                </div>
-                <div className="website-proof-nav website-proof-nav--before">
-                  <span>About</span>
-                  <span>Services</span>
-                  <span>Why us</span>
-                  <span>Process</span>
-                </div>
-                <div className="website-proof-copy website-proof-copy--before">
-                  <em>Too many messages</em>
-                  <strong>Digital solutions for modern businesses</strong>
-                  <p>Everything is present, but nothing lands first.</p>
-                </div>
-                <div className="website-proof-actions website-proof-actions--before">
-                  <span>Learn more</span>
-                  <span>See work</span>
-                  <span>Get started</span>
-                </div>
-                <div className="website-proof-grid website-proof-grid--before">
-                  <div>About us</div>
-                  <div>Services</div>
-                  <div>Why choose us</div>
-                  <div>Our process</div>
-                </div>
-              </div>
-
-              <div className="workflow-proof-divider" aria-hidden="true">
-                <span>Clarifies fast</span>
-                <Icons.ArrowRight />
-              </div>
-
-              <div className="website-proof-window website-proof-window--after" aria-label="After website clarity">
-                <div className="website-proof-browser">
-                  <span />
-                  <span />
-                  <span />
-                </div>
-                <div className="website-proof-copy website-proof-copy--after">
-                  <em>One clear offer</em>
-                  <strong>Websites that explain what you do and make the next step obvious.</strong>
-                  <p>Who it is for, what it solves, and what to do next all land quickly.</p>
-                </div>
-                <div className="website-proof-action website-proof-action--after">Talk through the build</div>
-                <div className="website-proof-trust">
-                  <span>What you do</span>
-                  <span>Who it helps</span>
-                  <span>Next step</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="workflow-proof-chips" aria-label="Website outcomes">
-              {websiteProofChips.map((chip) => (
-                <span className="workflow-proof-chip" key={chip}>{chip}</span>
-              ))}
-            </div>
-          </section>
+          {renderFaqSection(posterFaqTitle[service.slug])}
 
           <section className="workflow-poster-cta" aria-labelledby="website-cta-title">
-            <div className="workflow-poster-cta-copy">
-              <p className="section-label">Next step</p>
-              <h2 id="website-cta-title">Start with the page that needs to explain the business fastest.</h2>
-              <p className="workflow-poster-cta-note">
-                A rough note is enough. We can sharpen the message and structure from there.
-              </p>
-              <div className="service-page-actions">
-                <button
-                  type="button"
-                  className="btn-primary"
-                  data-contact-trigger="true"
-                  onClick={() => onContact({
-                    cta_label: `Start ${service.pageLabel.toLowerCase()} conversation`,
-                    cta_placement: `service_page_${service.slug}_footer`,
-                    service_name: service.title,
-                    service_slug: service.slug,
-                  })}
-                >
-                  Start the conversation
-                </button>
-                <a href="/contact" className="service-page-secondary-link">Use contact page</a>
+            <div className="workflow-poster-cta-panel">
+              <div className="workflow-poster-cta-copy">
+                <p className="section-label">Next step</p>
+                <h2 id="website-cta-title">Start with the page that needs to explain the business fastest.</h2>
+                <p className="workflow-poster-cta-note">
+                  A rough note is enough. We can sharpen the message and structure from there.
+                </p>
+                <div className="service-page-actions">
+                  <button
+                    type="button"
+                    className="btn-primary"
+                    data-contact-trigger="true"
+                    onClick={() => onContact({
+                      cta_label: `Start ${service.pageLabel.toLowerCase()} conversation`,
+                      cta_placement: `service_page_${service.slug}_footer`,
+                      service_name: service.title,
+                      service_slug: service.slug,
+                    })}
+                  >
+                    Start the conversation
+                  </button>
+                  <a href="/contact" className="service-page-secondary-link">Use contact page</a>
+                </div>
               </div>
             </div>
           </section>
@@ -291,103 +188,35 @@ function ServicePage({ currentPath, onContact, serviceSlug }) {
               </div>
             </div>
 
-            <div className="workflow-poster-visual">
-              <div className="workflow-poster-visual-frame">
-                <ServiceVisual visual={service.visual} label={service.imageAlt} />
-              </div>
-              <div className="workflow-poster-note">
-                <span className="service-page-visual-icon" aria-hidden="true">
-                  <ServiceIcon />
-                </span>
-                <p>{service.signal}</p>
-              </div>
-            </div>
+            {renderPosterVisual()}
           </section>
 
-          <section className="webapp-proof" aria-labelledby="webapp-proof-title">
-            <div className="workflow-proof-head">
-              <p className="section-label">Before / After</p>
-              <h2 id="webapp-proof-title">From scattered tabs to one dependable workspace.</h2>
-            </div>
-
-            <div className="webapp-proof-board">
-              <div className="webapp-proof-side webapp-proof-side--before" aria-label="Before unified workspace">
-                <div className="webapp-proof-cluster">
-                  <article className="webapp-proof-fragment webapp-proof-fragment--sheet">
-                    <span>Spreadsheet</span>
-                    <strong>Latest status?</strong>
-                  </article>
-                  <article className="webapp-proof-fragment webapp-proof-fragment--chat">
-                    <span>Team chat</span>
-                    <strong>Which version is current?</strong>
-                  </article>
-                  <article className="webapp-proof-fragment webapp-proof-fragment--inbox">
-                    <span>Inbox</span>
-                    <strong>Waiting on update</strong>
-                  </article>
-                  <article className="webapp-proof-fragment webapp-proof-fragment--notes">
-                    <span>Notes</span>
-                    <strong>Owner unclear</strong>
-                  </article>
-                </div>
-              </div>
-
-              <div className="workflow-proof-divider" aria-hidden="true">
-                <span>Brings work together</span>
-                <Icons.ArrowRight />
-              </div>
-
-              <div className="webapp-proof-side webapp-proof-side--after" aria-label="After unified workspace">
-                <div className="webapp-proof-workspace">
-                  <div className="webapp-proof-sidebar">
-                    <span>Overview</span>
-                    <span>Projects</span>
-                    <span>Owners</span>
-                  </div>
-                  <div className="webapp-proof-main">
-                    <div className="webapp-proof-toolbar">
-                      <strong>Delivery workspace</strong>
-                      <em>One source of truth</em>
-                    </div>
-                    <div className="webapp-proof-rows">
-                      <div><span>Build status</span><strong>Owner set</strong></div>
-                      <div><span>Next action</span><strong>Ready now</strong></div>
-                      <div><span>Client update</span><strong>Shared cleanly</strong></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="workflow-proof-chips" aria-label="Web app outcomes">
-              {webAppsProofChips.map((chip) => (
-                <span className="workflow-proof-chip" key={chip}>{chip}</span>
-              ))}
-            </div>
-          </section>
+          {renderFaqSection(posterFaqTitle[service.slug])}
 
           <section className="workflow-poster-cta" aria-labelledby="webapp-cta-title">
-            <div className="workflow-poster-cta-copy">
-              <p className="section-label">Next step</p>
-              <h2 id="webapp-cta-title">Start with the workflow everyone keeps stitching together by hand.</h2>
-              <p className="workflow-poster-cta-note">
-                A rough outline is enough. We can turn the scattered process into one dependable workspace.
-              </p>
-              <div className="service-page-actions">
-                <button
-                  type="button"
-                  className="btn-primary"
-                  data-contact-trigger="true"
-                  onClick={() => onContact({
-                    cta_label: `Start ${service.pageLabel.toLowerCase()} conversation`,
-                    cta_placement: `service_page_${service.slug}_footer`,
-                    service_name: service.title,
-                    service_slug: service.slug,
-                  })}
-                >
-                  Start the conversation
-                </button>
-                <a href="/contact" className="service-page-secondary-link">Use contact page</a>
+            <div className="workflow-poster-cta-panel">
+              <div className="workflow-poster-cta-copy">
+                <p className="section-label">Next step</p>
+                <h2 id="webapp-cta-title">Start with the workflow everyone keeps stitching together by hand.</h2>
+                <p className="workflow-poster-cta-note">
+                  A rough outline is enough. We can turn the scattered process into one dependable workspace.
+                </p>
+                <div className="service-page-actions">
+                  <button
+                    type="button"
+                    className="btn-primary"
+                    data-contact-trigger="true"
+                    onClick={() => onContact({
+                      cta_label: `Start ${service.pageLabel.toLowerCase()} conversation`,
+                      cta_placement: `service_page_${service.slug}_footer`,
+                      service_name: service.title,
+                      service_slug: service.slug,
+                    })}
+                  >
+                    Start the conversation
+                  </button>
+                  <a href="/contact" className="service-page-secondary-link">Use contact page</a>
+                </div>
               </div>
             </div>
           </section>
@@ -428,106 +257,35 @@ function ServicePage({ currentPath, onContact, serviceSlug }) {
               </div>
             </div>
 
-            <div className="workflow-poster-visual">
-              <div className="workflow-poster-visual-frame">
-                <ServiceVisual visual={service.visual} label={service.imageAlt} />
-              </div>
-              <div className="workflow-poster-note">
-                <span className="service-page-visual-icon" aria-hidden="true">
-                  <ServiceIcon />
-                </span>
-                <p>{service.signal}</p>
-              </div>
-            </div>
+            {renderPosterVisual()}
           </section>
 
-          <section className="workflow-proof" aria-labelledby="workflow-proof-title">
-            <div className="workflow-proof-head">
-              <p className="section-label">Before / After</p>
-              <h2 id="workflow-proof-title">From unread pile to calm queue.</h2>
-            </div>
-
-            <div className="workflow-proof-board">
-              <div className="workflow-proof-lane workflow-proof-lane--before" aria-label="Before automation">
-                <div className="workflow-proof-lane-head">
-                  <span className="section-label">Before</span>
-                  <span className="workflow-proof-lane-tag">Support overload</span>
-                </div>
-
-                <div className="workflow-proof-stack">
-                  {supportBeforeItems.map((item) => (
-                    <article
-                      className={`workflow-proof-card workflow-proof-card--before workflow-proof-card--${item.variant}`}
-                      key={`${item.system}-${item.title}`}
-                    >
-                      <div className="workflow-proof-card-top">
-                        <span>{item.system}</span>
-                        <em>{item.target}</em>
-                      </div>
-                      <strong>{item.title}</strong>
-                      <p>{item.detail}</p>
-                      <span className={`workflow-proof-state workflow-proof-state--${item.tone}`}>{item.status}</span>
-                    </article>
-                  ))}
-                </div>
-              </div>
-
-              <div className="workflow-proof-divider" aria-hidden="true">
-                <span>Triage kicks in</span>
-                <Icons.ArrowRight />
-              </div>
-
-              <div className="workflow-proof-lane workflow-proof-lane--after" aria-label="After automation">
-                <div className="workflow-proof-lane-head">
-                  <span className="section-label">After</span>
-                  <span className="workflow-proof-lane-tag">Calm triage</span>
-                </div>
-
-                <div className="workflow-proof-stack workflow-proof-stack--aligned">
-                  {supportAfterItems.map((item) => (
-                    <article className="workflow-proof-card workflow-proof-card--after" key={`${item.system}-${item.title}`}>
-                      <div className="workflow-proof-card-top">
-                        <span>{item.system}</span>
-                        <em>{item.target}</em>
-                      </div>
-                      <strong>{item.title}</strong>
-                      <p>{item.detail}</p>
-                      <span className={`workflow-proof-state workflow-proof-state--${item.tone}`}>{item.status}</span>
-                    </article>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            <div className="workflow-proof-chips" aria-label="Workflow outcomes">
-              {supportProofChips.map((chip) => (
-                <span className="workflow-proof-chip" key={chip}>{chip}</span>
-              ))}
-            </div>
-          </section>
+          {renderFaqSection(posterFaqTitle[service.slug])}
 
           <section className="workflow-poster-cta" aria-labelledby="workflow-poster-close-title">
-            <div className="workflow-poster-cta-copy">
-              <p className="section-label">Next step</p>
-              <h2 id="workflow-poster-close-title">Start with the support request that keeps bouncing around.</h2>
-              <p className="workflow-poster-cta-note">
-                A rough note is enough. We can turn the support bottleneck into the right workflow from there.
-              </p>
-              <div className="service-page-actions">
-                <button
-                  type="button"
-                  className="btn-primary"
-                  data-contact-trigger="true"
-                  onClick={() => onContact({
-                    cta_label: `Start ${service.pageLabel.toLowerCase()} conversation`,
-                    cta_placement: `service_page_${service.slug}_footer`,
-                    service_name: service.title,
-                    service_slug: service.slug,
-                  })}
-                >
-                  Start the conversation
-                </button>
-                <a href="/contact" className="service-page-secondary-link">Use contact page</a>
+            <div className="workflow-poster-cta-panel">
+              <div className="workflow-poster-cta-copy">
+                <p className="section-label">Next step</p>
+                <h2 id="workflow-poster-close-title">Start with the support request that keeps bouncing around.</h2>
+                <p className="workflow-poster-cta-note">
+                  A rough note is enough. We can turn the support bottleneck into the right workflow from there.
+                </p>
+                <div className="service-page-actions">
+                  <button
+                    type="button"
+                    className="btn-primary"
+                    data-contact-trigger="true"
+                    onClick={() => onContact({
+                      cta_label: `Start ${service.pageLabel.toLowerCase()} conversation`,
+                      cta_placement: `service_page_${service.slug}_footer`,
+                      service_name: service.title,
+                      service_slug: service.slug,
+                    })}
+                  >
+                    Start the conversation
+                  </button>
+                  <a href="/contact" className="service-page-secondary-link">Use contact page</a>
+                </div>
               </div>
             </div>
           </section>

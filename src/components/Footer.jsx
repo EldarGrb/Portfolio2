@@ -34,6 +34,16 @@ function Footer({ onContact, currentPath = '/', variant = 'default' }) {
             <a href={contactHref}>Contact</a>
           </nav>
 
+          <a
+            className="footer-social-link footer-social-link--minimal"
+            href="https://www.linkedin.com/company/113171953"
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Uroboros Systems on LinkedIn"
+          >
+            <img src="/icons/linkedin.png" alt="" aria-hidden="true" />
+          </a>
+
           <div className="footer-minimal-cta">
             <p>Need help applying one of these ideas to your workflow?</p>
             <div className="footer-cta-actions">
@@ -96,15 +106,18 @@ function Footer({ onContact, currentPath = '/', variant = 'default' }) {
             <a href={processHref}>Process</a>
             <a href={contactHref}>Contact</a>
           </nav>
-          <button
-            className="footer-contact-link"
-            type="button"
-            data-contact-trigger="true"
-            onClick={() => onContact({ cta_label: 'Tell me what you\'re building', cta_placement: 'footer_detail' })}
-          >
-            Tell me what you&apos;re building
-          </button>
-          <p className="footer-status">Remote-first · Available worldwide</p>
+          <div className="footer-meta">
+            <a
+              className="footer-social-link"
+              href="https://www.linkedin.com/company/113171953"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Uroboros Systems on LinkedIn"
+            >
+              <img src="/icons/linkedin.png" alt="" aria-hidden="true" />
+            </a>
+            <p className="footer-status">Remote-first · Available worldwide</p>
+          </div>
         </div>
       </div>
     </footer>

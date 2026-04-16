@@ -1,32 +1,8 @@
-import { useState } from 'react';
 import { useAnalytics } from '../analytics/useAnalytics';
 import Icons from './Icons';
 import { useFadeIn } from '../hooks/useFadeIn';
 
 function CTA({ onContact }) {
-  const options = [
-    {
-      id: 'website-system',
-      label: 'Website or web app',
-      summary: 'Clarify the offer, strengthen the user journey, and build a system that supports sales or delivery.',
-      cta: 'Talk through the build',
-    },
-    {
-      id: 'workflow-automation',
-      label: 'Workflow automation',
-      summary: 'Reduce repetitive admin, tighten handoffs, and connect the tools your business already depends on.',
-      cta: 'Scope the workflow',
-    },
-    {
-      id: 'assistant-layer',
-      label: 'Voice or chat assistant',
-      summary: 'Handle first-response questions, intake, and routing with AI that supports the real process behind it.',
-      cta: 'Plan the assistant',
-    },
-  ];
-
-  const [selected, setSelected] = useState(options[0].id);
-  const activeOption = options.find((item) => item.id === selected) || options[0];
   const ref = useFadeIn();
   const { track } = useAnalytics();
 
@@ -36,55 +12,32 @@ function CTA({ onContact }) {
         <div className="cta-bg" />
         <div className="cta-content">
           <div className="cta-intro">
-            <span className="section-signature cta-signature" aria-hidden="true"><Icons.Logo /></span>
-            <div>
+            <div className="cta-intro-mark" aria-hidden="true">
+              <span className="section-signature cta-signature"><Icons.Logo /></span>
+              <span className="cta-intro-rule" />
+            </div>
+            <div className="cta-copy">
               <h2>What&apos;s costing you more right now: weak conversion, messy ops, or too much manual follow-up?</h2>
               <p className="cta-note">Start with the bottleneck that matters most. We can scope the right first build from there.</p>
-            </div>
-          </div>
-
-          <div className="cta-conversation">
-            <div className="cta-choice-list">
-              <p className="cta-question">Where do you need the most help?</p>
-              <div className="cta-selectors" aria-label="Project type options">
-                {options.map((option) => (
-                  <button
-                    key={option.id}
-                    type="button"
-                    className={`cta-selector ${selected === option.id ? 'active' : ''}`}
-                    onClick={() => {
-                      setSelected(option.id);
-                      track('cta_click', {
-                        cta_label: option.label,
-                        cta_placement: 'cta_selector',
-                      });
-                    }}
-                    aria-pressed={selected === option.id}
-                  >
-                    <span>{option.label}</span>
-                    <span className="cta-selector-mark" aria-hidden="true">
-                      {selected === option.id ? 'Selected' : 'View'}
-                    </span>
-                  </button>
-                ))}
+              <div className="cta-conversation">
+                <button
+                  type="button"
+                  className="btn-primary cta-dynamic-btn"
+                  data-contact-trigger="true"
+                  onClick={() => {
+                    track('cta_click', {
+                      cta_label: 'Talk through the bottleneck',
+                      cta_placement: 'cta_section',
+                    });
+                    onContact({
+                      cta_label: 'Talk through the bottleneck',
+                      cta_placement: 'cta_section',
+                    });
+                  }}
+                >
+                  <span>Talk through the bottleneck</span>
+                </button>
               </div>
-            </div>
-
-            <div className="cta-response" aria-live="polite">
-              <p className="cta-response-label">Recommended first step</p>
-              <h3>{activeOption.label}</h3>
-              <p>{activeOption.summary}</p>
-              <button
-                type="button"
-                className="btn-primary cta-dynamic-btn"
-                data-contact-trigger="true"
-                onClick={() => onContact({
-                  cta_label: activeOption.cta,
-                  cta_placement: `cta_dynamic_${activeOption.id}`,
-                })}
-              >
-                {activeOption.cta}
-              </button>
             </div>
           </div>
         </div>

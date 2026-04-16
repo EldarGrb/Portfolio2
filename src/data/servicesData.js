@@ -36,6 +36,20 @@ const serviceEntries = [
       'Design the page structure around the commercial path',
       'Ship a site that is easier to maintain and easier to grow',
     ],
+    faqs: [
+      {
+        question: 'Do I need a full rebuild, or can the current site be improved?',
+        answer: 'That depends on the foundation. If the structure is still usable, the quickest win is often tightening the message, hierarchy, and conversion path without starting over. If the current site is too fragmented or too hard to extend, a rebuild usually saves time and confusion later.',
+      },
+      {
+        question: 'Can you help with the structure and wording, not just the build?',
+        answer: 'Yes. The work usually includes offer clarity, page flow, and copy structure, because the technical build is only useful if the buyer understands what the business does and what to do next.',
+      },
+      {
+        question: 'What kind of website projects is this best for?',
+        answer: 'This fits best when the website needs to support trust, lead quality, and clearer sales conversations. It is usually less about publishing more pages and more about making the right pages pull their weight.',
+      },
+    ],
     signal: 'Useful when the website looks finished but still does not pull its weight commercially.',
     relatedInsights: ['fix-slow-lead-follow-up-with-ai-chatbot-and-enrichment'],
   },
@@ -76,6 +90,20 @@ const serviceEntries = [
       'Build the critical path first and validate it against real usage',
       'Stabilize the app with analytics, QA, and a clean handoff',
     ],
+    faqs: [
+      {
+        question: 'Is this for internal tools, client-facing products, or both?',
+        answer: 'Both. Some projects are internal dashboards or operations tools, while others are client portals or focused products. The common thread is reducing friction and giving the business one dependable place to work from.',
+      },
+      {
+        question: 'What if the process is still messy and not fully defined yet?',
+        answer: 'That is normal. The first step is usually mapping the real workflow, spotting where the handoffs break down, and shaping the app around the most important path instead of trying to document everything at once.',
+      },
+      {
+        question: 'Can this work alongside the tools we already use?',
+        answer: 'Usually yes. A web app does not need to replace everything on day one. It can sit on top of the current stack, connect the important systems, and reduce the number of places people have to check manually.',
+      },
+    ],
     signal: 'Useful when daily work depends on too much memory, too many tabs, or too many repeated clarifications.',
     relatedInsights: ['fix-slow-lead-follow-up-with-ai-chatbot-and-enrichment'],
   },
@@ -115,6 +143,20 @@ const serviceEntries = [
       'Identify where the expensive manual step actually happens',
       'Design a workflow with clear ownership and fallback logic',
       'Launch with monitoring so automation stays trustworthy',
+    ],
+    faqs: [
+      {
+        question: 'What kinds of tasks are worth automating first?',
+        answer: 'The best starting points are repetitive handoffs, routing, enrichment, follow-up, and admin work that already happens often enough to create drag. The goal is to remove expensive repetition, not automate for the sake of it.',
+      },
+      {
+        question: 'Do workflows like this still need a human in the loop?',
+        answer: 'Usually yes, at the right points. The strongest setups use automation for sorting, summarizing, and moving information, while keeping clear fallback paths when judgment or approval still matters.',
+      },
+      {
+        question: 'How do you keep the automation from becoming another fragile system?',
+        answer: 'By designing with ownership, failure states, and monitoring in mind from the start. A good workflow should be understandable, easy to troubleshoot, and clear about what happens when something does not match the expected path.',
+      },
     ],
     signal: 'Useful when a business has already felt the pain of repetitive admin and knows that process speed is now a revenue issue.',
     relatedInsights: ['fix-slow-lead-follow-up-with-ai-chatbot-and-enrichment', 'reduce-customer-support-costs-with-ai'],
