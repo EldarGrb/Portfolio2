@@ -108,7 +108,7 @@ function Process() {
       <div className="process-layout">
         <div className="process-left">
           <span className="section-signature" aria-hidden="true"><Icons.Logo /></span>
-          <h2 className="section-title">This should feel like progress, not project theater.</h2>
+          <h2 className="section-title">You should never be guessing what&apos;s happening on a project.</h2>
           <p>
             We figure out what&apos;s actually broken, build the critical path first, then tighten
             it based on what happens live.
