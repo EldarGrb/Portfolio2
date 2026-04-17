@@ -123,7 +123,7 @@ export function getHomeSeo() {
       'AI workflow automation',
       'automation systems for founders',
     ],
-    imageAlt: 'Uroboros Systems abstract brand graphic',
+    imageAlt: 'Uroboros Digital abstract brand graphic',
     schemas: [
       buildOrganizationSchema(),
       buildWebsiteSchema(),
@@ -145,7 +145,7 @@ export function getHomeSeo() {
 export function getAboutSeo() {
   return {
     title: `About | ${SITE_NAME}`,
-    description: 'Meet Eldar Jahic and learn how Uroboros Systems grew into a calm, capable software partner for businesses that need clearer operations.',
+    description: 'Meet Eldar Jahic and learn how Uroboros Digital grew into a calm, capable software partner for businesses that need clearer operations.',
     canonical: `${SITE_URL}/about`,
     url: `${SITE_URL}/about`,
     type: 'website',
@@ -153,17 +153,17 @@ export function getAboutSeo() {
     author: SITE_AUTHOR,
     keywords: [
       'about Eldar Jahic',
-      'Uroboros Systems founder',
+      'Uroboros Digital founder',
       'software developer Bosnia and Herzegovina',
       'software partner for small business',
     ],
-    imageAlt: 'Uroboros Systems abstract brand graphic',
+    imageAlt: 'Uroboros Digital abstract brand graphic',
     schemas: [
       {
         '@context': 'https://schema.org',
         '@type': 'WebPage',
         name: `About ${SITE_NAME}`,
-        description: 'A short story about the person behind Uroboros Systems and the kind of work the studio does.',
+        description: 'A short story about the person behind Uroboros Digital and the kind of work the studio does.',
         url: `${SITE_URL}/about`,
       },
       {
@@ -201,7 +201,7 @@ export function getInsightsSeo() {
       'lead follow-up automation',
       'customer support automation',
     ],
-    imageAlt: 'Uroboros Systems insights cover image',
+    imageAlt: 'Uroboros Digital insights cover image',
     schemas: [
       {
         '@context': 'https://schema.org',
@@ -233,13 +233,13 @@ export function getContactSeo() {
     image: DEFAULT_OG_IMAGE,
     author: SITE_AUTHOR,
     keywords: [
-      'contact Uroboros Systems',
+      'contact Uroboros Digital',
       'website project inquiry',
       'workflow automation consultation',
       'AI assistant project contact',
       'software partner contact',
     ],
-    imageAlt: 'Uroboros Systems contact page cover image',
+    imageAlt: 'Uroboros Digital contact page cover image',
     schemas: [
       {
         '@context': 'https://schema.org',
@@ -394,13 +394,13 @@ export function getNotFoundSeo(currentPath) {
     image: DEFAULT_OG_IMAGE,
     author: SITE_AUTHOR,
     robots: 'noindex, nofollow',
-    imageAlt: 'Uroboros Systems abstract brand graphic',
+    imageAlt: 'Uroboros Digital abstract brand graphic',
     schemas: [
       {
         '@context': 'https://schema.org',
         '@type': 'WebPage',
         name: 'Page not found',
-        description: 'A missing page on the Uroboros Systems website.',
+        description: 'A missing page on the Uroboros Digital website.',
         url,
       },
     ],

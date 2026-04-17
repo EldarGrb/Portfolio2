@@ -45,7 +45,7 @@ function InsightsPage({ currentPath, onContact }) {
     >
       <div className="insights-hub">
         <header className="insights-hub-hero">
-          <p className="insights-masthead-label">Uroboros Systems Insights</p>
+          <p className="insights-masthead-label">Uroboros Digital Insights</p>
           <h1>Operational playbooks for teams that want calmer execution.</h1>
           <p className="insights-hub-intro">
             Practical notes on reducing bottlenecks, improving delivery quality, and using

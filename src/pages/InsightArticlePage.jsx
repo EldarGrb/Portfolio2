@@ -206,7 +206,7 @@ function InsightArticlePage({ articleSlug, articleMeta, currentPath, onContact, 
     >
       <div className="insight-article-page">
         <header className="insight-article-header">
-          <p className="insights-masthead-label">Uroboros Systems Insights</p>
+          <p className="insights-masthead-label">Uroboros Digital Insights</p>
           <div className="insight-article-meta-row">
             <span className="insights-card-category">{articleMeta.category}</span>
             <div className="insights-card-meta insight-article-meta-list">

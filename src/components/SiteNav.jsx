@@ -89,7 +89,7 @@ function SiteNav({ currentPath, onContact, variant = 'default' }) {
         className={`navbar ${inInsights ? 'navbar-page' : ''} ${isEditorial ? 'navbar--editorial' : ''} ${useInsightsNav ? 'navbar--insights' : ''}`.trim()}
       >
         <div className="navbar-inner">
-          <a href="/" className="nav-logo"><Icons.Logo /> Uroboros Systems</a>
+          <a href="/" className="nav-logo"><Icons.Logo /> Uroboros Digital</a>
           {useInsightsNav ? (
             <div className="nav-actions nav-actions--insights">
               <a href="/" className={`btn-secondary nav-home-link ${isEditorial ? 'nav-home-link--editorial' : ''}`.trim()}>
@@ -165,7 +165,7 @@ function SiteNav({ currentPath, onContact, variant = 'default' }) {
             ref={menuRef}
           >
             <div className="nav-mobile-head">
-              <a href="/" className="nav-logo" onClick={handleMenuClose}><Icons.Logo /> Uroboros Systems</a>
+              <a href="/" className="nav-logo" onClick={handleMenuClose}><Icons.Logo /> Uroboros Digital</a>
               <button
                 type="button"
                 className="nav-mobile-close"

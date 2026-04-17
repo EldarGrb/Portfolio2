@@ -21,7 +21,7 @@ function AboutPage({ currentPath, onContact }) {
               I build software that helps businesses move with less friction.
             </h1>
             <p className="about-intro">
-              I&apos;m Eldar Jahic, the person behind Uroboros Systems. I work with small businesses
+              I&apos;m Eldar Jahic, the person behind Uroboros Digital. I work with small businesses
               and solo founders who need a website, web app, or workflow that actually removes
               pressure instead of adding another layer of process.
             </p>
@@ -82,7 +82,7 @@ function AboutPage({ currentPath, onContact }) {
             <p className="section-label">Story</p>
             <h2 id="about-story-title">Built around clarity, not noise.</h2>
             <p>
-              Uroboros Systems grew out of a practical habit: listening for the part of a business
+              Uroboros Digital grew out of a practical habit: listening for the part of a business
               that was slowing everything else down. Sometimes that is the website. Sometimes it is
               an intake flow, a manual follow-up process, or a tool stack that does not talk to
               itself.

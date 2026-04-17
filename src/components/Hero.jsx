@@ -37,7 +37,7 @@ function Hero({ onContact, currentPath }) {
               business run better.
             </h1>
             <p className="hero-summary">
-              Uroboros Systems works with small/medium businesses and solo founders who need
+              Uroboros Digital works with small/medium businesses and solo founders who need
               practical software, stronger digital presence, and <span className="ai-emphasis ai-emphasis--inline">AI-enhanced workflows</span>{' '}
               without the noise of a generic agency process.
             </p>

@@ -10,7 +10,7 @@ function Navbar() {
   }, []);
   return (
     <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
-      <a href="#" className="nav-logo"><Icons.Logo /> Uroboros Systems</a>
+      <a href="#" className="nav-logo"><Icons.Logo /> Uroboros Digital</a>
       <ul className="nav-links">
         <li><a href="#" className="active">Home</a></li>
         <li><a href="#services">Services</a></li>

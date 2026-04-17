@@ -15,10 +15,10 @@ function Footer({ onContact, currentPath = '/', variant = 'default' }) {
       <footer className={`footer footer--minimal ${isEditorial ? 'footer--editorial' : ''}`.trim()}>
         <div className="footer-frame footer-frame--minimal">
           <div className="footer-minimal-brand">
-            <p className="footer-minimal-kicker">Uroboros Systems Insights</p>
+            <p className="footer-minimal-kicker">Uroboros Digital Insights</p>
             <div className="footer-logo">
               <Icons.Logo />
-              Uroboros Systems
+              Uroboros Digital
             </div>
             <p className="footer-minimal-copy">
               Practical websites, apps, and AI workflows for teams that want clearer execution.
@@ -39,7 +39,7 @@ function Footer({ onContact, currentPath = '/', variant = 'default' }) {
             href="https://www.linkedin.com/company/113171953"
             target="_blank"
             rel="noreferrer"
-            aria-label="Uroboros Systems on LinkedIn"
+            aria-label="Uroboros Digital on LinkedIn"
           >
             <img src="/icons/linkedin.png" alt="" aria-hidden="true" />
           </a>
@@ -71,7 +71,7 @@ function Footer({ onContact, currentPath = '/', variant = 'default' }) {
             <p className="footer-kicker section-label">Fix the bottleneck</p>
             <div className="footer-logo">
               <Icons.Logo />
-              Uroboros Systems
+              Uroboros Digital
             </div>
             <p className="footer-summary">
               Practical websites, web apps, and AI workflows for small/medium businesses and solo founders
@@ -112,7 +112,7 @@ function Footer({ onContact, currentPath = '/', variant = 'default' }) {
               href="https://www.linkedin.com/company/113171953"
               target="_blank"
               rel="noreferrer"
-              aria-label="Uroboros Systems on LinkedIn"
+              aria-label="Uroboros Digital on LinkedIn"
             >
               <img src="/icons/linkedin.png" alt="" aria-hidden="true" />
             </a>
