@@ -6520,6 +6520,10 @@ summary {
   padding-left: 1.25rem;
 }
 
+.insights-shell--article .insight-docs-section li::marker {
+  color: rgba(89, 68, 59, 0.72);
+}
+
 .insights-shell--article .insight-docs-section a {
   color: #7f2a1f;
   text-decoration-color: rgba(127, 42, 31, 0.3);
@@ -6530,6 +6534,20 @@ summary {
 .insights-shell--article .insight-docs-section a:focus-visible {
   color: #5e1f18;
   text-decoration-color: rgba(94, 31, 24, 0.45);
+}
+
+.insights-shell--article .insight-docs-section code {
+  color: #2a211d;
+  background: rgba(33, 28, 24, 0.08);
+}
+
+.insights-shell--article .insight-quote-chip {
+  border-left-color: rgba(141, 42, 30, 0.22);
+  background: linear-gradient(90deg, rgba(127, 42, 31, 0.08), rgba(127, 42, 31, 0));
+}
+
+.insights-shell--article .insight-quote-chip span {
+  color: #1d1915;
 }
 
 .insights-shell--article .insight-inline-note {
@@ -6571,6 +6589,27 @@ summary {
   padding: 12px 14px;
 }
 
+.insights-shell--article .insight-issue-card {
+  border-top-color: rgba(33, 28, 24, 0.1);
+}
+
+.insights-shell--article .insight-issue-index {
+  color: rgba(89, 68, 59, 0.68);
+}
+
+.insights-shell--article .insight-issue-card p {
+  color: rgba(28, 24, 20, 0.82);
+}
+
+.insights-shell--article .insight-outcome-card {
+  border: 1px solid rgba(33, 28, 24, 0.12);
+  background: rgba(224, 217, 207, 0.42);
+}
+
+.insights-shell--article .insight-outcome-card p {
+  color: rgba(28, 24, 20, 0.82);
+}
+
 .insights-shell--article .insight-faq-list {
   border-top: 1px solid rgba(33, 28, 24, 0.12);
 }
@@ -6583,6 +6622,14 @@ summary {
   color: #171411;
   font-family: 'Manrope', sans-serif;
   font-weight: 600;
+}
+
+.insights-shell--article .insight-docs-section#section-faq-block h3 {
+  color: #171411;
+}
+
+.insights-shell--article .insight-docs-section#section-faq-block h3 + p {
+  color: rgba(28, 24, 20, 0.78);
 }
 
 .insights-shell--article .insight-inline-cta {
