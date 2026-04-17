@@ -12,7 +12,7 @@ function SiteNav({ currentPath, onContact, variant = 'default' }) {
   const useHomeAnchors = currentPath !== '/';
   const servicesHref = useHomeAnchors ? '/#services' : '#services';
   const processHref = useHomeAnchors ? '/#process' : '#process';
-  const contactHref = '/contact';
+  const contactHref = useHomeAnchors ? '/#contact' : '#contact';
   const inServices = currentPath.startsWith('/services');
   const navLinks = [
     { href: '/', label: 'Home', active: currentPath === '/' },
@@ -20,7 +20,7 @@ function SiteNav({ currentPath, onContact, variant = 'default' }) {
     { href: '/insights', label: 'Insights', active: inInsights },
     { href: servicesHref, label: 'Services', active: inServices },
     { href: processHref, label: 'Process', active: false },
-    { href: contactHref, label: 'Contact', active: currentPath === '/contact' },
+    { href: contactHref, label: 'Contact', active: false },
   ];
   const mobileMenuLinks = useInsightsNav
     ? [
