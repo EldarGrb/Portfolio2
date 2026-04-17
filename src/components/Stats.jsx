@@ -15,7 +15,7 @@ function Stats() {
         </div>
         <div className="stats-text">
           <span className="section-signature" aria-hidden="true"><Icons.Logo /></span>
-          <h2 className="section-title">You should never be guessing what&apos;s happening on a project.</h2>
+          <h2 className="section-title">The project should move forward without turning into a communication burden.</h2>
           <p>
             Good work is not just code. It&apos;s clear replies, clear ownership, and fixing
             the right problem first.

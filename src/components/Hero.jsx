@@ -20,7 +20,7 @@ function Hero({ onContact, currentPath }) {
       icon: 'Monitor',
       label: 'Low-drama delivery',
       title: 'Visible progress and practical next steps',
-      description: 'The project should move forward without turning into a communication burden.',
+      description: 'You should always know what is being built, what decision is next, and what outcome the work supports.',
     },
   ];
 
